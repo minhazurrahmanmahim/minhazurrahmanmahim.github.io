@@ -1,91 +1,531 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Minhazur Rahman Mahim | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --bg: #fbfaf7; --text: #1a1a1a; --sidebar: #ffffff; --accent: #2c3e50; }
-        .dark { --bg: #121212; --text: #f5f5f5; --sidebar: #1e1e1e; --accent: #e0e0e0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minhazur Rahman Mahim</title>
 
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; }
-        
-        /* Sidebar */
-        #sidebar { width: 280px; height: 100vh; background: var(--sidebar); position: fixed; left: -280px; transition: 0.3s; padding: 20px; border-right: 1px solid #ccc; z-index: 1000; }
-        #sidebar.active { left: 0; }
-        .menu-icon { position: fixed; top: 20px; left: 20px; cursor: pointer; font-size: 24px; z-index: 1001; }
-        
-        main { padding: 50px; max-width: 900px; margin: auto; }
-        .card { border: 1px solid #ddd; padding: 20px; margin: 15px 0; border-radius: 8px; }
-        
-        .footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #ccc; }
-        .socials a { font-size: 20px; margin: 0 10px; color: var(--text); text-decoration: none; }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --sidebar:#0f172a;
+      --hover:#2563eb;
+      --shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    body.dark{
+      --bg:#0f172a;
+      --card:#1e293b;
+      --text:#f1f5f9;
+      --sidebar:#020617;
+      --hover:#60a5fa;
+      --shadow:0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      transition:.3s;
+    }
+
+    .sidebar{
+      width:260px;
+      background:var(--sidebar);
+      height:100vh;
+      position:fixed;
+      left:0;
+      top:0;
+      padding:30px 20px;
+      overflow:auto;
+    }
+
+    .profile{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .profile img{
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      border:4px solid white;
+    }
+
+    .profile h2{
+      color:white;
+      margin-top:15px;
+      font-size:22px;
+    }
+
+    .profile p{
+      color:#cbd5e1;
+      font-size:14px;
+    }
+
+    .nav-links{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .nav-links a{
+      text-decoration:none;
+      color:white;
+      padding:14px;
+      border-radius:12px;
+      transition:.3s;
+      font-size:15px;
+    }
+
+    .nav-links a:hover{
+      background:rgba(255,255,255,0.1);
+      transform:translateX(5px);
+    }
+
+    .theme-btn{
+      margin-top:25px;
+      width:100%;
+      border:none;
+      padding:14px;
+      border-radius:12px;
+      background:white;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .main{
+      margin-left:260px;
+      width:100%;
+      padding:40px;
+    }
+
+    section{
+      margin-bottom:80px;
+    }
+
+    .section-title{
+      font-size:34px;
+      margin-bottom:25px;
+      font-weight:700;
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      gap:40px;
+      flex-wrap:wrap;
+      min-height:90vh;
+    }
+
+    .hero img{
+      width:320px;
+      border-radius:25px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-content{
+      flex:1;
+    }
+
+    .hero-content h1{
+      font-size:52px;
+      margin-bottom:15px;
+    }
+
+    .hero-content p{
+      font-size:18px;
+      line-height:1.8;
+      opacity:.9;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:var(--card);
+      padding:25px;
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      transition:.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+    }
+
+    .card img{
+      width:70px;
+      height:70px;
+      object-fit:contain;
+      margin-bottom:15px;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+    }
+
+    .article-card{
+      background:var(--card);
+      padding:30px;
+      border-radius:24px;
+      margin-bottom:25px;
+      box-shadow:var(--shadow);
+      transition:.3s;
+    }
+
+    .article-card:hover{
+      transform:translateY(-5px);
+    }
+
+    .article-card h3{
+      margin-bottom:12px;
+      font-size:24px;
+    }
+
+    .article-card p{
+      line-height:1.9;
+      margin-bottom:18px;
+    }
+
+    .read-btn{
+      display:inline-block;
+      padding:12px 22px;
+      background:var(--hover);
+      color:white;
+      text-decoration:none;
+      border-radius:10px;
+      transition:.3s;
+    }
+
+    .read-btn:hover{
+      opacity:.9;
+    }
+
+    .about-box{
+      background:var(--card);
+      padding:35px;
+      border-radius:24px;
+      line-height:2;
+      box-shadow:var(--shadow);
+    }
+
+    footer{
+      margin-top:60px;
+      text-align:center;
+      padding:40px 20px;
+    }
+
+    .socials{
+      margin-top:20px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .socials a{
+      text-decoration:none;
+      color:white;
+      background:var(--hover);
+      padding:12px 18px;
+      border-radius:10px;
+    }
+
+    @media(max-width:900px){
+
+      body{
+        flex-direction:column;
+      }
+
+      .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+      }
+
+      .main{
+        margin-left:0;
+        padding:20px;
+      }
+
+      .hero{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .hero img{
+        width:100%;
+        max-width:320px;
+      }
+
+      .hero-content h1{
+        font-size:38px;
+      }
+
+    }
+
+  </style>
 </head>
+
 <body>
 
-<div class="menu-icon" onclick="toggleSidebar()">☰</div>
+  <div class="sidebar">
 
-<div id="sidebar">
-    <button onclick="toggleTheme()">Dark/Light Mode</button>
-    <ul style="list-style:none; padding:0; margin-top:20px;">
-        <li><a href="#" onclick="show('home')">Home</a></li>
-        <li><a href="#" onclick="show('articles')">Bengali Articles (29)</a></li>
-    </ul>
-</div>
+    <div class="profile">
 
-<main id="content">
-    <section id="home">
-        <h1>Md. Minhazur Rahman Mahim</h1>
-        <p>Biomedical Engineering Student | Researcher | Journalist</p>
-        <div class="card">
-            <h3>Summary</h3>
-            <p>I am a B.Sc. student at Islamic University. Passionate about research, innovation, and media.</p>
-        </div>
-    </section>
+      <img src="images/profile.jpg" alt="Profile">
 
-    <section id="articles" style="display:none;">
-        <h1>Bengali Articles</h1>
-        <div id="article-list"></div>
-    </section>
-</main>
+      <h2>Minhazur Rahman Mahim</h2>
 
-<div class="footer">
-    <p>&copy; 2026 Md. Minhazur Rahman Mahim. All rights reserved.</p>
-    <div class="socials">
-        <a href="https://facebook.com/mdminhazur44rahman"><i class="fab fa-facebook"></i></a>
-        <a href="https://instagram.com/mdminhazurrahmanmahim"><i class="fab fa-instagram"></i></a>
-        <a href="https://linkedin.com/in/mdminhazur44rahman"><i class="fab fa-linkedin"></i></a>
+      <p>Writer | Student | Research Enthusiast</p>
+
     </div>
-</div>
 
-<script>
-    const articles = [
-        "২৯/ মানবজীবনে টিকার গুরুত্ব", "২৮/ পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা", "২৭/ পশ্চাদপদ মানসিকতা পরিহার করুন", 
-        "২৬/ বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত", "২৫/ বন্ধু নির্বাচনে হতে হবে সতর্ক", 
-        "২৪/ ইদ হলো ঐক্যের, ইদ হলো ভাতৃত্বের", "২৩/ শিক্ষার্থীদের ঝরে পড়া রোধ করতে হবে", 
-        "২২/ বাংলাদেশ যেভাবে পরিবেশ দূষণের শীর্ষে", "২১/ ইবির অগঠিত ওয়েবসাইট", "২০/ বন্ধ হোক পলিথিন, সন্ধি হোক পাটের সাথে", 
-        "১৯/ স্মার্ট বাংলাদেশে কিশোর গ্যাং যখন বিষফোড়া", "১৮/ পরিবার পরিকল্পনা", "১৭/ ইবির অভ্যন্তরে ভাঙ্গা রাস্তা", 
-        "১৬/ বাংলাদেশের নদী ও রেল লাইনের পাশের এলাকাগুলো বস্তি থেকে স্বস্তির হবে কবে?", "১৫/ প্রতি জেলায় পাবলিক বিশ্ববিদ্যালয়", 
-        "১৪/ সমস্যায় পরিপূর্ণ ইসলামী বিশ্ববিদ্যালয়", "১৩/ বিশ্বের কোথায় ধর্ষণের শাস্তি কেমন", "১২/ বন্ধু হলো জীবনের এক অমূল্য উপহার", 
-        "১১/ শৌচাগারে মোবাইল চালানোর অপকারিতা", "১০/ বন্ধ হোক পোষ্য কোটা", "০৯/ তরুণদের চোখে আগামীর বাংলাদেশ", 
-        "০৮/ প্রবীণরা অবহেলার স্বীকার না হোক", "০৭/ পাবলিকিয়ান হওয়ার যুদ্ধ", "০৬/ শীতের আর্তনাদ", 
-        "০৫/ ইবির জিমনেসিয়ামে যত সমস্যা", "০৪/ সমুন্নত হোক...", "০৩/ শিক্ষা...", "০২/ স্বাস্থ্য...", "০১/ জীবন..."
-    ];
+    <div class="nav-links">
 
-    const list = document.getElementById('article-list');
-    articles.forEach(title => {
-        list.innerHTML += `<div class="card"><h3>${title}</h3><a href="YOUR_LINK_HERE" target="_blank">Read Here</a></div>`;
-    });
+      <a href="#home">🏠 Home</a>
+      <a href="#articles">📝 Bengali Articles</a>
+      <a href="#education">🎓 Education</a>
+      <a href="#job">💼 Job Experience</a>
+      <a href="#club">🤝 Clubbing Experience</a>
+      <a href="#about">👨 About Me</a>
 
-    function show(id) {
-        document.getElementById('home').style.display = id === 'home' ? 'block' : 'none';
-        document.getElementById('articles').style.display = id === 'articles' ? 'block' : 'none';
-        document.getElementById('sidebar').classList.remove('active');
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()">
+      🌙 Dark / Light
+    </button>
+
+  </div>
+
+  <div class="main">
+
+    <!-- HOME -->
+
+    <section id="home">
+
+      <div class="hero">
+
+        <img src="images/profile.jpg" alt="Profile">
+
+        <div class="hero-content">
+
+          <h1>Welcome!</h1>
+
+          <p>
+            I am Md. Minhazur Rahman Mahim. 
+            Passionate about writing, education, research, leadership and social activities. 
+            This portfolio showcases my articles, educational journey, experiences and achievements.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ARTICLES -->
+
+    <section id="articles">
+
+      <h2 class="section-title">Bengali Articles</h2>
+
+      <!-- ARTICLE -->
+
+      <div class="article-card">
+
+        <h3>পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা</h3>
+
+        <p>
+          আমাদের সমাজে পেশার দিক দিয়ে বিবেচনা করতে গেলে সবচেয়ে সম্মানজনক পেশা ধরা হয় শিক্ষকতাকে...
+        </p>
+
+        <a href="#" class="read-btn">
+          Read at Daily Karatoa
+        </a>
+
+      </div>
+
+      <div class="article-card">
+
+        <h3>পশ্চাদপদ মানসিকতা পরিহার করুন</h3>
+
+        <p>
+          কোনো ব্যক্তির চিন্তা-ভাবনা, মতাদর্শ, বিশ্বাস স্থাপনের জায়গা অনুযায়ী তার মানসিকতা প্রকাশ পায়...
+        </p>
+
+        <a href="#" class="read-btn">
+          Read at Daily Jai Jai Din
+        </a>
+
+      </div>
+
+      <div class="article-card">
+
+        <h3>বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত</h3>
+
+        <p>
+          প্রতিটি বিশ্ববিদ্যালয়ের শৃঙ্খলা, ভ্রাতৃত্ব ও নিয়মনীতি বজায় রাখতে সিনিয়র-জুনিয়র সম্পর্ক সুন্দর হওয়া জরুরি...
+        </p>
+
+        <a href="#" class="read-btn">
+          Read at Daily Share Biz
+        </a>
+
+      </div>
+
+      <!-- বাকিগুলো একইভাবে Add করবে -->
+
+    </section>
+
+    <!-- EDUCATION -->
+
+    <section id="education">
+
+      <h2 class="section-title">Education</h2>
+
+      <div class="cards">
+
+        <div class="card">
+
+          <img src="images/edu1.png">
+
+          <h3>Islamic University</h3>
+
+          <p>BME Department</p>
+
+        </div>
+
+        <div class="card">
+
+          <img src="images/edu2.png">
+
+          <h3>Your College Name</h3>
+
+          <p>Higher Secondary Education</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- JOB -->
+
+    <section id="job">
+
+      <h2 class="section-title">Job Experience</h2>
+
+      <div class="cards">
+
+        <div class="card">
+
+          <img src="images/job1.png">
+
+          <h3>Organization Name</h3>
+
+          <p>Your Position</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CLUB -->
+
+    <section id="club">
+
+      <h2 class="section-title">Clubbing Experience</h2>
+
+      <div class="cards">
+
+        <div class="card">
+
+          <img src="images/club1.png">
+
+          <h3>Club Name</h3>
+
+          <p>Leadership / Member</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-box">
+
+        <p>
+          I am passionate about writing articles, research activities, leadership, education and social development.
+          I always try to contribute positively through creativity, knowledge and teamwork.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <p>
+        © 2026 Minhazur Rahman Mahim. All Rights Reserved.
+      </p>
+
+      <div class="socials">
+
+        <a href="https://facebook.com/mdminhazur44rahman" target="_blank">
+          Facebook
+        </a>
+
+        <a href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">
+          Instagram
+        </a>
+
+        <a href="https://linkedin.com/in/mdminhazur44rahman" target="_blank">
+          LinkedIn
+        </a>
+
+      </div>
+
+    </footer>
+
+  </div>
+
+  <script>
+
+    function toggleTheme(){
+      document.body.classList.toggle("dark");
     }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-    function toggleTheme() { document.body.classList.toggle('dark'); }
-</script>
+
+  </script>
+
 </body>
 </html>
