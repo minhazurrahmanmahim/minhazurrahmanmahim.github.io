@@ -4,439 +4,653 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md. Minhazur Rahman Mahim | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fbfaf7;
-            --text-main: #1a1a1a;
-            --text-muted: #606060;
-            --border-color: #e6e1da;
-            --card-bg: #ffffff;
-            --card-hover: #f5f2eb;
-            --nav-active: #1a1a1a;
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-main: #f5f5f5;
-            --text-muted: #a0a0a0;
-            --border-color: #2c2c2c;
-            --card-bg: #1e1e1e;
-            --card-hover: #252525;
-            --nav-active: #ffffff;
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #319795;
+            --bg-color: #f7fafc;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --sidebar-width: 280px;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', 'Noto Serif Bengali', sans-serif;
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 940px;
-            margin: 0 auto;
-            padding: 0 25px;
-        }
-
-        /* Sticky Navigation & Dropdown */
-        nav {
-            position: sticky;
+        /* Sidebar Navigation */
+        aside {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            color: white;
+            position: fixed;
             top: 0;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 0;
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: background-color 0.4s ease;
-        }
-
-        nav .logo {
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 15px;
-            align-items: center;
-        }
-
-        nav ul li {
-            position: relative;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 400;
-            cursor: pointer;
-            padding: 8px 12px;
-            transition: all 0.3s;
-            border-radius: 4px;
-        }
-
-        nav ul li a:hover, nav ul li a.active-nav {
-            color: var(--nav-active);
-            background-color: var(--card-hover);
-        }
-
-        /* Experiences Dropdown Menu */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
             left: 0;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-            padding: 10px 0;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            z-index: 100;
         }
 
-        .dropdown-menu li a {
-            display: block;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            border-radius: 0;
+        .profile-box {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .dropdown:hover .dropdown-menu {
-            display: block;
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 20px;
-            color: var(--text-main);
+        .profile-box h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-box p {
             font-size: 0.85rem;
+            color: #cbd5e0;
         }
 
-        /* Tab Content Control */
-        .tab-content {
+        .nav-links {
+            width: 100%;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: #e2e8f0;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content Area */
+        main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 3rem;
+            max-width: 1200px;
+        }
+
+        .section {
             display: none;
-            animation: fadeIn 0.5s ease-in-out forwards;
-            padding: 50px 0;
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        .tab-content.active-tab {
+        .section.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Typography & Layouts */
-        .hero-section h1 {
-            font-size: 3.2rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+        h1.section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
-        .hero-section p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            font-weight: 300;
-            margin-bottom: 40px;
+        /* Home / About Section */
+        .home-grid {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
         }
 
-        h2.section-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+        .home-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 40px;
+        .home-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            background-color: var(--card-hover);
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .card .meta {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        /* Articles Styling (Magazine/Editorial Style) */
-        .article-card {
-            border-left: 3px solid var(--text-main);
-            background: var(--card-bg);
-            padding: 25px;
-            margin-bottom: 20px;
-            border-top: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            border-radius: 0 6px 6px 0;
-            transition: all 0.3s;
-        }
-
-        .article-card:hover {
-            background: var(--card-hover);
-        }
-
-        .article-card h3 {
-            font-family: 'Noto Serif Bengali', serif;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .skills-flex {
+        .tagline-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
         }
 
-        .skill-pill {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 8px 18px;
-            font-size: 0.9rem;
-            border-radius: 25px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--text-main);
-            color: var(--bg-color);
-            padding: 14px 30px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            border-radius: 4px;
-            font-weight: 500;
-            margin-top: 15px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 0 40px 0;
+        .tagline {
+            background: #edf2f7;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            margin-top: 60px;
+            font-weight: 600;
+            color: var(--primary-color);
+            border: 1px solid #e2e8f0;
         }
 
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .hero-section h1 { font-size: 2.3rem; }
-            nav { flex-direction: column; gap: 15px; padding: 15px 0; }
-            .dropdown-menu { position: relative; top: 0; box-shadow: none; width: 100%; border: none; padding-left: 15px;}
+        /* Universal Card Styles (Education, Job, Clubbing) */
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-box img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 5px;
+            background: #fff;
+        }
+
+        .card-details h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .card-details h4 {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-details .date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Articles Section */
+        .articles-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .article-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 1rem;
+        }
+
+        .article-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .article-title-area h2 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .article-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-at-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #e2e8f0;
+            color: var(--primary-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-at-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            aside { width: 100%; height: auto; position: relative; padding: 1.5rem; }
+            main { margin-left: 0; padding: 1.5rem; }
+            .home-grid { flex-direction: column; text-align: center; }
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+            .nav-links li { margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <nav>
-            <div class="logo">M. MAHIM</div>
-            <div class="nav-right">
-                <ul>
-                    <li><a id="nav-home" class="active-nav" onclick="switchTab('home')">Home</a></li>
-                    <li><a id="nav-about" onclick="switchTab('about')">About Me</a></li>
-                    <li><a id="nav-education" onclick="switchTab('education')">Education</a></li>
-                    <li class="dropdown">
-                        <a id="nav-experiences" style="cursor: default;">Experiences ▾</a>
-                        <ul class="dropdown-menu">
-                            <li><a onclick="switchTab('job-exp')">Job Experiences</a></li>
-                            <li><a onclick="switchTab('club-exp')">Clubbing Experiences</a></li>
-                        </ul>
-                    </li>
-                    <li><a id="nav-articles" onclick="switchTab('articles')">Bengali Articles</a></li>
-                </ul>
-                <button class="theme-toggle" onclick="toggleTheme()">Mode</button>
-            </div>
-        </nav>
+    <aside>
+        <div class="profile-box">
+            <img src="mahim.jpg" alt="Md. Minhazur Rahman Mahim" class="profile-img">
+            <h2>মোঃ মিনহাজুর রহমান মাহিম</h2>
+            <p>Biomedical Engineering Student</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="showSection('home', this)"><i class="fa-solid var(--fa-house) fa-house"></i> হোম পেজ</a></li>
+            <li><a href="#" onclick="showSection('articles', this)"><i class="fa-solid fa-newspaper"></i> আমার লেখা আর্টিকেল</a></li>
+            <li><a href="#" onclick="showSection('education', this)"><i class="fa-solid fa-graduation-cap"></i> শিক্ষাগত যোগ্যতা</a></li>
+            <li><a href="#" onclick="showSection('job', this)"><i class="fa-solid fa-briefcase"></i> সাংবাদিকতা ও ক্যারিয়ার</a></li>
+            <li><a href="#" onclick="showSection('clubbing', this)"><i class="fa-solid fa-users"></i> সামাজিক ও ক্লাব অ্যাক্টিভিটি</a></li>
+        </ul>
+    </aside>
 
-        <div id="tab-home" class="tab-content active-tab">
-            <div class="hero-section">
-                <h1>Md. Minhazur Rahman Mahim</h1>
-                <p>Welcome to my personal portfolio. I am a Biomedical Engineering student and campus journalist focusing on medical technology research and media communications.</p>
-            </div>
-            <h2 class="section-title">Quick Highlights</h2>
-            <div class="grid">
-                <div class="card" onclick="switchTab('articles')" style="cursor:pointer;">
-                    <h3>Bengali Articles Portfolio</h3>
-                    <p style="color:var(--text-muted); margin-top:5px;">আমার লেখা ক্যাম্পাস ফিচার, রিপোর্ট এবং মিডিয়া প্রেস রিলিজগুলো একনজরে দেখতে এখানে ক্লিক করুন।</p>
-                </div>
-                <div class="card" onclick="switchTab('job-exp')" style="cursor:pointer;">
-                    <h3>Journalism & Roles</h3>
-                    <p style="color:var(--text-muted); margin-top:5px;">ক্যাম্পাস প্রতিনিধি ও মিডিয়া রিলেশনশিপের দায়িত্ব এবং কাজের অভিজ্ঞতাগুলো দেখুন।</p>
+    <main>
+        
+        <section id="home" class="section active">
+            <h1 class="section-title">স্বাগতম</h1>
+            <div class="home-grid">
+                <div class="home-text">
+                    <h3>মোঃ মিনহাজুর রহমান মাহিম</h3>
+                    <p>ইসলামী বিশ্ববিদ্যালয়, কুষ্টিয়ার বায়োমেডিক্যাল ইঞ্জিনিয়ারিং বিভাগের একজন বি.এস.সি. (ইঞ্জিনিয়ারিং) শিক্ষার্থী। আমি গবেষণা, উদ্ভাবন এবং সমাজসেবামূলক কাজে গভীরভাবে অনুরাগী। একইসাথে ক্যাম্পাস সাংবাদিকতার মাধ্যমে সত্য তুলে ধরতে নিয়োজিত আছি।</p>
+                    <div class="tagline-container">
+                        <span class="tagline">Biomedical Engineering Student</span>
+                        <span class="tagline">Aspiring Researcher</span>
+                        <span class="tagline">Social Advocate</span>
+                        <span class="tagline">Journalist</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="tab-about" class="tab-content">
-            <h2 class="section-title">About Me</h2>
-            <div class="card">
-                <p style="font-size: 1.1rem; margin-bottom: 15px;">আমি মোঃ মিনহাজুর রহমান মাহিম। ইসলামী বিশ্ববিদ্যালয়, কুষ্টিয়া-তে বায়োমেডিকেল ইঞ্জিনিয়ারিং বিভাগে পড়াশোনা করছি।</p>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">একাডেমিক পড়াশোনার পাশাপাশি আমি ক্যাম্পাস সাংবাদিকতা, জনসংযোগ (PR) এবং মিডিয়া নোটিশ ও প্রেস রিলিজ ড্রাফটিংয়ের সাথে গভীরভাবে যুক্ত। অবজেক্টিভ জার্নালিজম এবং ক্রিস্প রাইটিং স্টাইল মেইনটেইন করতে আমি পছন্দ করি।</p>
-                <p style="color: var(--text-muted);">এছাড়াও, হাই-রেজোলিউশন মোবাইল ফটোগ্রাফি সেন্সর প্রযুক্তি এবং মিনিমালিস্ট ওয়েব ইউজার ইন্টারফেস ডেভেলপমেন্ট আমার অন্যতম আগ্রহের জায়গা।</p>
-            </div>
-        </div>
-
-        <div id="tab-education" class="tab-content">
-            <h2 class="section-title">Educational Background</h2>
-            <div class="card">
-                <h3>B.Sc. (Engg.) in Biomedical Engineering</h3>
-                <div class="meta">Islamic University, Kushtia | 2023 - Present</div>
-                <p>মেডিকেল ইমেজিং সিস্টেম (Medical Imaging), ক্লিনিক্যাল ইনস্ট্রুমেন্টেশন এবং সিগন্যাল প্রসেসিং সংক্রান্ত একাডেমিক কোর্সওয়ার্ক এবং গবেষণামূলক প্রজেক্ট প্ল্যানিংয়ের সাথে যুক্ত।</p>
-            </div>
-        </div>
-
-        <div id="tab-job-exp" class="tab-content">
-            <h2 class="section-title">Job & Media Experiences</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>ক্যাম্পাস করেসপন্ডেন্ট / প্রতিনিধি</h3>
-                    <div class="meta">সংবাদ মাধ্যম ও গণযোগাযোগ</div>
-                    <p>বিশ্ববিদ্যালয় ক্যাম্পাসের প্রতিদিনের গুরুত্বপূর্ণ ঘটনা, প্রশাসনিক সিদ্ধান্ত এবং একাডেমিক কার্যক্রমের উপর বস্তুনিষ্ঠ সংবাদ তৈরি ও প্রকাশের দায়িত্ব পালন।</p>
+        <section id="articles" class="section">
+            <h1 class="section-title">আমার কন্টেন্ট ও প্রবন্ধসমূহ</h1>
+            <div class="articles-container">
+                
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৯/ মানবজীবনে টিকার গুরুত্ব</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        যুগে যুগে মানবজাতির কল্যাণে সবচেয়ে বেশি গুরুত্ব দেওয়া হচ্ছে স্বাস্থ্য সুরক্ষায়। স্বাস্থ্য সুরক্ষায় সবচেয়ে বড় বিপ্লব বা পরিবর্তন ঘটে টিকা প্রদানের উদ্ভব ঘটার মাধ্যমে। টিকা বা ভ্যাক্সিন হলো মানব শরীরের রোগ প্রতিরোধের একটি অনন্য মাধ্যম। যেকোনো একটি টিকা একটি রোগের বিরুদ্ধেই রোগ প্রতিরোধ ব্যবস্থা তৈরি করে থাকে। সাধারণত শরীরের ইমিউন সিস্টেমকে সক্রিয় করার জন্য নির্দিষ্ট রোগের ভাইরাস বা ব্যাকটেরিয়ার মৃত বা দুর্বল অংশকে শরীরে প্রবেশ করানো হয়। যাতে শরীরে আগে থেকেই এই ভাইরাস বা ব্যাকটেরিয়ার আক্রমণ থেকে রক্ষার জন্য অ্যান্টিবডি বা স্মৃতি কোষ তৈরি হয়ে থাকে। এর ফলে টিকা প্রদানের মাধ্যমে নির্দিষ্ট রোগের ভাইরাস/ব্যাকটেরিয়া প্রবেশ করলে আগে থেকে তৈরি হওয়া অ্যান্টিবডি উক্ত ভাইরাস/ব্যাকটেরিয়াকে ধ্বংস করে দেয় এবং মানুষ সেই নির্দিষ্ট রোগ থেকে দ্রুততম সময়ের মধ্যে আক্রান্ত হওয়া থেকে রক্ষা পায়।
+                    </div>
+                    <a href="https://www.ittefaq.com.bd" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Ittefaq
+                    </a>
                 </div>
-                <div class="card">
-                    <h3>মিডিয়া ও প্রেস কো-অর্ডিনেটর</h3>
-                    <div class="meta">জনসংযোগ ও আন্দোলন মিডিয়া উইং</div>
-                    <p>বিভিন্ন জাতীয় ও স্থানীয় সংবাদ মাধ্যমের সাংবাদিকদের সাথে সরাসরি যোগাযোগ রক্ষা করা এবং অফিশিয়াল প্রেস রিলিজ নিখুঁতভাবে ড্রাফট ও ডিস্ট্রিবিউট করা।</p>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৮/ পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        আমাদের সমাজে পেশার দিক দিয়ে বিবেচনা করতে গেলে সবচেয়ে সম্মানজনক পেশা ধরা হয় শিক্ষকতাকে। তবে এই শিক্ষকতা পেশা, সবচেয়ে সম্মানজনক পেশা হলেও আমরা এই পেশাকেই আবার কয়েকটি অংশে বিভক্ত করে থাকি। প্রাথমিক স্কুল, মাধ্যমিক স্কুল, কলেজ, মাদরাসা ও বিশ্ববিদ্যালয়ে শিক্ষকতা। তন্মধ্যে পাবলিক বিশ্ববিদ্যালয়, প্রাইভেট বিশ্ববিদ্যালয়, জাতীয় বিশ্ববিদ্যালয় ও পাবলিক বিশ্ববিদ্যালয়ের অধিভুক্ত কলেজগুলোতে বিশ্ববিদ্যালয়ের শিক্ষকরা শিক্ষকতা করে থাকেন। পাবলিক বিশ্ববিদ্যালয়ের অত্যন্ত মেধাবী, পরিশ্রমী ও দক্ষ শিক্ষার্থীরাই পরবর্তীতে পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা করে থাকেন।
+                    </div>
+                    <a href="https://www.karatoa.com.bd" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Karatoa
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৭/ পশ্চাদপদ মানসিকতা পরিহার করুন</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        কোনো ব্যক্তির চিন্তা-ভাবনা, মতাদর্শ, বিশ্বাস স্থাপনের জায়গা অনুযায়ী তার আচার-ব্যবহার ও সিদ্ধান্ত নেওয়ার মাধ্যমে তার মানসিকতা প্রকাশ পায়। সমাজে প্রতিটি মানুষের ভিন্ন ভিন্ন মতাদর্শ থাকে বা থাকতে পারে। তবে সঠিক শিক্ষাগ্রহণ থেকে বঞ্চিত হওয়া, পরিবার ও পরিবেশগত প্রভাব ও মূল্যবোধের কারণে অনেকে পশ্চাদপদ মানসিকতার হয়ে থাকে। আধুনিক প্রযুক্তি ও চিকিৎসা গ্রহণের মাধ্যমে এবং পুরাতন রীতি নীতি পরিহারের মাধ্যমে এই মানসিকতা থেকে উঠে আসা সম্ভব এবং এর মাধ্যমে জনস্বাস্থ্যের জন্য উপকার ও জনগণের জীবন যাত্রার মান বৃদ্ধি পাবে।
+                    </div>
+                    <a href="https://www.jaijaidinbd.com" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Jai Jai Din
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৬/ বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        প্রতিটি বিশ্ববিদ্যালয়ের শৃঙ্খলা, ভাতৃত্ব ও নিয়মানুবর্তীতা বজায় রাখার জন্য সিনিয়র জুনিয়র সম্পর্ক সুন্দর ও সুগঠিত হওয়া উচিত। সিনিয়র জুনিয়র সম্পর্ক মূলত গড়ে উঠে স্থিতিশীলতা, সহযোগিতামূলক এবং পারস্পরিক সম্মানের উপর ভিত্তি করে। র‍্যাগিং মুক্ত, সম্মান ও সহযোগিতামূলক, বৈষম্যহীন সম্পর্কই হতে পারে সিনিয়র ও জুনিয়রদের মধ্যে সবচেয়ে সর্বোত্তম সম্পর্কের উপায়। এতে সুন্দর থাকবে বিশ্ববিদ্যালয়ের পরিবেশ, উপকৃত হবে সকল শিক্ষার্থীরা।
+                    </div>
+                    <a href="https://sharebiz.net" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Share Biz
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৫/ বন্ধু নির্বাচনে হতে হবে সতর্ক</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        একজন মানুষ কোন পথে পরিচালিত হবে তার অনেকটাই নির্ভর করে বন্ধু নির্বাচনের উপর। একটি প্রচলিত কথা রয়েছে যে, সঙ্গ দোষে, লোহা ভাসে। তাই জীবনের গতির সাথে সঙ্গের সম্পর্ক বিদ্যমান। একজন বন্ধুই পারে একজন মানুষকে বেঠিক পথ থেকে সঠিক এবং সঠিক পথ থেকে বেঠিক পথে নিয়ে যেতে। জীবনের গতি সঠিক রাখতে, জীবন সুন্দর করতে, সফলতার উচ্চ শিখরে পৌঁছাতে, সঠিক-ভুল নির্বাচন করতে বন্ধু নির্বাচন অত্যন্ত গুরুত্বপূর্ণ একটি বিষয়।
+                    </div>
+                    <a href="https://www.jaijaidinbd.com" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Jai Jai Din
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৪/ ইদ হলো ঐক্যের, ইদ হলো ভাতৃত্বের</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        মুসলিমদের নিজেদের মধ্যে বন্ধন, ভাতৃত্ববোধ ও ঐক্যবদ্ধতা বৃদ্ধি ও একত্রিত হয়ে আনন্দ উদযাপনের জন্য প্রতি বছর দুইবার দুইটি ইদ উদযাপন করে থাকে। একটি হলো ইদ-উল-ফিতর এবং আরেকটি ইদ-উল-আযহা। রমযান মাস মুসলিমদের শিক্ষা দেয়, কিভাবে সকল পাপ কাজ থেকে নিজেদের বিরত রাখা যায়, গরিব, দুঃখী ও অসহায়দের না খেয়ে থাকার যন্ত্রণা অনুভব করা যায়। ইদ একার নয়, ইদ হোক আমাদের সবার, ইদ হোক ধনী, গরিব, ছোট, বড় সকলে মিলে এক এবং ঐক্যবদ্ধতার।
+                    </div>
+                    <a href="https://www.kholakagojbd.com" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Khola Kagoj
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২৩/ শিক্ষার্থীদের ঝরে পড়া রোধ করতে হবে</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        বাংলাদেশে প্রতি বছর বিভিন্ন পর্যায়ে লাখো লাখো শিক্ষার্থী ঝরে পড়ে এবং পড়ছে। শিক্ষার্থীদের ঝরে পড়ার পিছনে বহু কারণ রয়েছে। দারিদ্র্যতা নিরসনে শিক্ষা উপবৃত্তি বৃদ্ধি করা, শিক্ষা ক্ষেত্রে প্রয়োজনীয় শিক্ষা উপকরণ বিদ্যালয় থেকে প্রদানের ব্যবস্থা করা, বাল্য বিবাহ রোধে আইনি পদক্ষেপ কঠোর করা এবং কারিগরি স্কুল-কলেজের উন্নয়নে বিশেষ নজরদারি ও পারিবারিকভাবে সচেতনতা বৃদ্ধির মাধ্যমে শিক্ষার্থীদের ঝরে পড়া রোধ করা সম্ভব।
+                    </div>
+                    <a href="https://www.ittefaq.com.bd" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Ittefaq
+                    </a>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-header">
+                        <img src="mahim.jpg" alt="Author" class="article-author-img">
+                        <div class="article-title-area">
+                            <h2>২২/ বাংলাদেশ যেভাবে পরিবেশ দূষণের শীর্ষে</h2>
+                            <div class="article-meta">লেখক: মোঃ মিনহাজুর রহমান মাহিম</div>
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        মাটি, পানি, বায়ু, শব্দ, আলো সকল ধরণের দূষণ একত্রিত হয়ে পরিবেশ দূষণ হয়ে থাকে। ২০২৩ সালের আইকিউএয়ার এর প্রতিবেদনে দেখা যায়, বাংলাদেশ পৃথিবীর সবচেয়ে দূষিত বাতাসের দেশ। দূষিত শহরের তালিকায় ঢাকা জেলা পৃথিবীর দ্বিতীয় তম দূষিত শহর। কলকারখানার বর্জ্য ও প্লাস্টিকজাত বর্জ্য প্রত্যক্ষভাবে নদী ও পরিবেশে ফেলা এর জন্য মারাত্মকভাবে দায়ী। পরিবেশ দূষণ সম্পূর্ণ রোধে সামাজিক, পারিবারিক ও রাষ্ট্রীয়ভাবে কঠোর পদক্ষেপ গ্রহণ করা এখন সময়ের দাবি।
+                    </div>
+                    <a href="https://sharebiz.net" target="_blank" class="read-at-btn">
+                        <i class="fa-solid fa-book-open"></i> Read at Daily Share Biz
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h1 class="section-title">শিক্ষাগত যোগ্যতা</h1>
+            <div class="card-list">
+                <div class="info-card">
+                    <div class="logo-box">
+                        <img src="iu_logo.png" alt="Islamic University Logo">
+                    </div>
+                    <div class="card-details">
+                        <h3>ইসলামী বিশ্ববিদ্যালয়, বাংলাদেশ (IU)</h3>
+                        <h4>বি.এস.সি. (ইঞ্জিনিয়ারিং) - বায়োমেডিক্যাল ইঞ্জিনিয়ারিং (BME)</h4>
+                        <p class="date">অধ্যয়নরত (৩য় বর্ষ)</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="tab-club-exp" class="tab-content">
-            <h2 class="section-title">Clubbing & Voluntary Activities</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>"সহস্র কণ্ঠে দেশের গান" ইভেন্ট</h3>
-                    <div class="meta">অর্গানাইজিং টিম ও মিডিয়া পার্টনারশিপ | ২০১৫</div>
-                    <p>ইসলামী বিশ্ববিদ্যালয়ের ফুটবল মাঠে আয়োজিত এই মেগা ইভেন্টের প্রচার, মিডিয়া পার্টনারদের সাথে কোঅর্ডিনেশন এবং ডিজিটাল ক্যাম্পেইন ডিজাইন টিমে সক্রিয় ভূমিকা পালন।</p>
+        <section id="job" class="section">
+            <h1 class="section-title">সাংবাদিকতা ও মিডিয়া অভিজ্ঞতা</h1>
+            <div class="card-list">
+                
+                <div class="info-card">
+                    <div class="logo-box"><img src="agrajatra_logo.png" alt="Agrajatra Pratidin"></div>
+                    <div class="card-details">
+                        <h3>অগ্রযাত্রা প্রতিদিন (Agrajatra Pratidin)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি (IU Correspondent)</h4>
+                        <p class="date">বর্তমান দায়িত্ব</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>কবিতা লিখন প্রতিযোগিতা</h3>
-                    <div class="meta">ইভেন্ট ম্যানেজমেন্ট ও রিপোর্টিং</div>
-                    <p>পুরো ইভেন্টের অফিশিয়াল নোটিশ ড্রাফটিং, পুরস্কার বিতরণী অনুষ্ঠানের মিডিয়া কভারেজ এবং ফলাফল সংক্রান্ত প্রেস স্টেটমেন্ট তৈরি।</p>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="aajker_probhat_logo.png" alt="Daily Aajker Probhat"></div>
+                    <div class="card-details">
+                        <h3>দৈনিক আজকের প্রভাত (The Daily Aajker Probhat)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি</h4>
+                        <p class="date">০১ জানুয়ারি ২০২৬ থেকে বর্তমান</p>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div id="tab-articles" class="tab-content">
-            <h2 class="section-title">Bengali Articles & Editorial Portfolio</h2>
-            <p style="color: var(--text-muted); margin-bottom: 30px;">আমার তৈরি করা ফিচার আর্টিকেল এবং অফিশিয়াল প্রেস রিলিজিং স্ট্রাকচারসমূহ নিচে দেওয়া হলো:</p>
-            
-            <div class="article-card">
-                <h3>১. ক্যাম্পাস সাংবাদিকতা এবং ফিচার রিপোর্টিং</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem;">ক্যাম্পাসের একাডেমিক উন্নয়ন এবং শিক্ষার্থীদের বিভিন্ন যৌক্তিক সমস্যা নিয়ে গণমাধ্যমে প্রকাশিত ফিচার রিপোর্টের বিবরণ এখানে সাজাতে পারবেন।</p>
-            </div>
+                <div class="info-card">
+                    <div class="logo-box"><img src="noya_songbad_logo.png" alt="Noya Songbad"></div>
+                    <div class="card-details">
+                        <h3>নয়া সংবাদ (Noya Songbad)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি</h4>
+                        <p class="date">০১ ডিসেম্বর ২০২৫ থেকে বর্তমান</p>
+                    </div>
+                </div>
 
-            <div class="article-card">
-                <h3>২. কঠোর ও সংক্ষিপ্ত প্রাতিষ্ঠানিক প্রেস রিলিজ</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem;">অপ্রয়োজনীয় বিরামচিহ্ন (যেমন: এম-ড্যাশ) বর্জন করে একদম stern (দৃঢ়) এবং সরাসরি ভাষায় মিডিয়ার জন্য তৈরি করা অফিশিয়াল স্টেটমেন্টের ফরম্যাট।</p>
-            </div>
+                <div class="info-card">
+                    <div class="logo-box"><img src="bmf_logo.png" alt="BMF Television"></div>
+                    <div class="card-details">
+                        <h3>বিএমএফ টেলিভিশন (BMF Television)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি</h4>
+                        <p class="date">০১ জুন ২০২৫ থেকে বর্তমান</p>
+                    </div>
+                </div>
 
-            <div class="article-card">
-                <h3>৩. আন্তর্জাতিক বিষয়াবলি ও অনুবাদমূলক সাব-হেডিং</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem;">আন্তর্জাতিক বিভিন্ন গুরুত্বপূর্ণ স্টেটমেন্টের বাংলা অনুবাদ এবং তা দেশীয় সংবাদ মাধ্যমে প্রকাশের উপযোগী করে তোলার কন্টেন্ট স্ট্রাকচার।</p>
-            </div>
-        </div>
+                <div class="info-card">
+                    <div class="logo-box"><img src="desherkotha_logo.png" alt="Daynik Desherkotha"></div>
+                    <div class="card-details">
+                        <h3>দৈনিক দেশের কথা (Daynik Desherkotha)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি</h4>
+                        <p class="date">০১ জুন ২০২৫ থেকে বর্তমান</p>
+                    </div>
+                </div>
 
-        <footer>
-            <p>&copy; 2026 Md. Minhazur Rahman Mahim. Built with Quiet Luxury Aesthetic.</p>
-        </footer>
-    </div>
+                <div class="info-card">
+                    <div class="logo-box"><img src="rupalidesh_logo.png" alt="Daily Rupalidesh"></div>
+                    <div class="card-details">
+                        <h3>দৈনিক রূপালীদেশ (Daily Rupalidesh)</h3>
+                        <h4>ইসলামী বিশ্ববিদ্যালয় প্রতিনিধি</h4>
+                        <p class="date">০১ ফেব্রুয়ারি ২০২৫ - ৩০ মে ২০২৫</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="clubbing" class="section">
+            <h1 class="section-title">সামাজিক ও ক্লাব এক্টিভিটিজ</h1>
+            <div class="card-list">
+                
+                <div class="info-card">
+                    <div class="logo-box"><img src="ieee_logo.png" alt="IEEE EMBS"></div>
+                    <div class="card-details">
+                        <h3>IEEE - EMBS (Islamic University Student Branch)</h3>
+                        <h4>Publication Coordinator & Member</h4>
+                        <p class="date">পাবলিকেশন কো-অর্ডিনেটর (০১ জানুয়ারি ২০২৫ থেকে) | মেম্বার (২২ সেপ্টেম্বর ২০২৫ থেকে)</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="biomed_innovates_logo.png" alt="Biomed Innovates"></div>
+                    <div class="card-details">
+                        <h3>Biomed Innovates</h3>
+                        <h4>IT Secretary & Former Publicity Secretary</h4>
+                        <p class="date">আইটি সেক্রেটারি (২১ জানুয়ারি ২০২৬ থেকে) | পাবলিসিটি সেক্রেটারি (০৫ ফেব্রুয়ারি ২০২৫ - ২০ জানুয়ারি ২০২৬)</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="pathakbondhu_logo.png" alt="Pathakbondhu"></div>
+                    <div class="card-details">
+                        <h3>পাঠকবন্ধু (ইসলামী বিশ্ববিদ্যালয় ইউনিট)</h3>
+                        <h4>Organizing Secretary (সাংগঠনিক সম্পাদক)</h4>
+                        <p class="date">০৫ ডিসেম্বর ২০২৪ থেকে বর্তমান</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="iusc_logo.png" alt="Islamic University Science Club"></div>
+                    <div class="card-details">
+                        <h3>Islamic University Science Club</h3>
+                        <h4>সাধারণ সদস্য (General Member)</h4>
+                        <p class="date">২৮ নভেম্বর ২০২৩ থেকে বর্তমান</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="iuds_logo.png" alt="Islamic University Debating Society"></div>
+                    <div class="card-details">
+                        <h3>Islamic University Debating Society</h3>
+                        <h4>সাধারণ সদস্য (General Member)</h4>
+                        <p class="date">১৮ নভেম্বর ২০২৩ থেকে বর্তমান</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="btclf_logo.png" alt="Bangladesh Torun Column Lekhok Forum"></div>
+                    <div class="card-details">
+                        <h3>বাংলাদেশ তরুণ কলাম লেখক ফোরাম (ইবি ইউনিট)</h3>
+                        <h4>সাবেক সদস্য এবং সাবেক সহযোগী সদস্য</h4>
+                        <p class="date">সদস্য (০৪ জুন ২০২৪ - ০৫ জুলাই ২০২৫) | সহযোগী সদস্য (০১ অক্টোবর ২০২৩ - ০৩ জুন ২০২৪)</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="cyb_logo.png" alt="Consumer Youth Bangladesh"></div>
+                    <div class="card-details">
+                        <h3>Consumer Youth Bangladesh (ইবি ইউনিট)</h3>
+                        <h4>সাবেক সাধারণ সদস্য</h4>
+                        <p class="date">০৫ ডিসেম্বর ২০২৪ - ০২ আগস্ট ২০২৫</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="logo-box"><img src="green_voice_logo.png" alt="Green Voice"></div>
+                    <div class="card-details">
+                        <h3>Green Voice (ইসলামী বিশ্ববিদ্যালয় ইউনিট)</h3>
+                        <h4>সাবেক সাধারণ সদস্য</h4>
+                        <p class="date">১৭ ডিসেম্বর ২০২৩ - ১৭ জানুয়ারি ২০২৫</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
 
     <script>
-        // Tab Switching Logic
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active-tab');
-            });
-            // Remove active class from all main nav links
-            document.querySelectorAll('nav ul li a').forEach(nav => {
-                nav.classList.remove('active-nav');
-            });
-
-            // Show selected tab
-            document.getElementById('tab-' + tabName).classList.add('active-tab');
+        function showSection(sectionId, element) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.classList.remove('active'));
             
-            // Logic to highlight the correct nav item
-            if(tabName === 'job-exp' || tabName === 'club-exp') {
-                document.getElementById('nav-experiences').classList.add('active-nav');
-            } else {
-                const activeNav = document.getElementById('nav-' + tabName);
-                if(activeNav) activeNav.classList.add('active-nav');
-            }
+            // Show requested section
+            document.getElementById(sectionId).classList.add('active');
             
+            // Reset and update navigation link active state
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Auto scroll to top on mobile view changes
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // Theme Toggle Logic
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        // Apply Saved Preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 </body>
 </html>
