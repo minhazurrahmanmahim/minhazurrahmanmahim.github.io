@@ -1,20 +1,126 @@
-<!-- ===== REPLACE THESE PARTS IN YOUR CURRENT CODE ===== -->
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- ===================== TITLE ===================== -->
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Md. Minhazur Rahman Mahim</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- ===================== PROFILE NAME ===================== -->
+<style>
 
-<h2>
-    Md. Minhazur Rahman Mahim
-</h2>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
 
+:root{
 
-<!-- ===================== ADD THIS CSS INSIDE STYLE TAG ===================== -->
+    --bg:#050816;
+    --card:rgba(255,255,255,.05);
+    --glass:rgba(255,255,255,.06);
 
-/* PAGE INTRO ANIMATION */
+    --text:#ffffff;
+    --muted:#94a3b8;
+
+    --border:rgba(255,255,255,.08);
+
+    --primary:#7c3aed;
+    --secondary:#06b6d4;
+    --third:#3b82f6;
+
+}
+
+body.light{
+
+    --bg:#eef2ff;
+    --card:rgba(255,255,255,.75);
+    --glass:rgba(255,255,255,.75);
+
+    --text:#111827;
+    --muted:#475569;
+
+    --border:rgba(0,0,0,.08);
+
+}
+
+*::-webkit-scrollbar{
+    width:7px;
+}
+
+*::-webkit-scrollbar-thumb{
+    background:linear-gradient(var(--primary),var(--secondary));
+    border-radius:20px;
+}
+
+body{
+
+    background:var(--bg);
+    color:var(--text);
+
+    font-family:'Inter',sans-serif;
+
+    overflow-x:hidden;
+
+    transition:.4s;
+
+}
+
+/* BACKGROUND */
+
+body::before{
+
+    content:'';
+
+    position:fixed;
+
+    width:700px;
+    height:700px;
+
+    background:
+    radial-gradient(circle,var(--primary),transparent 70%);
+
+    top:-300px;
+    left:-250px;
+
+    filter:blur(130px);
+
+    opacity:.35;
+
+    z-index:-1;
+
+}
+
+body::after{
+
+    content:'';
+
+    position:fixed;
+
+    width:700px;
+    height:700px;
+
+    background:
+    radial-gradient(circle,var(--secondary),transparent 70%);
+
+    bottom:-300px;
+    right:-250px;
+
+    filter:blur(130px);
+
+    opacity:.28;
+
+    z-index:-1;
+
+}
+
+/* INTRO */
 
 .page-intro{
 
@@ -30,27 +136,26 @@
 
     align-items:center;
 
-    z-index:99999;
+    z-index:999999;
 
-    animation:introHide 2.8s forwards;
+    animation:introHide 3s forwards;
 
 }
 
 .page-intro img{
 
-    width:220px;
-
-    height:220px;
-
-    border-radius:50%;
+    width:230px;
+    height:230px;
 
     object-fit:cover;
+
+    border-radius:50%;
 
     border:5px solid rgba(255,255,255,.15);
 
     box-shadow:
     0 0 50px rgba(124,58,237,.6),
-    0 0 100px rgba(6,182,212,.4);
+    0 0 120px rgba(6,182,212,.4);
 
     animation:introZoom 2.5s ease;
 
@@ -61,20 +166,27 @@
     0%{
 
         opacity:0;
-        transform:scale(.4) rotate(-10deg);
+
+        transform:
+        scale(.3)
+        rotate(-15deg);
 
     }
 
     50%{
 
         opacity:1;
-        transform:scale(1.1);
+
+        transform:
+        scale(1.1)
+        rotate(0deg);
 
     }
 
     100%{
 
         opacity:1;
+
         transform:scale(1);
 
     }
@@ -105,93 +217,27 @@
 
 }
 
-/* DIFFERENT PAGE VIBES */
+/* MENU BUTTON */
 
-#home{
-
-    background:
-    radial-gradient(circle at top left,rgba(124,58,237,.12),transparent 40%),
-    radial-gradient(circle at bottom right,rgba(6,182,212,.12),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-#articles{
-
-    background:
-    radial-gradient(circle at top right,rgba(251,191,36,.12),transparent 40%),
-    radial-gradient(circle at bottom left,rgba(239,68,68,.10),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-#education{
-
-    background:
-    radial-gradient(circle at top left,rgba(34,197,94,.12),transparent 40%),
-    radial-gradient(circle at bottom right,rgba(59,130,246,.10),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-#job{
-
-    background:
-    radial-gradient(circle at top left,rgba(249,115,22,.12),transparent 40%),
-    radial-gradient(circle at bottom right,rgba(168,85,247,.10),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-#club{
-
-    background:
-    radial-gradient(circle at top left,rgba(236,72,153,.12),transparent 40%),
-    radial-gradient(circle at bottom right,rgba(14,165,233,.10),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-#about{
-
-    background:
-    radial-gradient(circle at top left,rgba(99,102,241,.12),transparent 40%),
-    radial-gradient(circle at bottom right,rgba(16,185,129,.10),transparent 40%);
-
-    padding:30px;
-    border-radius:40px;
-
-}
-
-/* DESKTOP MENU ICON */
-
-.desktop-menu{
+.menu-btn{
 
     position:fixed;
 
-    top:18px;
-
-    left:18px;
-
-    z-index:3000;
+    top:20px;
+    left:20px;
 
     width:55px;
-
     height:55px;
 
     border:none;
 
-    border-radius:16px;
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--secondary));
 
     color:white;
 
@@ -199,55 +245,297 @@
 
     cursor:pointer;
 
-    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    z-index:99999;
 
-    box-shadow:0 0 30px rgba(124,58,237,.35);
+    box-shadow:
+    0 0 30px rgba(124,58,237,.35);
 
 }
 
-/* ARTICLE COUNTER */
+/* SIDEBAR */
 
-.article-count{
+.sidebar{
+
+    position:fixed;
+
+    top:20px;
+    left:-350px;
+
+    width:310px;
+    height:calc(100vh - 40px);
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(25px);
+
+    border-radius:35px;
+
+    padding:28px;
+
+    overflow:auto;
+
+    z-index:9999;
+
+    transition:.45s;
+
+}
+
+.sidebar.show{
+
+    left:20px;
+
+}
+
+.profile{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+.profile img{
+
+    width:125px;
+    height:125px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.15);
+
+    box-shadow:
+    0 0 40px rgba(124,58,237,.35);
+
+}
+
+.profile h2{
+
+    margin-top:18px;
+
+    font-size:25px;
+
+    font-family:'Syne',sans-serif;
+
+}
+
+.profile p{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+}
+
+.nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.nav a{
+
+    text-decoration:none;
+
+    color:var(--text);
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    transition:.35s;
+
+    font-weight:500;
+
+}
+
+.nav a:hover{
+
+    background:rgba(255,255,255,.06);
+
+    transform:translateX(7px);
+
+}
+
+.theme-btn{
+
+    margin-top:25px;
+
+    width:100%;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--third));
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+/* MAIN */
+
+.main{
+
+    width:100%;
+
+    padding:45px;
+
+}
+
+/* PAGES */
+
+.page{
+
+    display:none;
+
+    animation:fade .5s ease;
+
+}
+
+.page.active{
+
+    display:block;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/* HOME */
+
+#home{
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at top left,rgba(124,58,237,.12),transparent 40%),
+    radial-gradient(circle at bottom right,rgba(6,182,212,.12),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+.hero{
+
+    min-height:85vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:60px;
+
+    flex-wrap:wrap;
+
+}
+
+.hero-img img{
+
+    width:380px;
+
+    border-radius:35px;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+    0 0 50px rgba(124,58,237,.3),
+    0 0 120px rgba(6,182,212,.2);
+
+}
+
+.hero-content{
+
+    flex:1;
+
+    max-width:750px;
+
+}
+
+.hero-content h1{
+
+    font-size:75px;
+
+    line-height:1.1;
+
+    font-family:'Syne',sans-serif;
 
     margin-bottom:25px;
 
-    font-size:16px;
+}
 
-    color:var(--muted);
+.gradient{
 
-    letter-spacing:1px;
+    background:
+    linear-gradient(
+    90deg,
+    #7c3aed,
+    #06b6d4,
+    #3b82f6);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
 
 }
 
-/* ARTICLE NUMBER */
+.hero-content p{
 
-.article-number{
+    font-size:18px;
 
-    display:inline-block;
-
-    margin-bottom:15px;
-
-    font-size:13px;
-
-    letter-spacing:2px;
-
-    color:var(--muted);
+    line-height:2;
 
 }
-
-/* NEW HERO INFO */
 
 .current-box{
 
-    margin-top:30px;
+    margin-top:35px;
 
     background:rgba(255,255,255,.05);
 
     border:1px solid var(--border);
 
-    padding:25px;
+    padding:30px;
 
-    border-radius:25px;
+    border-radius:28px;
 
     line-height:2;
 
@@ -255,31 +543,428 @@
 
 }
 
-/* EMAIL */
+/* SECTION */
 
-.email-box{
+.section-title{
 
-    margin-top:25px;
+    font-size:58px;
+
+    margin-bottom:35px;
+
+    font-family:'Syne',sans-serif;
+
+}
+
+/* ARTICLES */
+
+#articles{
+
+    background:
+    radial-gradient(circle at top right,rgba(251,191,36,.12),transparent 40%),
+    radial-gradient(circle at bottom left,rgba(239,68,68,.10),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+.article-layout{
+
+    display:grid;
+
+    grid-template-columns:320px 1fr;
+
+    gap:30px;
+
+}
+
+.article-sidebar{
+
+    position:sticky;
+
+    top:20px;
+
+    height:calc(100vh - 40px);
+
+    overflow:auto;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    padding:25px;
+
+    backdrop-filter:blur(20px);
+
+}
+
+.article-sidebar h3{
+
+    margin-bottom:20px;
+
+    font-size:30px;
+
+    font-family:'Syne',sans-serif;
+
+}
+
+.article-sidebar a{
+
+    display:block;
+
+    text-decoration:none;
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+    padding:12px;
+
+    border-radius:14px;
+
+    transition:.3s;
+
+}
+
+.article-sidebar a:hover{
+
+    background:rgba(255,255,255,.06);
+
+    transform:translateX(5px);
+
+}
+
+.article-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:35px;
+
+    padding:35px;
+
+    margin-bottom:30px;
+
+    backdrop-filter:blur(20px);
+
+}
+
+.article-number{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+}
+
+.article-card h2{
+
+    font-size:34px;
+
+    margin:15px 0;
+
+    font-family:'Syne',sans-serif;
+
+}
+
+.article-card p{
+
+    line-height:2.1;
+
+    margin-bottom:25px;
+
+}
+
+.read-btn{
 
     display:inline-block;
 
-    padding:16px 24px;
+    padding:14px 24px;
 
-    border-radius:18px;
+    border-radius:16px;
 
-    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    text-decoration:none;
 
     color:white;
 
-    text-decoration:none;
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--third));
 
     font-weight:600;
 
 }
 
+/* EDUCATION */
 
+#education{
 
-/* ===================== ADD THIS AFTER BODY TAG ===================== */
+    background:
+    radial-gradient(circle at top left,rgba(34,197,94,.12),transparent 40%),
+    radial-gradient(circle at bottom right,rgba(59,130,246,.10),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+/* JOB */
+
+#job{
+
+    background:
+    radial-gradient(circle at top left,rgba(249,115,22,.12),transparent 40%),
+    radial-gradient(circle at bottom right,rgba(168,85,247,.10),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+/* CLUB */
+
+#club{
+
+    background:
+    radial-gradient(circle at top left,rgba(236,72,153,.12),transparent 40%),
+    radial-gradient(circle at bottom right,rgba(14,165,233,.10),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+/* ABOUT */
+
+#about{
+
+    background:
+    radial-gradient(circle at top left,rgba(99,102,241,.12),transparent 40%),
+    radial-gradient(circle at bottom right,rgba(16,185,129,.10),transparent 40%);
+
+    border-radius:40px;
+
+    padding:40px;
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
+}
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    padding:30px;
+
+    backdrop-filter:blur(20px);
+
+    transition:.35s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card img{
+
+    width:75px;
+    height:75px;
+
+    object-fit:contain;
+
+    margin-bottom:20px;
+
+}
+
+.card h3{
+
+    font-size:26px;
+
+    margin-bottom:10px;
+
+    font-family:'Syne',sans-serif;
+
+}
+
+.card p{
+
+    line-height:1.9;
+
+}
+
+.about-box{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:35px;
+
+    padding:40px;
+
+    line-height:2.2;
+
+    backdrop-filter:blur(20px);
+
+}
+
+.email-box{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:15px 24px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--secondary));
+
+    text-decoration:none;
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+/* FOOTER */
+
+footer{
+
+    text-align:center;
+
+    padding:60px 20px;
+
+}
+
+.socials{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+    margin-top:25px;
+
+}
+
+.socials a{
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:14px 24px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary),
+    var(--third));
+
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+    .article-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .article-sidebar{
+
+        position:relative;
+
+        height:auto;
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .main{
+
+        padding:25px;
+        padding-top:90px;
+
+    }
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .hero-img img{
+
+        width:100%;
+        max-width:340px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:48px;
+
+    }
+
+    .section-title{
+
+        font-size:42px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- INTRO -->
 
 <div class="page-intro">
 
@@ -287,184 +972,466 @@
 
 </div>
 
+<!-- MENU BUTTON -->
 
-
-<!-- ===================== REPLACE HERO CONTENT ===================== -->
-
-<div class="hero-content">
-
-    <h1>
-
-        Md. Minhazur
-        <span class="gradient">
-            Rahman Mahim
-        </span>
-
-    </h1>
-
-    <p>
-
-        Welcome to my official portfolio website.
-        This platform represents my writings,
-        educational journey, professional experiences,
-        leadership activities and achievements.
-
-    </p>
-
-    <div class="current-box">
-
-        <strong>
-            Currently:
-        </strong>
-
-        <br><br>
-
-        • Studying at the Biomedical Engineering Department,
-        Islamic University, Bangladesh.
-
-        <br><br>
-
-        • Working as the Islamic University Correspondent
-        at
-
-        <a
-        href="https://dainikamadershomoy.com"
-        target="_blank"
-        style="color:#60a5fa;text-decoration:none;font-weight:600;">
-            Daily Amader Shomoy
-        </a>
-
-    </div>
-
-</div>
-
-
-
-<!-- ===================== ARTICLES SECTION ===================== -->
-
-<h1 class="section-title">
-    Bengali Articles
-</h1>
-
-<div class="article-count">
-
-    Total Articles: 29
-
-</div>
-
-
-
-<!-- ===================== ARTICLE FORMAT ===================== -->
-
-<div class="article-card" id="a1">
-
-    <span class="article-number">
-
-        ARTICLE 01
-
-    </span>
-
-    <h2>
-
-        পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা
-
-    </h2>
-
-    <p>
-
-        এখানে তোমার পুরো article বসাবে...
-
-    </p>
-
-    <a href="#" class="read-btn">
-
-        Read at Daily Karatoa
-
-    </a>
-
-</div>
-
-
-
-<!-- ===================== 29 ARTICLE SLOT ===================== -->
-
-<!-- a1 থেকে a29 পর্যন্ত বানাবে -->
-
-<div class="article-card" id="a29">
-
-    <span class="article-number">
-
-        ARTICLE 29
-
-    </span>
-
-    <h2>
-
-        তোমার 29 নম্বর লেখার শিরোনাম
-
-    </h2>
-
-    <p>
-
-        এখানে article বসবে...
-
-    </p>
-
-    <a href="#" class="read-btn">
-
-        Read at Newspaper
-
-    </a>
-
-</div>
-
-
-
-<!-- ===================== ABOUT ME REPLACE ===================== -->
-
-<div class="about-box">
-
-    <p>
-
-        I am Md. Minhazur Rahman Mahim.
-
-        Currently residing at Islamic University,
-        Kushtia, Bangladesh.
-
-        I am passionate about writing,
-        leadership, education, journalism,
-        research and social impact.
-
-        I continuously try to contribute
-        positively through creativity,
-        teamwork and meaningful initiatives.
-
-    </p>
-
-    <a
-    href="mailto:mdminhazur44rahman@gmail.com"
-    class="email-box">
-
-        Contact Me At Email
-
-    </a>
-
-</div>
-
-
-
-<!-- ===================== REPLACE MENU BUTTON ===================== -->
-
-<button class="desktop-menu" onclick="toggleMenu()">
+<button class="menu-btn" onclick="toggleMenu()">
 
 ☰
 
 </button>
 
+<!-- SIDEBAR -->
 
+<div class="sidebar" id="sidebar">
 
-<!-- ===================== DELETE OLD MOBILE MENU BUTTON ===================== -->
+    <div class="profile">
 
-<!-- এইটা delete করবে -->
+        <img src="images/profile.jpg">
 
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <h2>
+            Md. Minhazur Rahman Mahim
+        </h2>
+
+        <p>
+            Writer • Journalist • Student
+        </p>
+
+    </div>
+
+    <div class="nav">
+
+        <a href="#" onclick="showPage('home')">
+            Home
+        </a>
+
+        <a href="#" onclick="showPage('articles')">
+            Bengali Articles
+        </a>
+
+        <a href="#" onclick="showPage('education')">
+            Education
+        </a>
+
+        <a href="#" onclick="showPage('job')">
+            Job Experience
+        </a>
+
+        <a href="#" onclick="showPage('club')">
+            Clubbing Experience
+        </a>
+
+        <a href="#" onclick="showPage('about')">
+            About Me
+        </a>
+
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()">
+
+        Toggle Theme
+
+    </button>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- HOME -->
+
+<div class="page active" id="home">
+
+<div class="hero">
+
+<div class="hero-img">
+
+<img src="images/profile.jpg">
+
+</div>
+
+<div class="hero-content">
+
+<h1>
+
+Md. Minhazur
+<span class="gradient">
+Rahman Mahim
+</span>
+
+</h1>
+
+<p>
+
+Welcome to my official portfolio website.
+This platform represents my writings,
+educational journey, journalism,
+professional experiences and leadership activities.
+
+</p>
+
+<div class="current-box">
+
+<strong>
+Currently:
+</strong>
+
+<br><br>
+
+• Studying at the Biomedical Engineering Department,
+Islamic University, Bangladesh.
+
+<br><br>
+
+• Working as the Islamic University Correspondent at
+
+<a
+href="https://dainikamadershomoy.com"
+target="_blank"
+style="color:#60a5fa;text-decoration:none;font-weight:600;">
+
+Daily Amader Shomoy
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ARTICLES -->
+
+<div class="page" id="articles">
+
+<h1 class="section-title">
+
+Bengali Articles
+
+</h1>
+
+<div class="article-layout">
+
+<!-- CONTENTS -->
+
+<div class="article-sidebar">
+
+<h3>
+Contents
+</h3>
+
+<a href="#a1">01. Article Title</a>
+<a href="#a2">02. Article Title</a>
+<a href="#a3">03. Article Title</a>
+<a href="#a4">04. Article Title</a>
+<a href="#a5">05. Article Title</a>
+<a href="#a6">06. Article Title</a>
+<a href="#a7">07. Article Title</a>
+<a href="#a8">08. Article Title</a>
+<a href="#a9">09. Article Title</a>
+<a href="#a10">10. Article Title</a>
+<a href="#a11">11. Article Title</a>
+<a href="#a12">12. Article Title</a>
+<a href="#a13">13. Article Title</a>
+<a href="#a14">14. Article Title</a>
+<a href="#a15">15. Article Title</a>
+<a href="#a16">16. Article Title</a>
+<a href="#a17">17. Article Title</a>
+<a href="#a18">18. Article Title</a>
+<a href="#a19">19. Article Title</a>
+<a href="#a20">20. Article Title</a>
+<a href="#a21">21. Article Title</a>
+<a href="#a22">22. Article Title</a>
+<a href="#a23">23. Article Title</a>
+<a href="#a24">24. Article Title</a>
+<a href="#a25">25. Article Title</a>
+<a href="#a26">26. Article Title</a>
+<a href="#a27">27. Article Title</a>
+<a href="#a28">28. Article Title</a>
+<a href="#a29">29. Article Title</a>
+
+</div>
+
+<!-- ARTICLES -->
+
+<div>
+
+<!-- ARTICLE TEMPLATE -->
+
+<div class="article-card" id="a1">
+
+<span class="article-number">
+
+ARTICLE 01
+
+</span>
+
+<h2>
+
+Your Article Title
+
+</h2>
+
+<p>
+
+Paste your article here...
+
+</p>
+
+<a href="#" class="read-btn">
+
+Read At Newspaper
+
+</a>
+
+</div>
+
+<!-- COPY THIS CARD UNTIL ARTICLE 29 -->
+
+</div>
+
+</div>
+
+</div>
+
+<!-- EDUCATION -->
+
+<div class="page" id="education">
+
+<h1 class="section-title">
+
+Education
+
+</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<img src="images/edu1.png">
+
+<h3>
+
+Islamic University
+
+</h3>
+
+<p>
+
+Biomedical Engineering Department
+
+</p>
+
+</div>
+
+<div class="card">
+
+<img src="images/edu2.png">
+
+<h3>
+
+Your College
+
+</h3>
+
+<p>
+
+Higher Secondary Education
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- JOB -->
+
+<div class="page" id="job">
+
+<h1 class="section-title">
+
+Job Experience
+
+</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<img src="images/job1.png">
+
+<h3>
+
+Daily Amader Shomoy
+
+</h3>
+
+<p>
+
+Islamic University Correspondent
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CLUB -->
+
+<div class="page" id="club">
+
+<h1 class="section-title">
+
+Clubbing Experience
+
+</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<img src="images/club1.png">
+
+<h3>
+
+Club Name
+
+</h3>
+
+<p>
+
+Leadership / Member
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ABOUT -->
+
+<div class="page" id="about">
+
+<h1 class="section-title">
+
+About Me
+
+</h1>
+
+<div class="about-box">
+
+<p>
+
+I am Md. Minhazur Rahman Mahim.
+
+Currently residing at Islamic University,
+Kushtia, Bangladesh.
+
+I am passionate about writing,
+education, journalism, research,
+leadership and social impact.
+
+I continuously try to contribute positively
+through creativity, teamwork
+and meaningful initiatives.
+
+</p>
+
+<a
+href="mailto:mdminhazur44rahman@gmail.com"
+class="email-box">
+
+Contact Me At Email
+
+</a>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+
+© 2026 Md. Minhazur Rahman Mahim.
+All Rights Reserved.
+
+</p>
+
+<div class="socials">
+
+<a href="https://facebook.com/mdminhazur44rahman" target="_blank">
+
+Facebook
+
+</a>
+
+<a href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">
+
+Instagram
+
+</a>
+
+<a href="https://linkedin.com/in/mdminhazur44rahman" target="_blank">
+
+LinkedIn
+
+</a>
+
+</div>
+
+</footer>
+
+</div>
+
+<script>
+
+function showPage(pageId){
+
+    let pages=document.querySelectorAll('.page');
+
+    pages.forEach(page=>{
+
+        page.classList.remove('active');
+
+    });
+
+    document.getElementById(pageId).classList.add('active');
+
+    window.scrollTo(0,0);
+
+    if(window.innerWidth < 900){
+
+        document.getElementById('sidebar').classList.remove('show');
+
+    }
+
+}
+
+function toggleTheme(){
+
+    document.body.classList.toggle('light');
+
+}
+
+function toggleMenu(){
+
+    document.getElementById('sidebar').classList.toggle('show');
+
+}
+
+</script>
+
+</body>
+
+</html>
