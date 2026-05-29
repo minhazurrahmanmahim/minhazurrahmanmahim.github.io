@@ -1,39 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md. Minhazur Rahman Mahim | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #ffffff; --text: #333; --sidebar: #f4f4f4; --accent: #007bff; }
-        .dark { --bg: #1a1a1a; --text: #f0f0f0; --sidebar: #252525; --accent: #4da3ff; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); display: flex; transition: 0.3s; }
+        :root { --bg: #fbfaf7; --text: #1a1a1a; --sidebar: #ffffff; --accent: #2c3e50; }
+        .dark { --bg: #121212; --text: #f5f5f5; --sidebar: #1e1e1e; --accent: #e0e0e0; }
+
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; }
         
-        #sidebar { width: 250px; height: 100vh; background: var(--sidebar); position: fixed; padding: 20px; transition: 0.3s; }
-        main { margin-left: 250px; padding: 40px; width: 100%; }
+        /* Sidebar */
+        #sidebar { width: 280px; height: 100vh; background: var(--sidebar); position: fixed; left: -280px; transition: 0.3s; padding: 20px; border-right: 1px solid #ccc; z-index: 1000; }
+        #sidebar.active { left: 0; }
+        .menu-icon { position: fixed; top: 20px; left: 20px; cursor: pointer; font-size: 24px; z-index: 1001; }
         
-        .card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
-        .btn { display: inline-block; padding: 8px 12px; background: var(--accent); color: white; text-decoration: none; border-radius: 4px; margin-top: 10px; }
+        main { padding: 50px; max-width: 900px; margin: auto; }
+        .card { border: 1px solid #ddd; padding: 20px; margin: 15px 0; border-radius: 8px; }
         
-        @media (max-width: 768px) { #sidebar { display: none; } main { margin-left: 0; } }
+        .footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #ccc; }
+        .socials a { font-size: 20px; margin: 0 10px; color: var(--text); text-decoration: none; }
     </style>
 </head>
 <body>
 
+<div class="menu-icon" onclick="toggleSidebar()">☰</div>
+
 <div id="sidebar">
-    <h3>Mahim</h3>
-    <ul style="list-style:none; padding:0;">
-        <li><button onclick="show('home')">Home</button></li>
-        <li><button onclick="show('articles')">Articles</button></li>
-    </ul>
     <button onclick="toggleTheme()">Dark/Light Mode</button>
+    <ul style="list-style:none; padding:0; margin-top:20px;">
+        <li><a href="#" onclick="show('home')">Home</a></li>
+        <li><a href="#" onclick="show('articles')">Bengali Articles (29)</a></li>
+    </ul>
 </div>
 
 <main id="content">
     <section id="home">
         <h1>Md. Minhazur Rahman Mahim</h1>
-        <p>Biomedical Engineering Student at Islamic University, Kushtia. Passionate researcher, journalist, and social advocate.</p>
+        <p>Biomedical Engineering Student | Researcher | Journalist</p>
+        <div class="card">
+            <h3>Summary</h3>
+            <p>I am a B.Sc. student at Islamic University. Passionate about research, innovation, and media.</p>
+        </div>
     </section>
 
     <section id="articles" style="display:none;">
@@ -42,12 +51,14 @@
     </section>
 </main>
 
-<footer>
-    <p>&copy; 2026 Md. Minhazur Rahman Mahim</p>
-    <a href="https://facebook.com/mdminhazur44rahman">Facebook</a> |
-    <a href="https://instagram.com/mdminhazurrahmanmahim">Instagram</a> |
-    <a href="https://linkedin.com/in/mdminhazur44rahman">LinkedIn</a>
-</footer>
+<div class="footer">
+    <p>&copy; 2026 Md. Minhazur Rahman Mahim. All rights reserved.</p>
+    <div class="socials">
+        <a href="https://facebook.com/mdminhazur44rahman"><i class="fab fa-facebook"></i></a>
+        <a href="https://instagram.com/mdminhazurrahmanmahim"><i class="fab fa-instagram"></i></a>
+        <a href="https://linkedin.com/in/mdminhazur44rahman"><i class="fab fa-linkedin"></i></a>
+    </div>
+</div>
 
 <script>
     const articles = [
@@ -65,15 +76,16 @@
 
     const list = document.getElementById('article-list');
     articles.forEach(title => {
-        list.innerHTML += `<div class="card"><h3>${title}</h3><a href="#" class="btn">Read Here</a></div>`;
+        list.innerHTML += `<div class="card"><h3>${title}</h3><a href="YOUR_LINK_HERE" target="_blank">Read Here</a></div>`;
     });
 
     function show(id) {
         document.getElementById('home').style.display = id === 'home' ? 'block' : 'none';
         document.getElementById('articles').style.display = id === 'articles' ? 'block' : 'none';
+        document.getElementById('sidebar').classList.remove('active');
     }
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
     function toggleTheme() { document.body.classList.toggle('dark'); }
 </script>
-
 </body>
 </html>
