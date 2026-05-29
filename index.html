@@ -1,531 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minhazur Rahman Mahim</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Minhazur Rahman Mahim</title>
 
-  <style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      scroll-behavior:smooth;
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#111827;
+    --sidebar:#0f172a;
+    --hover:#2563eb;
+    --shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+body.dark{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --text:#f1f5f9;
+    --sidebar:#020617;
+    --hover:#60a5fa;
+    --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    transition:.3s;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    background:var(--sidebar);
+    padding:30px 20px;
+    overflow:auto;
+    z-index:1000;
+}
+
+.profile{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.profile img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid white;
+}
+
+.profile h2{
+    color:white;
+    margin-top:15px;
+    font-size:22px;
+}
+
+.profile p{
+    color:#cbd5e1;
+    margin-top:6px;
+    font-size:14px;
+}
+
+.sidebar-links{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.sidebar-links a{
+    text-decoration:none;
+    color:white;
+    padding:14px;
+    border-radius:12px;
+    transition:.3s;
+    font-size:15px;
+}
+
+.sidebar-links a:hover{
+    background:rgba(255,255,255,0.1);
+    transform:translateX(5px);
+}
+
+.theme-btn{
+    margin-top:25px;
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    background:white;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.theme-btn:hover{
+    transform:scale(1.03);
+}
+
+/* MAIN */
+
+.main{
+    margin-left:270px;
+    width:100%;
+    padding:50px;
+}
+
+/* SECTIONS */
+
+.page{
+    display:none;
+    animation:fade .5s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
     }
-
-    :root{
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --text:#111827;
-      --sidebar:#0f172a;
-      --hover:#2563eb;
-      --shadow:0 10px 30px rgba(0,0,0,0.08);
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
+}
 
-    body.dark{
-      --bg:#0f172a;
-      --card:#1e293b;
-      --text:#f1f5f9;
-      --sidebar:#020617;
-      --hover:#60a5fa;
-      --shadow:0 10px 30px rgba(0,0,0,0.4);
-    }
+.section-title{
+    font-size:40px;
+    margin-bottom:30px;
+    font-weight:700;
+}
 
-    body{
-      font-family:'Poppins',sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      display:flex;
-      transition:.3s;
-    }
+/* HOME */
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+    gap:50px;
+    flex-wrap:wrap;
+}
+
+.hero img{
+    width:340px;
+    border-radius:25px;
+    box-shadow:var(--shadow);
+}
+
+.hero-content{
+    flex:1;
+}
+
+.hero-content h1{
+    font-size:55px;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:18px;
+    line-height:1.9;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:var(--card);
+    padding:25px;
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-size:22px;
+}
+
+.card p{
+    line-height:1.8;
+}
+
+/* ARTICLES */
+
+.article-card{
+    background:var(--card);
+    padding:30px;
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    margin-bottom:30px;
+    transition:.3s;
+}
+
+.article-card:hover{
+    transform:translateY(-6px);
+}
+
+.article-card h3{
+    margin-bottom:15px;
+    font-size:26px;
+}
+
+.article-card p{
+    line-height:1.9;
+    margin-bottom:20px;
+}
+
+.read-btn{
+    display:inline-block;
+    background:var(--hover);
+    color:white;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.read-btn:hover{
+    opacity:.9;
+}
+
+/* ABOUT */
+
+.about-box{
+    background:var(--card);
+    padding:35px;
+    border-radius:25px;
+    line-height:2;
+    box-shadow:var(--shadow);
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:80px;
+    text-align:center;
+    padding:40px 20px;
+}
+
+.socials{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.socials a{
+    text-decoration:none;
+    background:var(--hover);
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+}
+
+/* MOBILE */
+
+.menu-btn{
+    display:none;
+}
+
+@media(max-width:900px){
 
     .sidebar{
-      width:260px;
-      background:var(--sidebar);
-      height:100vh;
-      position:fixed;
-      left:0;
-      top:0;
-      padding:30px 20px;
-      overflow:auto;
+        left:-100%;
+        transition:.4s;
     }
 
-    .profile{
-      text-align:center;
-      margin-bottom:30px;
+    .sidebar.show{
+        left:0;
     }
 
-    .profile img{
-      width:120px;
-      height:120px;
-      object-fit:cover;
-      border-radius:50%;
-      border:4px solid white;
-    }
-
-    .profile h2{
-      color:white;
-      margin-top:15px;
-      font-size:22px;
-    }
-
-    .profile p{
-      color:#cbd5e1;
-      font-size:14px;
-    }
-
-    .nav-links{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .nav-links a{
-      text-decoration:none;
-      color:white;
-      padding:14px;
-      border-radius:12px;
-      transition:.3s;
-      font-size:15px;
-    }
-
-    .nav-links a:hover{
-      background:rgba(255,255,255,0.1);
-      transform:translateX(5px);
-    }
-
-    .theme-btn{
-      margin-top:25px;
-      width:100%;
-      border:none;
-      padding:14px;
-      border-radius:12px;
-      background:white;
-      cursor:pointer;
-      font-weight:600;
+    .menu-btn{
+        display:block;
+        position:fixed;
+        top:15px;
+        left:15px;
+        z-index:2000;
+        background:var(--hover);
+        color:white;
+        border:none;
+        padding:12px 15px;
+        border-radius:10px;
+        font-size:20px;
     }
 
     .main{
-      margin-left:260px;
-      width:100%;
-      padding:40px;
-    }
-
-    section{
-      margin-bottom:80px;
-    }
-
-    .section-title{
-      font-size:34px;
-      margin-bottom:25px;
-      font-weight:700;
+        margin-left:0;
+        padding:20px;
+        padding-top:80px;
     }
 
     .hero{
-      display:flex;
-      align-items:center;
-      gap:40px;
-      flex-wrap:wrap;
-      min-height:90vh;
+        flex-direction:column;
+        text-align:center;
     }
 
     .hero img{
-      width:320px;
-      border-radius:25px;
-      box-shadow:var(--shadow);
-    }
-
-    .hero-content{
-      flex:1;
+        width:100%;
+        max-width:320px;
     }
 
     .hero-content h1{
-      font-size:52px;
-      margin-bottom:15px;
+        font-size:40px;
     }
 
-    .hero-content p{
-      font-size:18px;
-      line-height:1.8;
-      opacity:.9;
-    }
+}
 
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:25px;
-    }
-
-    .card{
-      background:var(--card);
-      padding:25px;
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      transition:.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-8px);
-    }
-
-    .card img{
-      width:70px;
-      height:70px;
-      object-fit:contain;
-      margin-bottom:15px;
-    }
-
-    .card h3{
-      margin-bottom:10px;
-      font-size:22px;
-    }
-
-    .article-card{
-      background:var(--card);
-      padding:30px;
-      border-radius:24px;
-      margin-bottom:25px;
-      box-shadow:var(--shadow);
-      transition:.3s;
-    }
-
-    .article-card:hover{
-      transform:translateY(-5px);
-    }
-
-    .article-card h3{
-      margin-bottom:12px;
-      font-size:24px;
-    }
-
-    .article-card p{
-      line-height:1.9;
-      margin-bottom:18px;
-    }
-
-    .read-btn{
-      display:inline-block;
-      padding:12px 22px;
-      background:var(--hover);
-      color:white;
-      text-decoration:none;
-      border-radius:10px;
-      transition:.3s;
-    }
-
-    .read-btn:hover{
-      opacity:.9;
-    }
-
-    .about-box{
-      background:var(--card);
-      padding:35px;
-      border-radius:24px;
-      line-height:2;
-      box-shadow:var(--shadow);
-    }
-
-    footer{
-      margin-top:60px;
-      text-align:center;
-      padding:40px 20px;
-    }
-
-    .socials{
-      margin-top:20px;
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .socials a{
-      text-decoration:none;
-      color:white;
-      background:var(--hover);
-      padding:12px 18px;
-      border-radius:10px;
-    }
-
-    @media(max-width:900px){
-
-      body{
-        flex-direction:column;
-      }
-
-      .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-      }
-
-      .main{
-        margin-left:0;
-        padding:20px;
-      }
-
-      .hero{
-        flex-direction:column;
-        text-align:center;
-      }
-
-      .hero img{
-        width:100%;
-        max-width:320px;
-      }
-
-      .hero-content h1{
-        font-size:38px;
-      }
-
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="sidebar">
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
 
     <div class="profile">
 
-      <img src="images/profile.jpg" alt="Profile">
+        <img src="images/profile.jpg" alt="Profile">
 
-      <h2>Minhazur Rahman Mahim</h2>
+        <h2>Minhazur Rahman Mahim</h2>
 
-      <p>Writer | Student | Research Enthusiast</p>
+        <p>Writer | Student | Research Enthusiast</p>
 
     </div>
 
-    <div class="nav-links">
+    <div class="sidebar-links">
 
-      <a href="#home">🏠 Home</a>
-      <a href="#articles">📝 Bengali Articles</a>
-      <a href="#education">🎓 Education</a>
-      <a href="#job">💼 Job Experience</a>
-      <a href="#club">🤝 Clubbing Experience</a>
-      <a href="#about">👨 About Me</a>
+        <a href="#" onclick="showPage('home')">🏠 Home</a>
+
+        <a href="#" onclick="showPage('articles')">📝 Bengali Articles</a>
+
+        <a href="#" onclick="showPage('education')">🎓 Education</a>
+
+        <a href="#" onclick="showPage('job')">💼 Job Experience</a>
+
+        <a href="#" onclick="showPage('club')">🤝 Clubbing Experience</a>
+
+        <a href="#" onclick="showPage('about')">👨 About Me</a>
 
     </div>
 
     <button class="theme-btn" onclick="toggleTheme()">
-      🌙 Dark / Light
+        🌙 Dark / Light
     </button>
 
-  </div>
+</div>
 
-  <div class="main">
+<!-- MAIN -->
+
+<div class="main">
 
     <!-- HOME -->
 
-    <section id="home">
+    <div class="page active" id="home">
 
-      <div class="hero">
+        <div class="hero">
 
-        <img src="images/profile.jpg" alt="Profile">
+            <img src="images/profile.jpg">
 
-        <div class="hero-content">
+            <div class="hero-content">
 
-          <h1>Welcome!</h1>
+                <h1>Welcome!</h1>
 
-          <p>
-            I am Md. Minhazur Rahman Mahim. 
-            Passionate about writing, education, research, leadership and social activities. 
-            This portfolio showcases my articles, educational journey, experiences and achievements.
-          </p>
+                <p>
+                    I am Md. Minhazur Rahman Mahim.
+                    Passionate about writing, leadership, education, research and social development.
+                    This website showcases my articles, educational journey, experiences and achievements.
+                </p>
+
+            </div>
 
         </div>
 
-      </div>
-
-    </section>
+    </div>
 
     <!-- ARTICLES -->
 
-    <section id="articles">
+    <div class="page" id="articles">
 
-      <h2 class="section-title">Bengali Articles</h2>
+        <h2 class="section-title">Bengali Articles</h2>
 
-      <!-- ARTICLE -->
+        <!-- ARTICLE 1 -->
 
-      <div class="article-card">
+        <div class="article-card">
 
-        <h3>পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা</h3>
+            <h3>পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা</h3>
 
-        <p>
-          আমাদের সমাজে পেশার দিক দিয়ে বিবেচনা করতে গেলে সবচেয়ে সম্মানজনক পেশা ধরা হয় শিক্ষকতাকে...
-        </p>
+            <p>
+                এখানে তোমার পুরো article বসাবে...
+            </p>
 
-        <a href="#" class="read-btn">
-          Read at Daily Karatoa
-        </a>
+            <a href="#" class="read-btn">
+                Read at Daily Karatoa
+            </a>
 
-      </div>
+        </div>
 
-      <div class="article-card">
+        <!-- ARTICLE 2 -->
 
-        <h3>পশ্চাদপদ মানসিকতা পরিহার করুন</h3>
+        <div class="article-card">
 
-        <p>
-          কোনো ব্যক্তির চিন্তা-ভাবনা, মতাদর্শ, বিশ্বাস স্থাপনের জায়গা অনুযায়ী তার মানসিকতা প্রকাশ পায়...
-        </p>
+            <h3>পশ্চাদপদ মানসিকতা পরিহার করুন</h3>
 
-        <a href="#" class="read-btn">
-          Read at Daily Jai Jai Din
-        </a>
+            <p>
+                এখানে তোমার পুরো article বসাবে...
+            </p>
 
-      </div>
+            <a href="#" class="read-btn">
+                Read at Daily Jai Jai Din
+            </a>
 
-      <div class="article-card">
+        </div>
 
-        <h3>বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত</h3>
+        <!-- ARTICLE 3 -->
 
-        <p>
-          প্রতিটি বিশ্ববিদ্যালয়ের শৃঙ্খলা, ভ্রাতৃত্ব ও নিয়মনীতি বজায় রাখতে সিনিয়র-জুনিয়র সম্পর্ক সুন্দর হওয়া জরুরি...
-        </p>
+        <div class="article-card">
 
-        <a href="#" class="read-btn">
-          Read at Daily Share Biz
-        </a>
+            <h3>বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত</h3>
 
-      </div>
+            <p>
+                এখানে তোমার পুরো article বসাবে...
+            </p>
 
-      <!-- বাকিগুলো একইভাবে Add করবে -->
+            <a href="#" class="read-btn">
+                Read at Daily Share Biz
+            </a>
 
-    </section>
+        </div>
+
+        <!-- এভাবে 29টা article add করবে -->
+
+    </div>
 
     <!-- EDUCATION -->
 
-    <section id="education">
+    <div class="page" id="education">
 
-      <h2 class="section-title">Education</h2>
+        <h2 class="section-title">Education</h2>
 
-      <div class="cards">
+        <div class="cards">
 
-        <div class="card">
+            <div class="card">
 
-          <img src="images/edu1.png">
+                <img src="images/edu1.png">
 
-          <h3>Islamic University</h3>
+                <h3>Islamic University</h3>
 
-          <p>BME Department</p>
+                <p>BME Department</p>
+
+            </div>
+
+            <div class="card">
+
+                <img src="images/edu2.png">
+
+                <h3>Your College Name</h3>
+
+                <p>Higher Secondary Education</p>
+
+            </div>
 
         </div>
 
-        <div class="card">
-
-          <img src="images/edu2.png">
-
-          <h3>Your College Name</h3>
-
-          <p>Higher Secondary Education</p>
-
-        </div>
-
-      </div>
-
-    </section>
+    </div>
 
     <!-- JOB -->
 
-    <section id="job">
+    <div class="page" id="job">
 
-      <h2 class="section-title">Job Experience</h2>
+        <h2 class="section-title">Job Experience</h2>
 
-      <div class="cards">
+        <div class="cards">
 
-        <div class="card">
+            <div class="card">
 
-          <img src="images/job1.png">
+                <img src="images/job1.png">
 
-          <h3>Organization Name</h3>
+                <h3>Organization Name</h3>
 
-          <p>Your Position</p>
+                <p>Your Position</p>
+
+            </div>
 
         </div>
 
-      </div>
-
-    </section>
+    </div>
 
     <!-- CLUB -->
 
-    <section id="club">
+    <div class="page" id="club">
 
-      <h2 class="section-title">Clubbing Experience</h2>
+        <h2 class="section-title">Clubbing Experience</h2>
 
-      <div class="cards">
+        <div class="cards">
 
-        <div class="card">
+            <div class="card">
 
-          <img src="images/club1.png">
+                <img src="images/club1.png">
 
-          <h3>Club Name</h3>
+                <h3>Club Name</h3>
 
-          <p>Leadership / Member</p>
+                <p>Leadership / Member</p>
+
+            </div>
 
         </div>
 
-      </div>
-
-    </section>
+    </div>
 
     <!-- ABOUT -->
 
-    <section id="about">
+    <div class="page" id="about">
 
-      <h2 class="section-title">About Me</h2>
+        <h2 class="section-title">About Me</h2>
 
-      <div class="about-box">
+        <div class="about-box">
 
-        <p>
-          I am passionate about writing articles, research activities, leadership, education and social development.
-          I always try to contribute positively through creativity, knowledge and teamwork.
-        </p>
+            <p>
+                I am passionate about writing articles, leadership activities, education, research and social development.
+                I always try to contribute positively through creativity, knowledge and teamwork.
+            </p>
 
-      </div>
+        </div>
 
-    </section>
+    </div>
 
     <!-- FOOTER -->
 
     <footer>
 
-      <p>
-        © 2026 Minhazur Rahman Mahim. All Rights Reserved.
-      </p>
+        <p>
+            © 2026 Minhazur Rahman Mahim. All Rights Reserved.
+        </p>
 
-      <div class="socials">
+        <div class="socials">
 
-        <a href="https://facebook.com/mdminhazur44rahman" target="_blank">
-          Facebook
-        </a>
+            <a href="https://facebook.com/mdminhazur44rahman" target="_blank">
+                Facebook
+            </a>
 
-        <a href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">
-          Instagram
-        </a>
+            <a href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">
+                Instagram
+            </a>
 
-        <a href="https://linkedin.com/in/mdminhazur44rahman" target="_blank">
-          LinkedIn
-        </a>
+            <a href="https://linkedin.com/in/mdminhazur44rahman" target="_blank">
+                LinkedIn
+            </a>
 
-      </div>
+        </div>
 
     </footer>
 
-  </div>
+</div>
 
-  <script>
+<script>
 
-    function toggleTheme(){
-      document.body.classList.toggle("dark");
+function showPage(pageId){
+
+    let pages = document.querySelectorAll('.page');
+
+    pages.forEach(page=>{
+        page.classList.remove('active');
+    });
+
+    document.getElementById(pageId).classList.add('active');
+
+    if(window.innerWidth < 900){
+        document.getElementById('sidebar').classList.remove('show');
     }
 
-  </script>
+}
+
+function toggleTheme(){
+    document.body.classList.toggle('dark');
+}
+
+function toggleMenu(){
+    document.getElementById('sidebar').classList.toggle('show');
+}
+
+</script>
 
 </body>
 </html>
