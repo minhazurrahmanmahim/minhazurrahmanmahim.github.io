@@ -13,28 +13,26 @@
             --bg-color: #fbfaf7;
             --text-main: #1a1a1a;
             --text-muted: #606060;
-            --accent: #2c3e50;
             --border-color: #e6e1da;
             --card-bg: #ffffff;
             --card-hover: #f5f2eb;
+            --nav-active: #1a1a1a;
         }
 
-        /* Dark Mode Colors */
         [data-theme="dark"] {
             --bg-color: #121212;
             --text-main: #f5f5f5;
             --text-muted: #a0a0a0;
-            --accent: #e0e0e0;
             --border-color: #2c2c2c;
             --card-bg: #1e1e1e;
             --card-hover: #252525;
+            --nav-active: #ffffff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth;
         }
 
         body {
@@ -51,7 +49,7 @@
             padding: 0 25px;
         }
 
-        /* Sticky Navigation */
+        /* Sticky Navigation & Dropdown */
         nav {
             position: sticky;
             top: 0;
@@ -80,7 +78,12 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        nav ul li {
+            position: relative;
         }
 
         nav ul li a {
@@ -88,14 +91,44 @@
             color: var(--text-muted);
             font-size: 0.95rem;
             font-weight: 400;
-            transition: color 0.3s;
+            cursor: pointer;
+            padding: 8px 12px;
+            transition: all 0.3s;
+            border-radius: 4px;
         }
 
-        nav ul li a:hover {
-            color: var(--text-main);
+        nav ul li a:hover, nav ul li a.active-nav {
+            color: var(--nav-active);
+            background-color: var(--card-hover);
         }
 
-        /* Theme Toggle Button */
+        /* Experiences Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            padding: 10px 0;
+            margin-top: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
         .theme-toggle {
             background: none;
             border: 1px solid var(--border-color);
@@ -104,48 +137,41 @@
             border-radius: 20px;
             color: var(--text-main);
             font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        .theme-toggle:hover {
-            background-color: var(--card-hover);
         }
 
-        /* Animation class */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
+        /* Tab Content Control */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+            padding: 50px 0;
         }
 
-        /* Hero Section */
-        header {
-            padding: 90px 0 60px 0;
+        .tab-content.active-tab {
+            display: block;
         }
 
-        header h1 {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Layouts */
+        .hero-section h1 {
             font-size: 3.2rem;
             font-weight: 500;
             margin-bottom: 20px;
             letter-spacing: -1px;
         }
 
-        header p {
+        .hero-section p {
             font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 680px;
+            max-width: 700px;
             font-weight: 300;
+            margin-bottom: 40px;
         }
 
-        /* Section General */
-        section {
-            padding: 60px 0 20px 0;
-        }
-
-        section h2 {
+        h2.section-title {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -155,11 +181,11 @@
             padding-bottom: 10px;
         }
 
-        /* Grid Setup */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
+            margin-bottom: 40px;
         }
 
         .card {
@@ -167,7 +193,7 @@
             padding: 30px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
 
         .card:hover {
@@ -187,66 +213,34 @@
             margin-bottom: 15px;
         }
 
-        /* Beautiful Accordion for Writing Section */
-        .writing-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .accordion-item {
-            border: 1px solid var(--border-color);
+        /* Articles Styling (Magazine/Editorial Style) */
+        .article-card {
+            border-left: 3px solid var(--text-main);
             background: var(--card-bg);
-            border-radius: 6px;
-            overflow: hidden;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 0 6px 6px 0;
+            transition: all 0.3s;
         }
 
-        .accordion-header {
-            padding: 20px 25px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            transition: background 0.3s;
-        }
-
-        .accordion-header:hover {
+        .article-card:hover {
             background: var(--card-hover);
         }
 
-        .accordion-header .status-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: var(--border-color);
-            padding: 4px 10px;
-            border-radius: 12px;
-            color: var(--text-muted);
+        .article-card h3 {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
         }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
-            padding: 0 25px;
-            color: var(--text-muted);
-            font-size: 0.98rem;
-            border-top: 0 solid var(--border-color);
-        }
-
-        .accordion-item.active .accordion-content {
-            max-height: 1000px; /* high enough to hold text */
-            padding: 20px 25px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Skills Pill Tags */
         .skills-flex {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
+            margin-top: 20px;
         }
 
         .skill-pill {
@@ -255,15 +249,8 @@
             padding: 8px 18px;
             font-size: 0.9rem;
             border-radius: 25px;
-            transition: all 0.3s;
         }
 
-        .skill-pill:hover {
-            background: var(--text-main);
-            color: var(--bg-color);
-        }
-
-        /* Contact Button */
         .btn {
             display: inline-block;
             background: var(--text-main);
@@ -273,11 +260,7 @@
             font-size: 0.95rem;
             border-radius: 4px;
             font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
+            margin-top: 15px;
         }
 
         footer {
@@ -291,137 +274,155 @@
 
         @media (max-width: 768px) {
             .grid { grid-template-columns: 1fr; }
-            header h1 { font-size: 2.3rem; }
-            nav ul { display: none; } /* Mobile basic fallback */
+            .hero-section h1 { font-size: 2.3rem; }
+            nav { flex-direction: column; gap: 15px; padding: 15px 0; }
+            .dropdown-menu { position: relative; top: 0; box-shadow: none; width: 100%; border: none; padding-left: 15px;}
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Header / Nav -->
         <nav>
             <div class="logo">M. MAHIM</div>
             <div class="nav-right">
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#writing">Writing & Press</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a id="nav-home" class="active-nav" onclick="switchTab('home')">Home</a></li>
+                    <li><a id="nav-about" onclick="switchTab('about')">About Me</a></li>
+                    <li><a id="nav-education" onclick="switchTab('education')">Education</a></li>
+                    <li class="dropdown">
+                        <a id="nav-experiences" style="cursor: default;">Experiences ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="switchTab('job-exp')">Job Experiences</a></li>
+                            <li><a onclick="switchTab('club-exp')">Clubbing Experiences</a></li>
+                        </ul>
+                    </li>
+                    <li><a id="nav-articles" onclick="switchTab('articles')">Bengali Articles</a></li>
                 </ul>
                 <button class="theme-toggle" onclick="toggleTheme()">Mode</button>
             </div>
         </nav>
 
-        <!-- Hero Section -->
-        <header id="about" class="fade-in">
-            <h1>Md. Minhazur Rahman Mahim</h1>
-            <p>Biomedical Engineering Student & Campus Journalist. Specializing in Medical Imaging, Technical Content Writing, Public Relations, and Minimalist Web UI design.</p>
-        </header>
+        <div id="tab-home" class="tab-content active-tab">
+            <div class="hero-section">
+                <h1>Md. Minhazur Rahman Mahim</h1>
+                <p>Welcome to my personal portfolio. I am a Biomedical Engineering student and campus journalist focusing on medical technology research and media communications.</p>
+            </div>
+            <h2 class="section-title">Quick Highlights</h2>
+            <div class="grid">
+                <div class="card" onclick="switchTab('articles')" style="cursor:pointer;">
+                    <h3>Bengali Articles Portfolio</h3>
+                    <p style="color:var(--text-muted); margin-top:5px;">আমার লেখা ক্যাম্পাস ফিচার, রিপোর্ট এবং মিডিয়া প্রেস রিলিজগুলো একনজরে দেখতে এখানে ক্লিক করুন।</p>
+                </div>
+                <div class="card" onclick="switchTab('job-exp')" style="cursor:pointer;">
+                    <h3>Journalism & Roles</h3>
+                    <p style="color:var(--text-muted); margin-top:5px;">ক্যাম্পাস প্রতিনিধি ও মিডিয়া রিলেশনশিপের দায়িত্ব এবং কাজের অভিজ্ঞতাগুলো দেখুন।</p>
+                </div>
+            </div>
+        </div>
 
-        <!-- Education Section -->
-        <section id="education" class="fade-in">
-            <h2>Education</h2>
+        <div id="tab-about" class="tab-content">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">আমি মোঃ মিনহাজুর রহমান মাহিম। ইসলামী বিশ্ববিদ্যালয়, কুষ্টিয়া-তে বায়োমেডিকেল ইঞ্জিনিয়ারিং বিভাগে পড়াশোনা করছি।</p>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">একাডেমিক পড়াশোনার পাশাপাশি আমি ক্যাম্পাস সাংবাদিকতা, জনসংযোগ (PR) এবং মিডিয়া নোটিশ ও প্রেস রিলিজ ড্রাফটিংয়ের সাথে গভীরভাবে যুক্ত। অবজেক্টিভ জার্নালিজম এবং ক্রিস্প রাইটিং স্টাইল মেইনটেইন করতে আমি পছন্দ করি।</p>
+                <p style="color: var(--text-muted);">এছাড়াও, হাই-রেজোলিউশন মোবাইল ফটোগ্রাফি সেন্সর প্রযুক্তি এবং মিনিমালিস্ট ওয়েব ইউজার ইন্টারফেস ডেভেলপমেন্ট আমার অন্যতম আগ্রহের জায়গা।</p>
+            </div>
+        </div>
+
+        <div id="tab-education" class="tab-content">
+            <h2 class="section-title">Educational Background</h2>
             <div class="card">
                 <h3>B.Sc. (Engg.) in Biomedical Engineering</h3>
                 <div class="meta">Islamic University, Kushtia | 2023 - Present</div>
-                <p>Focusing on medical instrumentation, digital signal processing, and medical imaging modalities. Active in campus research initiatives and academic publishing structures.</p>
+                <p>মেডিকেল ইমেজিং সিস্টেম (Medical Imaging), ক্লিনিক্যাল ইনস্ট্রুমেন্টেশন এবং সিগন্যাল প্রসেসিং সংক্রান্ত একাডেমিক কোর্সওয়ার্ক এবং গবেষণামূলক প্রজেক্ট প্ল্যানিংয়ের সাথে যুক্ত।</p>
             </div>
-        </section>
+        </div>
 
-        <!-- Writing & Journalism Section (Specialized Interface) -->
-        <section id="writing" class="fade-in">
-            <h2>Writing, Press & Journalism</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.95rem;">ক্লিক করে বিস্তারিত কন্টেন্ট এবং প্রেস রিলিজগুলো দেখুন:</p>
+        <div id="tab-job-exp" class="tab-content">
+            <h2 class="section-title">Job & Media Experiences</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>ক্যাম্পাস করেসপন্ডেন্ট / প্রতিনিধি</h3>
+                    <div class="meta">সংবাদ মাধ্যম ও গণযোগাযোগ</div>
+                    <p>বিশ্ববিদ্যালয় ক্যাম্পাসের প্রতিদিনের গুরুত্বপূর্ণ ঘটনা, প্রশাসনিক সিদ্ধান্ত এবং একাডেমিক কার্যক্রমের উপর বস্তুনিষ্ঠ সংবাদ তৈরি ও প্রকাশের দায়িত্ব পালন।</p>
+                </div>
+                <div class="card">
+                    <h3>মিডিয়া ও প্রেস কো-অর্ডিনেটর</h3>
+                    <div class="meta">জনসংযোগ ও আন্দোলন মিডিয়া উইং</div>
+                    <p>বিভিন্ন জাতীয় ও স্থানীয় সংবাদ মাধ্যমের সাংবাদিকদের সাথে সরাসরি যোগাযোগ রক্ষা করা এবং অফিশিয়াল প্রেস রিলিজ নিখুঁতভাবে ড্রাফট ও ডিস্ট্রিবিউট করা।</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-club-exp" class="tab-content">
+            <h2 class="section-title">Clubbing & Voluntary Activities</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>"সহস্র কণ্ঠে দেশের গান" ইভেন্ট</h3>
+                    <div class="meta">অর্গানাইজিং টিম ও মিডিয়া পার্টনারশিপ | ২০১৫</div>
+                    <p>ইসলামী বিশ্ববিদ্যালয়ের ফুটবল মাঠে আয়োজিত এই মেগা ইভেন্টের প্রচার, মিডিয়া পার্টনারদের সাথে কোঅর্ডিনেশন এবং ডিজিটাল ক্যাম্পেইন ডিজাইন টিমে সক্রিয় ভূমিকা পালন।</p>
+                </div>
+                <div class="card">
+                    <h3>কবিতা লিখন প্রতিযোগিতা</h3>
+                    <div class="meta">ইভেন্ট ম্যানেজমেন্ট ও রিপোর্টিং</div>
+                    <p>পুরো ইভেন্টের অফিশিয়াল নোটিশ ড্রাফটিং, পুরস্কার বিতরণী অনুষ্ঠানের মিডিয়া কভারেজ এবং ফলাফল সংক্রান্ত প্রেস স্টেটমেন্ট তৈরি।</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-articles" class="tab-content">
+            <h2 class="section-title">Bengali Articles & Editorial Portfolio</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">আমার তৈরি করা ফিচার আর্টিকেল এবং অফিশিয়াল প্রেস রিলিজিং স্ট্রাকচারসমূহ নিচে দেওয়া হলো:</p>
             
-            <div class="writing-container">
-                
-                <!-- Accordion Item 1 -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>ক্যাম্পাস সাংবাদিকতা ও ফিচার রিপোর্টিং</span>
-                        <span class="status-tag">Journalism</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>ইসলামী বিশ্ববিদ্যালয় ক্যাম্পাসের বিভিন্ন একাডেমিক, সামাজিক এবং প্রশাসনিক ঘটনাবলীর নিয়মিত সংবাদ সংগ্রহ এবং প্রতিবেদন তৈরি। বস্তুনিষ্ঠ সাংবাদিকতার মাধ্যমে বিশ্ববিদ্যালয়ের অগ্রগতির চিত্র তুলে ধরা।</p>
-                    </div>
-                </div>
-
-                <!-- Accordion Item 2 -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>প্রেস রিলিজ ও জনসংযোগ (Anti-Discrimination Movement)</span>
-                        <span class="status-tag">Press Relations</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>বিভিন্ন ছাত্র আন্দোলন এবং বিশ্ববিদ্যালয়ের নীতিনির্ধারণী বিষয়ে মিডিয়া ও প্রেস কমিউনিকেশন নিখুঁতভাবে পরিচালনা। দ্রুততম সময়ে তথ্য যাচাই এবং সংবাদ মাধ্যমগুলোর জন্য অফিশিয়াল প্রেস স্টেটমেন্ট ড্রাফট করার অভিজ্ঞতা।</p>
-                    </div>
-                </div>
-
-                <!-- Accordion Item 3 -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>ইভেন্ট মিডিয়া পার্টনারশিপ ও ক্রিয়েটিভ কন্টেন্ট</span>
-                        <span class="status-tag">Media Control</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>"সহস্র কণ্ঠে দেশের গান" এবং "কবিতা লিখন প্রতিযোগিতা"-র মতো বড় মাপের সাংস্কৃতিক ইভেন্টগুলোর প্রচার-প্রসার, ডিজিটাল ব্যানার/ফটোক্যার্ড আইডিয়া ডেভেলপমেন্ট এবং মিডিয়া পার্টনারদের সাথে কোঅর্ডিনেশন পরিচালনা।</p>
-                    </div>
-                </div>
-
+            <div class="article-card">
+                <h3>১. ক্যাম্পাস সাংবাদিকতা এবং ফিচার রিপোর্টিং</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">ক্যাম্পাসের একাডেমিক উন্নয়ন এবং শিক্ষার্থীদের বিভিন্ন যৌক্তিক সমস্যা নিয়ে গণমাধ্যমে প্রকাশিত ফিচার রিপোর্টের বিবরণ এখানে সাজাতে পারবেন।</p>
             </div>
-        </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="fade-in">
-            <h2>Skills & Expertise</h2>
-            <div class="skills-flex">
-                <div class="skill-pill">Medical Imaging Research</div>
-                <div class="skill-pill">Press Release Drafting</div>
-                <div class="skill-pill">Front-end Development (HTML/CSS)</div>
-                <div class="skill-pill">Media Communications</div>
-                <div class="skill-pill">Mobile Photography (High-Res Sensors)</div>
-                <div class="skill-pill">Public Relations</div>
+            <div class="article-card">
+                <h3>২. কঠোর ও সংক্ষিপ্ত প্রাতিষ্ঠানিক প্রেস রিলিজ</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">অপ্রয়োজনীয় বিরামচিহ্ন (যেমন: এম-ড্যাশ) বর্জন করে একদম stern (দৃঢ়) এবং সরাসরি ভাষায় মিডিয়ার জন্য তৈরি করা অফিশিয়াল স্টেটমেন্টের ফরম্যাট।</p>
             </div>
-        </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="fade-in">
-            <h2>Connect With Me</h2>
-            <p style="color: var(--text-muted); margin-bottom: 25px; max-width: 500px;">আপনি যদি কোনো রিসার্চ প্রজেক্ট, সাংবাদিকতা কিংবা ওয়েব ডেভলপমেন্ট কোলাবোরেশনের জন্য আগ্রহী হন, তবে নিচে সরাসরি নক দিতে পারেন।</p>
-            <a href="mailto:your-email@gmail.com" class="btn">Send an Email</a>
-        </section>
+            <div class="article-card">
+                <h3>৩. আন্তর্জাতিক বিষয়াবলি ও অনুবাদমূলক সাব-হেডিং</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">আন্তর্জাতিক বিভিন্ন গুরুত্বপূর্ণ স্টেটমেন্টের বাংলা অনুবাদ এবং তা দেশীয় সংবাদ মাধ্যমে প্রকাশের উপযোগী করে তোলার কন্টেন্ট স্ট্রাকচার।</p>
+            </div>
+        </div>
 
-        <!-- Footer -->
         <footer>
             <p>&copy; 2026 Md. Minhazur Rahman Mahim. Built with Quiet Luxury Aesthetic.</p>
         </footer>
     </div>
 
-    <!-- Scroll & Mode JavaScript Animations -->
     <script>
-        // Smooth Scroll Fade-In Animation
-        const faders = document.querySelectorAll('.fade-in');
-        const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
-        
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('appear');
-                appearOnScroll.unobserve(entry.target);
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active-tab');
             });
-        }, appearOptions);
+            // Remove active class from all main nav links
+            document.querySelectorAll('nav ul li a').forEach(nav => {
+                nav.classList.remove('active-nav');
+            });
 
-        faders.forEach(fader => appearOnScroll.observe(fader));
-
-        // Accordion Toggle
-        function toggleAccordion(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active-tab');
+            
+            // Logic to highlight the correct nav item
+            if(tabName === 'job-exp' || tabName === 'club-exp') {
+                document.getElementById('nav-experiences').classList.add('active-nav');
+            } else {
+                const activeNav = document.getElementById('nav-' + tabName);
+                if(activeNav) activeNav.classList.add('active-nav');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Dark/Light Theme Toggle
+        // Theme Toggle Logic
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             if (currentTheme === 'dark') {
@@ -433,7 +434,7 @@
             }
         }
 
-        // Check for saved user preference
+        // Apply Saved Preference
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
