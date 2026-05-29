@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md. Minhazur Rahman Mahim | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #fbfaf7;
+            --text-main: #1a1a1a;
+            --text-muted: #606060;
+            --accent: #2c3e50;
+            --border-color: #e6e1da;
+            --card-bg: #ffffff;
+            --card-hover: #f5f2eb;
+        }
+
+        /* Dark Mode Colors */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-main: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --accent: #e0e0e0;
+            --border-color: #2c2c2c;
+            --card-bg: #1e1e1e;
+            --card-hover: #252525;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background-color 0.4s ease;
+        }
+
+        nav .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--text-main);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 20px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover {
+            background-color: var(--card-hover);
+        }
+
+        /* Animation class */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        header {
+            padding: 90px 0 60px 0;
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            font-weight: 300;
+        }
+
+        /* Section General */
+        section {
+            padding: 60px 0 20px 0;
+        }
+
+        section h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Grid Setup */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            background-color: var(--card-hover);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .card .meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Beautiful Accordion for Writing Section */
+        .writing-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px 25px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: var(--card-hover);
+        }
+
+        .accordion-header .status-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--border-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: var(--text-muted);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            padding: 0 25px;
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            border-top: 0 solid var(--border-color);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px; /* high enough to hold text */
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Skills Pill Tags */
+        .skills-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .skill-pill:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        /* Contact Button */
+        .btn {
+            display: inline-block;
+            background: var(--text-main);
+            color: var(--bg-color);
+            padding: 14px 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0 40px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.3rem; }
+            nav ul { display: none; } /* Mobile basic fallback */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header / Nav -->
+        <nav>
+            <div class="logo">M. MAHIM</div>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#writing">Writing & Press</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" onclick="toggleTheme()">Mode</button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header id="about" class="fade-in">
+            <h1>Md. Minhazur Rahman Mahim</h1>
+            <p>Biomedical Engineering Student & Campus Journalist. Specializing in Medical Imaging, Technical Content Writing, Public Relations, and Minimalist Web UI design.</p>
+        </header>
+
+        <!-- Education Section -->
+        <section id="education" class="fade-in">
+            <h2>Education</h2>
+            <div class="card">
+                <h3>B.Sc. (Engg.) in Biomedical Engineering</h3>
+                <div class="meta">Islamic University, Kushtia | 2023 - Present</div>
+                <p>Focusing on medical instrumentation, digital signal processing, and medical imaging modalities. Active in campus research initiatives and academic publishing structures.</p>
+            </div>
+        </section>
+
+        <!-- Writing & Journalism Section (Specialized Interface) -->
+        <section id="writing" class="fade-in">
+            <h2>Writing, Press & Journalism</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.95rem;">ক্লিক করে বিস্তারিত কন্টেন্ট এবং প্রেস রিলিজগুলো দেখুন:</p>
+            
+            <div class="writing-container">
+                
+                <!-- Accordion Item 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>ক্যাম্পাস সাংবাদিকতা ও ফিচার রিপোর্টিং</span>
+                        <span class="status-tag">Journalism</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>ইসলামী বিশ্ববিদ্যালয় ক্যাম্পাসের বিভিন্ন একাডেমিক, সামাজিক এবং প্রশাসনিক ঘটনাবলীর নিয়মিত সংবাদ সংগ্রহ এবং প্রতিবেদন তৈরি। বস্তুনিষ্ঠ সাংবাদিকতার মাধ্যমে বিশ্ববিদ্যালয়ের অগ্রগতির চিত্র তুলে ধরা।</p>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>প্রেস রিলিজ ও জনসংযোগ (Anti-Discrimination Movement)</span>
+                        <span class="status-tag">Press Relations</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>বিভিন্ন ছাত্র আন্দোলন এবং বিশ্ববিদ্যালয়ের নীতিনির্ধারণী বিষয়ে মিডিয়া ও প্রেস কমিউনিকেশন নিখুঁতভাবে পরিচালনা। দ্রুততম সময়ে তথ্য যাচাই এবং সংবাদ মাধ্যমগুলোর জন্য অফিশিয়াল প্রেস স্টেটমেন্ট ড্রাফট করার অভিজ্ঞতা।</p>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>ইভেন্ট মিডিয়া পার্টনারশিপ ও ক্রিয়েটিভ কন্টেন্ট</span>
+                        <span class="status-tag">Media Control</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>"সহস্র কণ্ঠে দেশের গান" এবং "কবিতা লিখন প্রতিযোগিতা"-র মতো বড় মাপের সাংস্কৃতিক ইভেন্টগুলোর প্রচার-প্রসার, ডিজিটাল ব্যানার/ফটোক্যার্ড আইডিয়া ডেভেলপমেন্ট এবং মিডিয়া পার্টনারদের সাথে কোঅর্ডিনেশন পরিচালনা।</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="fade-in">
+            <h2>Skills & Expertise</h2>
+            <div class="skills-flex">
+                <div class="skill-pill">Medical Imaging Research</div>
+                <div class="skill-pill">Press Release Drafting</div>
+                <div class="skill-pill">Front-end Development (HTML/CSS)</div>
+                <div class="skill-pill">Media Communications</div>
+                <div class="skill-pill">Mobile Photography (High-Res Sensors)</div>
+                <div class="skill-pill">Public Relations</div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="fade-in">
+            <h2>Connect With Me</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px; max-width: 500px;">আপনি যদি কোনো রিসার্চ প্রজেক্ট, সাংবাদিকতা কিংবা ওয়েব ডেভলপমেন্ট কোলাবোরেশনের জন্য আগ্রহী হন, তবে নিচে সরাসরি নক দিতে পারেন।</p>
+            <a href="mailto:your-email@gmail.com" class="btn">Send an Email</a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Md. Minhazur Rahman Mahim. Built with Quiet Luxury Aesthetic.</p>
+        </footer>
+    </div>
+
+    <!-- Scroll & Mode JavaScript Animations -->
+    <script>
+        // Smooth Scroll Fade-In Animation
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('appear');
+                appearOnScroll.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => appearOnScroll.observe(fader));
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            item.classList.toggle('active');
+        }
+
+        // Dark/Light Theme Toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved user preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
