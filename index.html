@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Minhazur Rahman Mahim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&family=Noto+Sans+Bengali:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#020408;--bg2:#060d14;--bg3:#0a1520;--surface:rgba(0,220,255,0.04);--border:rgba(0,220,255,0.12);--border2:rgba(0,220,255,0.25);--text:#e0f4ff;--text2:#7ab8d4;--text3:#3a6a80;--accent:#00dcff;--accent2:#00ff9d;--accent3:#ff6b35;--warn:#ff3d71;--glow:0 0 30px rgba(0,220,255,0.15);--sidebar-w:260px;--r:16px;}
+[data-theme="light"]{--bg:#f0f8ff;--bg2:#e4f1fa;--bg3:#d6eaf7;--surface:rgba(0,100,180,0.06);--border:rgba(0,100,180,0.18);--border2:rgba(0,100,180,0.35);--text:#0a1f2e;--text2:#1a4a6e;--text3:#4a7a9e;--accent:#006eb8;--accent2:#00875a;--accent3:#c84a00;--warn:#c0002a;--glow:0 0 30px rgba(0,110,184,0.12);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;display:flex;min-height:100vh;overflow-x:hidden;transition:background .5s,color .5s;}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;animation:introFade 3.2s forwards;}
+#intro .intro-photo{width:180px;height:180px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:0 0 60px rgba(0,220,255,.5);animation:introPhoto 3s ease forwards;}
+#intro .intro-name{font-family:'Orbitron',monospace;font-size:clamp(14px,3vw,26px);font-weight:700;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-top:24px;animation:introText 3s ease forwards;text-shadow:0 0 20px var(--accent);}
+#intro .intro-line{width:0;height:1px;background:var(--accent);margin-top:16px;animation:introLine 2.5s .3s ease forwards;box-shadow:0 0 10px var(--accent);}
+@keyframes introPhoto{0%{opacity:0;transform:scale(.3) rotate(-20deg);filter:blur(20px)}50%{opacity:1;transform:scale(1.05);filter:blur(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes introText{0%{opacity:0;letter-spacing:20px}60%{opacity:1;letter-spacing:4px}100%{opacity:1}}
+@keyframes introLine{to{width:280px}}
+@keyframes introFade{0%{opacity:1;visibility:visible}80%{opacity:1}100%{opacity:0;visibility:hidden;pointer-events:none}}
+
+/* PAGE FLASH */
+#page-flash{position:fixed;inset:0;z-index:8000;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;}
+#page-flash img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:0 0 60px var(--accent);}
+#page-flash.flash-active{animation:pageFlash 1.2s ease forwards;}
+@keyframes pageFlash{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0}}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:1000;transition:transform .35s cubic-bezier(.4,0,.2,1),background .5s;overflow-y:auto;overflow-x:hidden;}
+.sidebar::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
+.sidebar-profile{padding:36px 20px 24px;text-align:center;border-bottom:1px solid var(--border);}
+.avatar-hex{width:90px;height:90px;margin:0 auto 16px;position:relative;}
+.avatar-hex img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:var(--glow);display:block;}
+.avatar-hex::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--accent);opacity:.3;animation:avatarPulse 2.5s ease-in-out infinite;}
+@keyframes avatarPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.1);opacity:.08}}
+.sidebar-name{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--text);letter-spacing:1px;line-height:1.4;margin-bottom:6px;}
+.sidebar-role{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:600;}
+.sidebar-nav{padding:16px 0;flex:1;}
+.nav-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:3px;padding:10px 20px 4px;font-family:'Orbitron',monospace;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;color:var(--text2);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.5px;border-left:2px solid transparent;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.nav-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,rgba(0,220,255,.08),transparent);transition:width .3s;}
+.nav-item:hover::before,.nav-item.active::before{width:100%;}
+.nav-item:hover,.nav-item.active{color:var(--accent);border-left-color:var(--accent);}
+.nav-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);}
+.sidebar-socials{display:flex;gap:10px;justify-content:center;margin-top:8px;}
+.soc-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text2);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:12px;font-weight:700;transition:all .25s;}
+.soc-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(0,220,255,.2);transform:translateY(-2px);}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;position:relative;z-index:1;}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;height:52px;background:rgba(2,4,8,.85);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 36px;z-index:500;transition:background .5s;}
+[data-theme="light"] .topbar{background:rgba(240,248,255,.85);}
+.topbar-left{display:flex;flex-direction:column;justify-content:center;}
+.topbar-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;line-height:1.2;}
+.topbar-sub{font-size:10px;color:var(--text3);letter-spacing:1px;font-family:'Orbitron',monospace;line-height:1.2;margin-top:1px;}
+.topbar-right{display:flex;gap:10px;align-items:center;}
+.tb-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .25s;}
+.tb-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px rgba(0,220,255,.15);}
+.hamburger{display:none;}
+
+/* PAGES */
+.page{display:none;min-height:calc(100vh - 52px);position:relative;overflow:hidden;}
+.page.active{display:block;animation:pageFade .5s ease;}
+@keyframes pageFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.page-inner{position:relative;z-index:1;padding:48px 40px;max-width:1100px;}
+
+/* PAGE BG */
+.page-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.3;}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat 8s ease-in-out infinite;}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-30px)}66%{transform:translate(-15px,20px)}}
+@keyframes inkDraw{0%{opacity:0;width:0}20%{opacity:.3}80%{opacity:.2}100%{opacity:0;width:80%}}
+@keyframes nodeBreath{from{opacity:.2;transform:scale(.8)}to{opacity:.7;transform:scale(1.3)}}
+@keyframes streamFlow{from{top:-100%}to{top:200%}}
+
+/* SECTION HEADINGS */
+.section-eyebrow{font-family:'Orbitron',monospace;font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:4px;margin-bottom:8px;}
+.section-title{font-family:'Orbitron',monospace;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text);line-height:1.1;margin-bottom:8px;}
+.section-sub{font-size:10px;color:var(--text3);font-family:'Orbitron',monospace;letter-spacing:2px;margin-bottom:8px;}
+.section-line{width:60px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:40px;}
+
+/* HOME */
+.hero{min-height:calc(100vh - 52px);display:grid;grid-template-columns:1fr 340px;align-items:center;gap:60px;padding:48px 40px;position:relative;}
+.hero-left{position:relative;z-index:1;}
+.hero-profile-photo{width:160px;height:160px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:0 0 50px rgba(0,220,255,.35),0 0 100px rgba(0,220,255,.1);margin-bottom:28px;display:block;animation:photoGlow 3s ease-in-out infinite alternate;}
+@keyframes photoGlow{from{box-shadow:0 0 30px rgba(0,220,255,.25),0 0 60px rgba(0,220,255,.08)}to{box-shadow:0 0 60px rgba(0,220,255,.5),0 0 120px rgba(0,220,255,.15)}}
+.hero-greeting{font-family:'Orbitron',monospace;font-size:11px;color:var(--accent2);letter-spacing:5px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.hero-greeting::before{content:'';width:40px;height:1px;background:var(--accent2);}
+.hero-name{font-family:'Orbitron',monospace;font-size:clamp(28px,4.5vw,54px);font-weight:900;color:var(--text);line-height:1.05;margin-bottom:8px;}
+.hero-name span{color:var(--accent);text-shadow:0 0 30px rgba(0,220,255,.4);}
+.hero-sub{font-size:16px;color:var(--text2);margin-bottom:28px;letter-spacing:1px;font-weight:500;}
+.role-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.role-pill{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 14px;font-size:12px;color:var(--text2);font-family:'Orbitron',monospace;letter-spacing:.5px;transition:all .25s;}
+.role-pill:hover{border-color:var(--accent);color:var(--accent);}
+.hero-bio{font-size:15px;color:var(--text2);line-height:1.8;max-width:520px;margin-bottom:36px;}
+.hero-stats{display:flex;gap:36px;margin-bottom:40px;}
+.stat-num{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;color:var(--accent);line-height:1;text-shadow:0 0 20px rgba(0,220,255,.3);}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-family:'Orbitron',monospace;}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{padding:12px 28px;border-radius:8px;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;}
+.btn-primary{background:var(--accent);color:#020408;box-shadow:0 0 20px rgba(0,220,255,.3);}
+.btn-primary:hover{background:#33e5ff;transform:translateY(-2px);box-shadow:0 0 40px rgba(0,220,255,.5);}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+.hero-right{position:relative;z-index:1;}
+.hero-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:32px 24px;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(10px);box-shadow:var(--glow);}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);animation:scanLine 3s ease-in-out infinite;}
+@keyframes scanLine{0%,100%{opacity:.4}50%{opacity:1}}
+.hero-card-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);box-shadow:0 0 40px rgba(0,220,255,.3);margin:0 auto 20px;display:block;}
+.hero-card-name{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.hero-card-role{font-size:12px;color:var(--accent);letter-spacing:1px;margin-bottom:20px;}
+.currently-box{text-align:left;background:rgba(0,220,255,.04);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.currently-label{font-family:'Orbitron',monospace;font-size:9px;color:var(--accent2);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+.cur-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.4;}
+.cur-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;box-shadow:0 0 6px var(--accent);}
+
+/* WRITING CARDS */
+.writing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.writing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .3s;position:relative;overflow:hidden;cursor:pointer;}
+.writing-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;transition:height .3s;}
+.writing-card:hover{transform:translateY(-4px);}
+.writing-card:hover::before{height:100%;}
+.writing-card.art-theme::before{background:linear-gradient(180deg,var(--accent3),var(--accent));}
+.writing-card.art-theme:hover{border-color:var(--accent3);box-shadow:0 16px 40px rgba(255,107,53,.08);}
+.writing-card.rep-theme::before{background:linear-gradient(180deg,var(--warn),var(--accent));}
+.writing-card.rep-theme:hover{border-color:var(--warn);box-shadow:0 16px 40px rgba(255,61,113,.08);}
+.writing-num{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:1px;margin-bottom:6px;}
+.writing-num.art{color:var(--accent3);}
+.writing-num.rep{color:var(--warn);}
+.writing-paper{font-size:10px;color:var(--text3);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;}
+.writing-title-bn{font-family:'Noto Sans Bengali',sans-serif;font-size:15px;color:var(--text);font-weight:600;line-height:1.6;margin-bottom:6px;}
+.writing-title-en{font-family:'Orbitron',monospace;font-size:10px;color:var(--text2);margin-bottom:18px;line-height:1.5;}
+.writing-open-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;border-radius:6px;padding:5px 12px;font-family:'Orbitron',monospace;letter-spacing:.5px;transition:all .2s;text-decoration:none;}
+.writing-open-btn.art{color:var(--accent3);border:1px solid rgba(255,107,53,.3);background:rgba(255,107,53,.06);}
+.writing-open-btn.art:hover{background:var(--accent3);color:#020408;border-color:var(--accent3);}
+.writing-open-btn.rep{color:var(--warn);border:1px solid rgba(255,61,113,.3);background:rgba(255,61,113,.06);}
+.writing-open-btn.rep:hover{background:var(--warn);color:#fff;border-color:var(--warn);}
+
+/* ARTICLE READER */
+.article-reader{display:none;position:fixed;inset:0;z-index:7000;background:var(--bg);overflow-y:auto;animation:readerIn .35s ease;}
+.article-reader.open{display:block;}
+@keyframes readerIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.reader-topbar{position:sticky;top:0;background:rgba(2,4,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+[data-theme="light"] .reader-topbar{background:rgba(240,248,255,.9);}
+.reader-back{display:flex;align-items:center;gap:10px;color:var(--accent);font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;cursor:pointer;border:1px solid var(--border);background:var(--surface);padding:8px 16px;border-radius:8px;transition:all .2s;}
+.reader-back:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(0,220,255,.15);}
+.reader-body{max-width:760px;margin:0 auto;padding:48px 40px 80px;}
+.reader-eyebrow{font-family:'Orbitron',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;margin-bottom:12px;}
+.reader-title-bn{font-family:'Noto Sans Bengali',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:700;color:var(--text);line-height:1.4;margin-bottom:8px;}
+.reader-title-en{font-family:'Orbitron',monospace;font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.4;}
+.reader-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border);}
+.reader-meta-item{font-size:12px;color:var(--text3);font-family:'Orbitron',monospace;letter-spacing:.5px;display:flex;align-items:center;gap:6px;}
+.reader-content{font-family:'Noto Sans Bengali',sans-serif;font-size:17px;color:var(--text2);line-height:2.1;white-space:pre-wrap;}
+.reader-placeholder{border:1px dashed var(--border);border-radius:12px;padding:32px;text-align:center;color:var(--text3);font-size:12px;font-family:'Orbitron',monospace;letter-spacing:1px;line-height:2;}
+.reader-ext-link{margin-top:28px;}
+.reader-ext-link a{display:inline-flex;align-items:center;gap:8px;color:var(--accent);border:1px solid var(--border2);padding:10px 20px;border-radius:8px;text-decoration:none;font-family:'Orbitron',monospace;font-size:12px;transition:all .2s;}
+.reader-ext-link a:hover{border-color:var(--accent);box-shadow:0 0 12px rgba(0,220,255,.15);}
+
+/* SEARCH */
+.articles-search{margin-bottom:28px;}
+.search-wrap{position:relative;max-width:500px;}
+.search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 18px 12px 44px;color:var(--text);font-size:14px;font-family:'Rajdhani',sans-serif;outline:none;transition:border-color .25s,box-shadow .25s;}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,220,255,.08);}
+.search-wrap input::placeholder{color:var(--text3);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px;pointer-events:none;}
+.articles-count{font-size:12px;color:var(--text3);margin-top:8px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+
+/* EDUCATION */
+.edu-timeline{position:relative;padding-left:20px;}
+.edu-timeline::before{content:'';position:absolute;left:28px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--accent),var(--accent2),transparent);}
+.edu-item{display:flex;gap:32px;margin-bottom:44px;position:relative;animation:eduSlide .6s ease both;}
+.edu-item:nth-child(1){animation-delay:.1s}.edu-item:nth-child(2){animation-delay:.2s}.edu-item:nth-child(3){animation-delay:.3s}
+@keyframes eduSlide{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+.edu-node{flex-shrink:0;width:58px;height:58px;border-radius:14px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;z-index:1;transition:border-color .3s,box-shadow .3s;}
+.edu-item:hover .edu-node{border-color:var(--accent2);box-shadow:0 0 20px rgba(0,255,157,.15);}
+.edu-content{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:border-color .3s;}
+.edu-item:hover .edu-content{border-color:var(--accent2);}
+.edu-period{font-family:'Orbitron',monospace;font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:8px;}
+.edu-degree{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.edu-inst{font-size:14px;color:var(--text2);margin-bottom:6px;}
+.edu-note{font-size:12px;color:var(--text3);margin-bottom:12px;}
+.edu-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.edu-badge{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:3px 12px;font-size:11px;color:var(--text2);font-family:'Orbitron',monospace;}
+.edu-badge.gold{border-color:rgba(0,255,157,.35);color:var(--accent2);}
+
+/* EXP CARDS */
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.exp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .3s;position:relative;overflow:hidden;}
+.exp-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s;}
+.exp-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:var(--glow);}
+.exp-card:hover::after{opacity:1;}
+.exp-logo{width:48px;height:48px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.exp-org{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;}
+.exp-role{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:6px;}
+.exp-period{font-size:11px;color:var(--text3);font-family:'Orbitron',monospace;margin-bottom:4px;}
+.exp-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;padding:3px 10px;border-radius:100px;font-family:'Orbitron',monospace;margin-top:10px;letter-spacing:.5px;}
+.exp-status.current{background:rgba(0,220,255,.08);color:var(--accent);border:1px solid rgba(0,220,255,.25);}
+.exp-status.former{background:var(--surface);color:var(--text3);border:1px solid var(--border);}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.exp-status.current .status-dot{animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:300px 1fr;gap:44px;align-items:start;}
+.about-photo-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;overflow:hidden;position:sticky;top:72px;box-shadow:var(--glow);}
+.about-photo-card img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover;}
+.about-photo-label{padding:16px;text-align:center;font-family:'Orbitron',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;border-top:1px solid var(--border);}
+.about-bio{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:20px;}
+.about-section-label{font-family:'Orbitron',monospace;font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin:28px 0 14px;}
+.contact-item{display:flex;align-items:center;gap:12px;color:var(--text2);font-size:14px;margin-bottom:10px;}
+.contact-icon{color:var(--accent2);width:20px;text-align:center;}
+.contact-link{color:var(--accent);text-decoration:none;}
+.contact-link:hover{text-decoration:underline;}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.skill-tag{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 14px;font-size:12px;color:var(--text2);font-family:'Orbitron',monospace;transition:all .2s;}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent);}
+
+/* FOOTER */
+.page-footer{margin-top:80px;padding:24px 0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--text3);font-family:'Orbitron',monospace;letter-spacing:.5px;}
+.footer-socials{display:flex;gap:16px;}
+.footer-soc{color:var(--text3);text-decoration:none;transition:color .2s;}
+.footer-soc:hover{color:var(--accent);}
+
+/* OVERLAY */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;backdrop-filter:blur(4px);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .hamburger{display:flex;}
+  .sidebar-overlay.show{display:block;}
+  .hero{grid-template-columns:1fr;padding:36px 24px;}
+  .hero-right{display:none;}
+  .page-inner{padding:36px 24px;}
+  .topbar{padding:0 20px;}
+  .about-layout{grid-template-columns:1fr;}
+  .about-photo-card{position:relative;top:auto;max-width:280px;}
+  .reader-body{padding:32px 24px 60px;}
+  .reader-topbar{padding:0 20px;}
+}
+@media(max-width:600px){
+  .writing-grid{grid-template-columns:1fr;}
+  .exp-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+  .section-title{font-size:22px;}
+}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <img src="images/profile.jpg" alt="Minhaz" class="intro-photo">
+  <div class="intro-name">Minhazur Rahman Mahim</div>
+  <div class="intro-line"></div>
+</div>
+
+<div id="page-flash"><img src="images/profile.jpg" alt=""></div>
+
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-profile">
+    <div class="avatar-hex"><img src="images/profile.jpg" alt="Minhaz"></div>
+    <div class="sidebar-name">Md. Minhazur<br>Rahman Mahim</div>
+    <div class="sidebar-role">BME Student · Journalist</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Navigate</div>
+    <a class="nav-item active" onclick="showPage('home',this)"><span class="nav-icon">⬡</span>Home</a>
+    <div class="nav-label" style="margin-top:8px">Writings</div>
+    <a class="nav-item" onclick="showPage('articles',this)"><span class="nav-icon">✦</span>Bengali Articles</a>
+    <a class="nav-item" onclick="showPage('reports',this)"><span class="nav-icon">◈</span>Special News Reports</a>
+    <div class="nav-label" style="margin-top:8px">Profile</div>
+    <a class="nav-item" onclick="showPage('education',this)"><span class="nav-icon">◇</span>Education</a>
+    <a class="nav-item" onclick="showPage('job',this)"><span class="nav-icon">◆</span>Job Experience</a>
+    <a class="nav-item" onclick="showPage('club',this)"><span class="nav-icon">⬡</span>Clubbing Experience</a>
+    <a class="nav-item" onclick="showPage('about',this)"><span class="nav-icon">○</span>About Me</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-socials">
+      <a class="soc-btn" href="https://facebook.com/mdminhazur44rahman" target="_blank">f</a>
+      <a class="soc-btn" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank" style="font-style:italic">ig</a>
+      <a class="soc-btn" href="https://linkedin.com/in/mdminhazur44rahman" target="_blank" style="font-size:10px;font-weight:800">in</a>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Home</span>
+      <span class="topbar-sub">Md. Minhazur Rahman Mahim</span>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn" onclick="toggleTheme()" id="theme-btn">☀️</button>
+      <button class="tb-btn hamburger" onclick="toggleSidebar()">☰</button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div class="page active" id="home">
+    <div class="page-bg">
+      <div class="bg-grid"></div>
+      <div class="bg-orb" style="width:500px;height:500px;background:rgba(0,220,255,.06);top:-150px;right:-150px;animation-duration:10s;"></div>
+      <div class="bg-orb" style="width:400px;height:400px;background:rgba(0,255,157,.04);bottom:-100px;left:-100px;animation-duration:13s;animation-delay:-4s;"></div>
+      <canvas id="dna-canvas" style="position:absolute;inset:0;width:100%;height:100%;opacity:.12;"></canvas>
+    </div>
+    <div class="hero">
+      <div class="hero-left">
+        <img src="images/profile.jpg" alt="Minhaz" class="hero-profile-photo">
+        <div class="hero-greeting">BME Student &amp; Campus Journalist</div>
+        <h1 class="hero-name">Md. Minhazur<br><span>Rahman Mahim</span></h1>
+        <p class="hero-sub">Engineering Life. Reporting Truth.</p>
+        <div class="role-pills">
+          <span class="role-pill">BME Student</span>
+          <span class="role-pill">Campus Journalist</span>
+          <span class="role-pill">Aspiring Researcher</span>
+          <span class="role-pill">IEEE EMBS</span>
+          <span class="role-pill">Social Advocate</span>
+        </div>
+        <p class="hero-bio">A third-year Bachelor of Science student in Biomedical Engineering at Islamic University, Kushtia, Bangladesh. Passionate about research, innovation, community service, and science communication. Simultaneously serving as a campus correspondent for multiple Bengali daily newspapers.</p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">29</div><div class="stat-label">Articles</div></div>
+          <div class="stat"><div class="stat-num">7</div><div class="stat-label">Outlets</div></div>
+          <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Orgs</div></div>
+          <div class="stat"><div class="stat-num">3rd</div><div class="stat-label">Year</div></div>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" onclick="showPage('articles',document.querySelector('[onclick*=articles]'))">Read Articles →</a>
+          <a class="btn btn-outline" onclick="showPage('about',document.querySelector('[onclick*=about]'))">About Me</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <img src="images/profile.jpg" alt="Minhaz" class="hero-card-photo">
+          <div class="hero-card-name">Md. Minhazur Rahman Mahim</div>
+          <div class="hero-card-role">BME Student · Islamic University</div>
+          <div class="currently-box">
+            <div class="currently-label">Currently</div>
+            <div class="cur-item"><div class="cur-dot"></div>B.Sc. (Engg.) in BME — IU</div>
+            <div class="cur-item"><div class="cur-dot"></div>Publication Coordinator — IEEE EMBS</div>
+            <div class="cur-item"><div class="cur-dot"></div>IT Secretary — Biomed Innovates</div>
+            <div class="cur-item"><div class="cur-dot"></div>Correspondent — Multiple Bengali Dailies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLES -->
+  <div class="page" id="articles">
+    <div class="page-bg">
+      <div class="bg-grid"></div>
+      <div class="bg-orb" style="width:600px;height:400px;background:rgba(255,107,53,.05);top:-100px;right:-200px;animation-duration:11s;"></div>
+      <div id="ink-lines-container"></div>
+    </div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Writing</div>
+      <h2 class="section-title">Bengali Articles</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line" style="background:linear-gradient(90deg,var(--accent3),transparent);"></div>
+      <div class="articles-search">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="article-search" placeholder="Search by title or newspaper..." oninput="filterWritings('articles-grid','article-search','articles-count',29)">
+        </div>
+        <div class="articles-count" id="articles-count">Showing 29 articles</div>
+      </div>
+
+      <!--
+      ══════════════════════════════════════════════════════
+      HOW TO ADD/EDIT AN ARTICLE:
+
+      প্রতিটা article card এরকম দেখতে:
+
+        <div class="writing-card art-theme"
+          data-num="XX"
+          data-bn="বাংলায় শিরোনাম"
+          data-en="English Title"
+          data-paper-name="পত্রিকার নাম"
+          data-date="প্রকাশের তারিখ"
+          data-link="https://পত্রিকার-লিংক"
+          data-content="এখানে সম্পূর্ণ লেখা paste করুন"
+          onclick="openReader(this)">
+          <div class="writing-num art">No. XX</div>
+          <div class="writing-paper">পত্রিকার নাম</div>
+          <div class="writing-title-bn">বাংলায় শিরোনাম</div>
+          <div class="writing-title-en">English Title</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+      data-content এ সম্পূর্ণ লেখা paste করলে ভেতরে reader এ দেখা যাবে।
+      ══════════════════════════════════════════════════════
+      -->
+
+      <div class="writing-grid" id="articles-grid">
+
+        <div class="writing-card art-theme" data-num="29" data-bn="মানবজীবনে টিকার গুরুত্ব" data-en="The Importance of Vaccines in Human Life" data-paper-name="Daily Ittefaq" data-date="Published in Daily Ittefaq" data-link="https://epaper.ittefaq.com.bd/edition/1663/2nd-edition/page/9" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 29</div><div class="writing-paper">Daily Ittefaq</div>
+          <div class="writing-title-bn">মানবজীবনে টিকার গুরুত্ব</div>
+          <div class="writing-title-en">The Importance of Vaccines in Human Life</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="28" data-bn="পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা" data-en="Teaching in Public Universities" data-paper-name="Daily Karatoa" data-date="Published in Daily Karatoa" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 28</div><div class="writing-paper">Daily Karatoa</div>
+          <div class="writing-title-bn">পাবলিক বিশ্ববিদ্যালয়ে শিক্ষকতা</div>
+          <div class="writing-title-en">Teaching in Public Universities</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="27" data-bn="পশ্চাদপদ মানসিকতা পরিহার করুন" data-en="Avoid a Backward Mentality" data-paper-name="Daily Jai Jai Din" data-date="Published in Daily Jai Jai Din" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 27</div><div class="writing-paper">Daily Jai Jai Din</div>
+          <div class="writing-title-bn">পশ্চাদপদ মানসিকতা পরিহার করুন</div>
+          <div class="writing-title-en">Avoid a Backward Mentality</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="26" data-bn="বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত" data-en="How Senior-Junior Relationships Should Be in University" data-paper-name="Daily Share Biz" data-date="Published in Daily Share Biz" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 26</div><div class="writing-paper">Daily Share Biz</div>
+          <div class="writing-title-bn">বিশ্ববিদ্যালয়ে সিনিয়র-জুনিয়র সম্পর্ক যেমন হওয়া উচিত</div>
+          <div class="writing-title-en">How Senior-Junior Relationships Should Be in University</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="25" data-bn="বন্ধু নির্বাচনে হতে হবে সতর্ক" data-en="Be Careful in Choosing Friends" data-paper-name="Daily Jai Jai Din" data-date="Published in Daily Jai Jai Din" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 25</div><div class="writing-paper">Daily Jai Jai Din</div>
+          <div class="writing-title-bn">বন্ধু নির্বাচনে হতে হবে সতর্ক</div>
+          <div class="writing-title-en">Be Careful in Choosing Friends</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="24" data-bn="ইদ হলো ঐক্যের, ইদ হলো ভাতৃত্বের" data-en="Eid is Unity, Eid is Brotherhood" data-paper-name="Daily Khola Kagoj" data-date="Published in Daily Khola Kagoj" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 24</div><div class="writing-paper">Daily Khola Kagoj</div>
+          <div class="writing-title-bn">ইদ হলো ঐক্যের, ইদ হলো ভাতৃত্বের</div>
+          <div class="writing-title-en">Eid is Unity, Eid is Brotherhood</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="23" data-bn="শিক্ষার্থীদের ঝরে পড়া রোধ করতে হবে" data-en="Dropout Among Students Must Be Prevented" data-paper-name="Daily Ittefaq" data-date="Published in Daily Ittefaq" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 23</div><div class="writing-paper">Daily Ittefaq</div>
+          <div class="writing-title-bn">শিক্ষার্থীদের ঝরে পড়া রোধ করতে হবে</div>
+          <div class="writing-title-en">Dropout Among Students Must Be Prevented</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="22" data-bn="বাংলাদেশ যেভাবে পরিবেশ দূষণের শীর্ষে" data-en="How Bangladesh Tops Environmental Pollution" data-paper-name="Daily Share Biz" data-date="Published in Daily Share Biz" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 22</div><div class="writing-paper">Daily Share Biz</div>
+          <div class="writing-title-bn">বাংলাদেশ যেভাবে পরিবেশ দূষণের শীর্ষে</div>
+          <div class="writing-title-en">How Bangladesh Tops Environmental Pollution</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="21" data-bn="ইবির অগঠিত ওয়েবসাইট" data-en="IU's Unstructured Website" data-paper-name="Daily Amader Shomoy" data-date="Published in Daily Amader Shomoy" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 21</div><div class="writing-paper">Daily Amader Shomoy</div>
+          <div class="writing-title-bn">ইবির অগঠিত ওয়েবসাইট</div>
+          <div class="writing-title-en">IU's Unstructured Website</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="20" data-bn="বন্ধ হোক পলিথিন, সন্ধি হোক পাটের সাথে" data-en="Ban Polythene, Reconcile with Jute" data-paper-name="Daily Janakantha" data-date="Published in Daily Janakantha" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 20</div><div class="writing-paper">Daily Janakantha</div>
+          <div class="writing-title-bn">বন্ধ হোক পলিথিন, সন্ধি হোক পাটের সাথে</div>
+          <div class="writing-title-en">Ban Polythene, Reconcile with Jute</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="19" data-bn="স্মার্ট বাংলাদেশে কিশোর গ্যাং যখন বিষফোড়া" data-en="Teen Gangs as a Festering Wound in Smart Bangladesh" data-paper-name="Daily Karatoa" data-date="Published in Daily Karatoa" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 19</div><div class="writing-paper">Daily Karatoa</div>
+          <div class="writing-title-bn">স্মার্ট বাংলাদেশে কিশোর গ্যাং যখন বিষফোড়া</div>
+          <div class="writing-title-en">Teen Gangs as a Festering Wound in Smart Bangladesh</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="18" data-bn="পরিবার পরিকল্পনা" data-en="Family Planning" data-paper-name="Daily Jai Jai Din" data-date="Published in Daily Jai Jai Din" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 18</div><div class="writing-paper">Daily Jai Jai Din</div>
+          <div class="writing-title-bn">পরিবার পরিকল্পনা</div>
+          <div class="writing-title-en">Family Planning</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="17" data-bn="ইবির অভ্যন্তরে ভাঙ্গা রাস্তা" data-en="Broken Roads Inside IU Campus" data-paper-name="Daily Kaler Kantho" data-date="Published in Daily Kaler Kantho" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 17</div><div class="writing-paper">Daily Kaler Kantho</div>
+          <div class="writing-title-bn">ইবির অভ্যন্তরে ভাঙ্গা রাস্তা</div>
+          <div class="writing-title-en">Broken Roads Inside IU Campus</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="16" data-bn="বাংলাদেশের নদী ও রেল লাইনের পাশের এলাকাগুলো বস্তি থেকে স্বস্তির হবে কবে?" data-en="When Will Areas by Rivers and Railways Become Livable?" data-paper-name="Daily Jai Jai Din" data-date="Published in Daily Jai Jai Din" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 16</div><div class="writing-paper">Daily Jai Jai Din</div>
+          <div class="writing-title-bn">বাংলাদেশের নদী ও রেল লাইনের পাশের এলাকাগুলো বস্তি থেকে স্বস্তির হবে কবে?</div>
+          <div class="writing-title-en">When Will Areas by Rivers and Railways Become Livable?</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="15" data-bn="প্রতি জেলায় পাবলিক বিশ্ববিদ্যালয়" data-en="A Public University in Every District" data-paper-name="Daily Bhorer Kagoj" data-date="Published in Daily Bhorer Kagoj" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 15</div><div class="writing-paper">Daily Bhorer Kagoj</div>
+          <div class="writing-title-bn">প্রতি জেলায় পাবলিক বিশ্ববিদ্যালয়</div>
+          <div class="writing-title-en">A Public University in Every District</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="14" data-bn="সমস্যায় পরিপূর্ণ ইসলামী বিশ্ববিদ্যালয়" data-en="Islamic University Full of Problems" data-paper-name="Daily Share Biz" data-date="Published in Daily Share Biz" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 14</div><div class="writing-paper">Daily Share Biz</div>
+          <div class="writing-title-bn">সমস্যায় পরিপূর্ণ ইসলামী বিশ্ববিদ্যালয়</div>
+          <div class="writing-title-en">Islamic University Full of Problems</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="13" data-bn="বিশ্বের কোথায় ধর্ষণের শাস্তি কেমন" data-en="What Are the Punishments for Rape Around the World" data-paper-name="Daily Jai Jai Din" data-date="Published in Daily Jai Jai Din" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 13</div><div class="writing-paper">Daily Jai Jai Din</div>
+          <div class="writing-title-bn">বিশ্বের কোথায় ধর্ষণের শাস্তি কেমন</div>
+          <div class="writing-title-en">What Are the Punishments for Rape Around the World</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="12" data-bn="বন্ধু হলো জীবনের এক অমূল্য উপহার" data-en="A Friend is an Invaluable Gift of Life" data-paper-name="Daily Ittefaq" data-date="Published in Daily Ittefaq" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 12</div><div class="writing-paper">Daily Ittefaq</div>
+          <div class="writing-title-bn">বন্ধু হলো জীবনের এক অমূল্য উপহার</div>
+          <div class="writing-title-en">A Friend is an Invaluable Gift of Life</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="11" data-bn="শৌচাগারে মোবাইল চালানোর অপকারিতা" data-en="The Harms of Using Mobile in the Bathroom" data-paper-name="Daily Sangbad" data-date="Published in Daily Sangbad" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 11</div><div class="writing-paper">Daily Sangbad</div>
+          <div class="writing-title-bn">শৌচাগারে মোবাইল চালানোর অপকারিতা</div>
+          <div class="writing-title-en">The Harms of Using Mobile in the Bathroom</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="10" data-bn="বন্ধ হোক পোষ্য কোটা" data-en="The Dependent Quota Must End" data-paper-name="Daily Bhorer Kagoj" data-date="Published in Daily Bhorer Kagoj" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 10</div><div class="writing-paper">Daily Bhorer Kagoj</div>
+          <div class="writing-title-bn">বন্ধ হোক পোষ্য কোটা</div>
+          <div class="writing-title-en">The Dependent Quota Must End</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="09" data-bn="তরুণদের চোখে আগামীর বাংলাদেশ" data-en="Bangladesh of Tomorrow Through the Eyes of Youth" data-paper-name="Daily Karatoa" data-date="Published in Daily Karatoa" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 09</div><div class="writing-paper">Daily Karatoa</div>
+          <div class="writing-title-bn">তরুণদের চোখে আগামীর বাংলাদেশ</div>
+          <div class="writing-title-en">Bangladesh of Tomorrow Through the Eyes of Youth</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="08" data-bn="প্রবীণরা অবহেলার স্বীকার না হোক" data-en="The Elderly Must Not Be Neglected" data-paper-name="Daily Ittefaq" data-date="Published in Daily Ittefaq" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 08</div><div class="writing-paper">Daily Ittefaq</div>
+          <div class="writing-title-bn">প্রবীণরা অবহেলার স্বীকার না হোক</div>
+          <div class="writing-title-en">The Elderly Must Not Be Neglected</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="07" data-bn="পাবলিকিয়ান হওয়ার যুদ্ধ" data-en="The Battle to Become a Public University Student" data-paper-name="Daily Sangram" data-date="Published in Daily Sangram" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 07</div><div class="writing-paper">Daily Sangram</div>
+          <div class="writing-title-bn">পাবলিকিয়ান হওয়ার যুদ্ধ</div>
+          <div class="writing-title-en">The Battle to Become a Public University Student</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="06" data-bn="শীতের আর্তনাদ" data-en="Winter's Cry" data-paper-name="Daily Sangbad" data-date="Published in Daily Sangbad" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 06</div><div class="writing-paper">Daily Sangbad</div>
+          <div class="writing-title-bn">শীতের আর্তনাদ</div>
+          <div class="writing-title-en">Winter's Cry</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="05" data-bn="ইবির জিমনেসিয়ামে যত সমস্যা" data-en="Many Problems in IU's Gymnasium" data-paper-name="Daily Ajkaler Khobor" data-date="Published in Daily Ajkaler Khobor" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 05</div><div class="writing-paper">Daily Ajkaler Khobor</div>
+          <div class="writing-title-bn">ইবির জিমনেসিয়ামে যত সমস্যা</div>
+          <div class="writing-title-en">Many Problems in IU's Gymnasium</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="04" data-bn="সমুন্নত হোক ইবির গ্রন্থাগার" data-en="Let IU's Library Be Elevated" data-paper-name="Daily Amader Shomoy" data-date="Published in Daily Amader Shomoy" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 04</div><div class="writing-paper">Daily Amader Shomoy</div>
+          <div class="writing-title-bn">সমুন্নত হোক ইবির গ্রন্থাগার</div>
+          <div class="writing-title-en">Let IU's Library Be Elevated</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="03" data-bn="সামাজিক যোগাযোগ মাধ্যমে নিষ্ক্রিয় ইবি" data-en="IU Inactive on Social Media" data-paper-name="Daily Amader Shomoy" data-date="Published in Daily Amader Shomoy" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 03</div><div class="writing-paper">Daily Amader Shomoy</div>
+          <div class="writing-title-bn">সামাজিক যোগাযোগ মাধ্যমে নিষ্ক্রিয় ইবি</div>
+          <div class="writing-title-en">IU Inactive on Social Media</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="02" data-bn="চালু হোক ইবির ক্যাফেটেরিয়া" data-en="Let IU's Cafeteria Open" data-paper-name="Prothom Alo" data-date="Published in Prothom Alo" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 02</div><div class="writing-paper">Prothom Alo</div>
+          <div class="writing-title-bn">চালু হোক ইবির ক্যাফেটেরিয়া</div>
+          <div class="writing-title-en">Let IU's Cafeteria Open</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+        <div class="writing-card art-theme" data-num="01" data-bn="ইবির ফোয়ারা চালু হোক" data-en="Let IU's Fountain Be Activated" data-paper-name="Daily Kaler Kantho" data-date="Published in Daily Kaler Kantho" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num art">No. 01</div><div class="writing-paper">Daily Kaler Kantho</div>
+          <div class="writing-title-bn">ইবির ফোয়ারা চালু হোক</div>
+          <div class="writing-title-en">Let IU's Fountain Be Activated</div>
+          <span class="writing-open-btn art">Read Full Article ↗</span>
+        </div>
+
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div class="page" id="reports">
+    <div class="page-bg"><div class="bg-grid"></div><div class="bg-orb" style="width:500px;height:500px;background:rgba(255,61,113,.05);top:-200px;right:0;animation-duration:12s;"></div></div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Journalism</div>
+      <h2 class="section-title">Special News Reports</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line" style="background:linear-gradient(90deg,var(--warn),transparent);"></div>
+      <div class="articles-search">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="reports-search" placeholder="Search reports..." oninput="filterWritings('reports-grid','reports-search','reports-count',7)">
+        </div>
+        <div class="articles-count" id="reports-count">Showing 7 reports</div>
+      </div>
+
+      <!--
+      ══════════════════════════════════════════════════════
+      HOW TO EDIT A REPORT CARD:
+      data-bn = বাংলা শিরোনাম
+      data-en = English title
+      data-paper-name = পত্রিকার নাম
+      data-date = প্রকাশের তারিখ
+      data-link = পত্রিকার লিংক
+      data-content = সম্পূর্ণ রিপোর্টের লেখা (এখানে paste করুন)
+      ══════════════════════════════════════════════════════
+      -->
+
+      <div class="writing-grid" id="reports-grid">
+
+        <div class="writing-card rep-theme" data-num="07" data-bn="বিশেষ প্রতিবেদন ০৭" data-en="Special Report 07" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 07</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০৭</div>
+          <div class="writing-title-en">Special Report 07</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="06" data-bn="বিশেষ প্রতিবেদন ০৬" data-en="Special Report 06" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 06</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০৬</div>
+          <div class="writing-title-en">Special Report 06</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="05" data-bn="বিশেষ প্রতিবেদন ০৫" data-en="Special Report 05" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 05</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০৫</div>
+          <div class="writing-title-en">Special Report 05</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="04" data-bn="বিশেষ প্রতিবেদন ০৪" data-en="Special Report 04" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 04</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০৪</div>
+          <div class="writing-title-en">Special Report 04</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="03" data-bn="বিশেষ প্রতিবেদন ০৩" data-en="Special Report 03" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 03</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০৩</div>
+          <div class="writing-title-en">Special Report 03</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="02" data-bn="বিশেষ প্রতিবেদন ০২" data-en="Special Report 02" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 02</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০২</div>
+          <div class="writing-title-en">Special Report 02</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+        <div class="writing-card rep-theme" data-num="01" data-bn="বিশেষ প্রতিবেদন ০১" data-en="Special Report 01" data-paper-name="Newspaper Name" data-date="Date" data-link="#" data-content="" onclick="openReader(this)">
+          <div class="writing-num rep">Report 01</div><div class="writing-paper">Newspaper Name</div>
+          <div class="writing-title-bn">বিশেষ প্রতিবেদন ০১</div>
+          <div class="writing-title-en">Special Report 01</div>
+          <span class="writing-open-btn rep">Read Full Report ↗</span>
+        </div>
+
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="page" id="education">
+    <div class="page-bg"><div class="bg-grid"></div><div class="bg-orb" style="width:600px;height:600px;background:rgba(0,255,157,.04);top:-200px;left:50%;transform:translateX(-50%);animation-duration:14s;"></div><div id="data-streams"></div></div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Academic Journey</div>
+      <h2 class="section-title">Education</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line" style="background:linear-gradient(90deg,var(--accent2),transparent);"></div>
+      <div class="edu-timeline">
+        <div class="edu-item">
+          <div class="edu-node">🎓</div>
+          <div class="edu-content">
+            <div class="edu-period">August 2023 — Present</div>
+            <div class="edu-degree">B.Sc. (Engg.) in Biomedical Engineering</div>
+            <div class="edu-inst">Islamic University, Kushtia, Bangladesh</div>
+            <div class="edu-note">Session 2022–23 · Faculty of Engineering &amp; Technology · Third Year</div>
+            <div class="edu-badges"><span class="edu-badge gold">Currently Running</span><span class="edu-badge">50 Seats / Batch</span><span class="edu-badge">8th Batch</span><span class="edu-badge">5th Dept. in FET</span><span class="edu-badge">29th Dept. Overall</span></div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-node">🏛️</div>
+          <div class="edu-content">
+            <div class="edu-period">Class of 2022</div>
+            <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+            <div class="edu-inst">Government Bangla College, Dhaka</div>
+            <div class="edu-badges"><span class="edu-badge gold">GPA 4.50 / 5.00</span><span class="edu-badge">Science Group</span></div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-node">🏫</div>
+          <div class="edu-content">
+            <div class="edu-period">Class of 2020</div>
+            <div class="edu-degree">Secondary School Certificate (SSC)</div>
+            <div class="edu-inst">Tongi Pilot High School, Gazipur</div>
+            <div class="edu-badges"><span class="edu-badge gold">GPA 5.00 / 5.00 ✦</span><span class="edu-badge">Science Group</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <!-- JOB -->
+  <div class="page" id="job">
+    <div class="page-bg"><div class="bg-grid"></div><div class="bg-orb" style="width:450px;height:450px;background:rgba(0,220,255,.04);bottom:-100px;right:-100px;animation-duration:10s;"></div></div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Professional</div>
+      <h2 class="section-title">Job Experience</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line"></div>
+      <div class="exp-grid">
+        <div class="exp-card"><div class="exp-logo">📰</div><div class="exp-org">Daily Agrajatra Pratidin</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">January 2026 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📺</div><div class="exp-org">Sunnews</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">January 2026 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📰</div><div class="exp-org">The Daily Aajker Probhat</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">December 2025 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📰</div><div class="exp-org">Noya Songbad</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">June 2025 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📡</div><div class="exp-org">BMF Television</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">June 2025 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📰</div><div class="exp-org">Daynik Desherkotha</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">June 2025 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📰</div><div class="exp-org">Daily Rupalidesh</div><div class="exp-role">Islamic University Correspondent</div><div class="exp-period">February 2025 — May 2025</div><span class="exp-status former">Former</span></div>
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <!-- CLUB -->
+  <div class="page" id="club">
+    <div class="page-bg"><div class="bg-grid"></div><div class="bg-orb" style="width:500px;height:500px;background:rgba(147,51,234,.05);top:-100px;left:-100px;animation-duration:11s;"></div><div id="network-nodes-container"></div></div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Organizational</div>
+      <h2 class="section-title">Clubbing Experience</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line" style="background:linear-gradient(90deg,#9333ea,transparent);"></div>
+      <div class="exp-grid">
+        <div class="exp-card"><div class="exp-logo">⚡</div><div class="exp-org">IEEE EMBS IU Student Branch</div><div class="exp-role">Publication Coordinator</div><div class="exp-period">Sep 22, 2025 — Present (Coordinator)</div><div class="exp-period">Jan 1, 2025 — Present (Member)</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">🔬</div><div class="exp-org">Biomed Innovates</div><div class="exp-role">IT Secretary</div><div class="exp-period">Jan 21, 2026 — Present (IT Secretary)</div><div class="exp-period">Feb 5, 2025 – Jan 20, 2026 (Publicity Secretary)</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">📚</div><div class="exp-org">Pathakbondhu IU Unit</div><div class="exp-role">Organizing Secretary</div><div class="exp-period">December 5, 2024 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">🔭</div><div class="exp-org">IU Science Club</div><div class="exp-role">General Member</div><div class="exp-period">November 28, 2023 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">🗣️</div><div class="exp-org">IU Debating Society</div><div class="exp-role">General Member</div><div class="exp-period">November 18, 2023 — Present</div><span class="exp-status current"><span class="status-dot"></span> Current</span></div>
+        <div class="exp-card"><div class="exp-logo">✍️</div><div class="exp-org">Bangladesh Torun Column Lekhok Forum</div><div class="exp-role">Former Member</div><div class="exp-period">Oct 2023 – Jul 2025</div><span class="exp-status former">Former</span></div>
+        <div class="exp-card"><div class="exp-logo">🛒</div><div class="exp-org">Consumer Youth Bangladesh</div><div class="exp-role">Former General Member (IU Unit)</div><div class="exp-period">December 5, 2024 – August 2, 2025</div><span class="exp-status former">Former</span></div>
+        <div class="exp-card"><div class="exp-logo">🌿</div><div class="exp-org">Green Voice</div><div class="exp-role">Former General Member (IU Unit)</div><div class="exp-period">December 17, 2023 – January 17, 2025</div><span class="exp-status former">Former</span></div>
+        <div class="exp-card"><div class="exp-logo">🏥</div><div class="exp-org">Bangladesh Red Crescent Society</div><div class="exp-role">Former RCY Volunteer</div><div class="exp-period">February 28, 2022 – October 30, 2023</div><span class="exp-status former">Former</span></div>
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="page" id="about">
+    <div class="page-bg"><div class="bg-grid"></div><div class="bg-orb" style="width:500px;height:500px;background:rgba(0,220,255,.04);top:-100px;right:-100px;animation-duration:12s;"></div></div>
+    <div class="page-inner">
+      <div class="section-eyebrow">Personal</div>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-sub">Md. Minhazur Rahman Mahim</div>
+      <div class="section-line"></div>
+      <div class="about-layout">
+        <div>
+          <div class="about-photo-card">
+            <img src="images/about.jpg" alt="Minhaz">
+            <div class="about-photo-label">Md. Minhazur Rahman Mahim</div>
+          </div>
+        </div>
+        <div>
+          <p class="about-bio">I'm <strong style="color:var(--text)">Md. Minhazur Rahman Mahim</strong>, a third-year Biomedical Engineering student at Islamic University, Kushtia, Bangladesh (Session 2022–23). I'm passionate about the intersection of engineering, healthcare, and social impact.</p>
+          <p class="about-bio">Alongside my studies, I work as a campus correspondent for multiple Bengali daily newspapers and TV channels, covering university events, academic achievements, and campus issues. I believe in science communication and using journalism as a tool for positive change.</p>
+          <p class="about-bio">I actively participate in IEEE EMBS, Biomed Innovates, Pathakbondhu, and other campus organizations. My interests span biomedical research, youth empowerment, and environmental advocacy.</p>
+          <div class="about-section-label">Contact &amp; Links</div>
+          <div class="contact-item"><span class="contact-icon">✉️</span><a class="contact-link" href="mailto:mdminhazur44rahman@gmail.com">mdminhazur44rahman@gmail.com</a></div>
+          <div class="contact-item"><span class="contact-icon">📍</span>Islamic University, Kushtia, Bangladesh</div>
+          <div class="contact-item"><span class="contact-icon" style="font-weight:700">f</span><a class="contact-link" href="https://facebook.com/mdminhazur44rahman" target="_blank">facebook.com/mdminhazur44rahman</a></div>
+          <div class="contact-item"><span class="contact-icon" style="font-style:italic">ig</span><a class="contact-link" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">instagram.com/mdminhazurrahmanmahim</a></div>
+          <div class="contact-item"><span class="contact-icon" style="font-size:10px;font-weight:800">in</span><a class="contact-link" href="https://linkedin.com/in/mdminhazur44rahman" target="_blank">linkedin.com/in/mdminhazur44rahman</a></div>
+          <div class="about-section-label">Interests &amp; Skills</div>
+          <div class="skills-wrap">
+            <span class="skill-tag">Biomedical Engineering</span><span class="skill-tag">Research</span><span class="skill-tag">Journalism</span><span class="skill-tag">Science Writing</span><span class="skill-tag">Social Advocacy</span><span class="skill-tag">IEEE EMBS</span><span class="skill-tag">Community Service</span><span class="skill-tag">Environmental Issues</span><span class="skill-tag">Youth Empowerment</span>
+          </div>
+        </div>
+      </div>
+      <div class="page-footer"><span>© 2026 Md. Minhazur Rahman Mahim</span><div class="footer-socials"><a class="footer-soc" href="https://facebook.com/mdminhazur44rahman" target="_blank">Facebook</a><a class="footer-soc" href="https://instagram.com/mdminhazurrahmanmahim" target="_blank">Instagram</a></div></div>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<!-- ARTICLE READER -->
+<div class="article-reader" id="article-reader">
+  <div class="reader-topbar">
+    <button class="reader-back" onclick="closeReader()">← Back</button>
+    <span style="font-family:'Orbitron',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;">Md. Minhazur Rahman Mahim</span>
+  </div>
+  <div class="reader-body">
+    <div class="reader-eyebrow" id="reader-eyebrow">Article</div>
+    <div class="reader-title-bn" id="reader-title-bn"></div>
+    <div class="reader-title-en" id="reader-title-en"></div>
+    <div class="reader-meta">
+      <span class="reader-meta-item" id="reader-paper">📰</span>
+      <span class="reader-meta-item" id="reader-date">📅</span>
+    </div>
+    <div id="reader-content-area"></div>
+    <div class="reader-ext-link" id="reader-ext-link"></div>
+  </div>
+</div>
+
+<script>
+const pages=['home','articles','reports','education','job','club','about'];
+const pageNames={home:'Home',articles:'Bengali Articles',reports:'Special News Reports',education:'Education',job:'Job Experience',club:'Clubbing Experience',about:'About Me'};
+
+function showPage(id,navEl){
+  if(!pages.includes(id))id='home';
+  const flash=document.getElementById('page-flash');
+  flash.classList.remove('flash-active');void flash.offsetWidth;flash.classList.add('flash-active');
+  setTimeout(()=>flash.classList.remove('flash-active'),1300);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(navEl){navEl.classList.add('active');}
+  else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active');});}
+  document.getElementById('topbar-title').textContent=pageNames[id]||id;
+  closeSidebar();window.scrollTo(0,0);
+  history.replaceState(null,'','#'+id);
+}
+
+function loadFromHash(){
+  const hash=location.hash.replace('#','');
+  if(pages.includes(hash))showPage(hash,null);
+  else showPage('home',null);
+}
+
+window.addEventListener('hashchange',()=>{
+  const hash=location.hash.replace('#','');
+  if(!document.getElementById('article-reader').classList.contains('open'))
+    showPage(hash||'home',null);
+});
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+function filterWritings(gridId,inputId,countId,total){
+  const q=document.getElementById(inputId).value.toLowerCase().trim();
+  const cards=document.querySelectorAll('#'+gridId+' .writing-card');
+  let visible=0;
+  cards.forEach(c=>{
+    const bn=(c.getAttribute('data-bn')||'').toLowerCase();
+    const en=(c.getAttribute('data-en')||'').toLowerCase();
+    const pn=(c.getAttribute('data-paper-name')||'').toLowerCase();
+    const match=!q||bn.includes(q)||en.includes(q)||pn.includes(q);
+    c.style.display=match?'':'none';
+    if(match)visible++;
+  });
+  document.getElementById(countId).textContent=q?'Showing '+visible+' of '+total:'Showing '+total+(gridId==='articles-grid'?' articles':' reports');
+}
+
+function openReader(el){
+  const num=el.getAttribute('data-num');
+  const bn=el.getAttribute('data-bn');
+  const en=el.getAttribute('data-en');
+  const paper=el.getAttribute('data-paper-name');
+  const date=el.getAttribute('data-date');
+  const link=el.getAttribute('data-link');
+  const content=el.getAttribute('data-content')||'';
+  const isRep=el.classList.contains('rep-theme');
+  document.getElementById('reader-eyebrow').textContent=isRep?'Special Report '+num:'Article No. '+num;
+  document.getElementById('reader-title-bn').textContent=bn;
+  document.getElementById('reader-title-en').textContent=en;
+  document.getElementById('reader-paper').textContent='📰 '+paper;
+  document.getElementById('reader-date').textContent='📅 '+date;
+  const area=document.getElementById('reader-content-area');
+  if(content&&content.trim()!==''){
+    area.innerHTML='<div class="reader-content">'+content+'</div>';
+  }else{
+    area.innerHTML='<div class="reader-placeholder">✦ লেখাটি শীঘ্রই যোগ করা হবে ✦<br><br><small style="font-family:Rajdhani,sans-serif;font-size:14px;">HTML ফাইলে এই card-এর <code>data-content=""</code> এর ভেতরে সম্পূর্ণ লেখাটি paste করুন।</small></div>';
+  }
+  const extArea=document.getElementById('reader-ext-link');
+  if(link&&link!=='#'){extArea.innerHTML='<a href="'+link+'" target="_blank">পত্রিকায় পড়ুন → '+paper+' ↗</a>';}
+  else{extArea.innerHTML='';}
+  document.getElementById('article-reader').classList.add('open');
+  document.body.style.overflow='hidden';
+  history.pushState(null,'',location.hash+'/article-'+num);
+}
+
+function closeReader(){
+  document.getElementById('article-reader').classList.remove('open');
+  document.body.style.overflow='';
+  history.back();
+}
+
+window.addEventListener('popstate',()=>{
+  if(document.getElementById('article-reader').classList.contains('open'))closeReader();
+});
+
+function drawDNA(){
+  const canvas=document.getElementById('dna-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  let t=0;
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+    const col1=isDark?'0,220,255':'0,110,184';
+    const col2=isDark?'0,255,157':'0,135,90';
+    const w=canvas.width,h=canvas.height;
+    ctx.strokeStyle='rgba('+col1+',0.3)';ctx.lineWidth=0.5;
+    for(let x=0;x<w;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    for(let y=0;y<h;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const cx=w*.5,amp=Math.min(w*.18,120),freq=0.018;
+    for(let y=0;y<h;y+=2){
+      const ph=y*freq+t;
+      const x1=cx+Math.sin(ph)*amp,x2=cx+Math.sin(ph+Math.PI)*amp;
+      const al=0.4+0.2*Math.sin(ph*2);
+      ctx.beginPath();ctx.arc(x1,y,1.5,0,Math.PI*2);ctx.fillStyle='rgba('+col1+','+al+')';ctx.fill();
+      ctx.beginPath();ctx.arc(x2,y,1.5,0,Math.PI*2);ctx.fillStyle='rgba('+col2+','+al+')';ctx.fill();
+      if(y%30<2){
+        ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.strokeStyle='rgba('+col1+',0.15)';ctx.lineWidth=1;ctx.stroke();
+        ctx.beginPath();ctx.arc(x1,y,3,0,Math.PI*2);ctx.fillStyle='rgba('+col1+',0.6)';ctx.fill();
+        ctx.beginPath();ctx.arc(x2,y,3,0,Math.PI*2);ctx.fillStyle='rgba('+col2+',0.6)';ctx.fill();
+      }
+    }
+    t+=0.02;requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+function initDataStreams(){
+  const c=document.getElementById('data-streams');if(!c)return;
+  for(let i=0;i<12;i++){const s=document.createElement('div');s.style.cssText='position:absolute;left:'+Math.random()*100+'%;top:-200px;width:1px;height:'+(60+Math.random()*100)+'px;background:linear-gradient(180deg,transparent,rgba(0,255,157,.4),transparent);animation:streamFlow '+(3+Math.random()*4)+'s '+(Math.random()*5)+'s linear infinite;opacity:.25;';c.appendChild(s);}
+}
+function initInkLines(){
+  const c=document.getElementById('ink-lines-container');if(!c)return;
+  for(let i=0;i<15;i++){const l=document.createElement('div');l.style.cssText='position:absolute;left:'+Math.random()*20+'%;top:'+(5+i*6)+'%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,53,.25),transparent);animation:inkDraw '+(4+Math.random()*4)+'s '+(Math.random()*6)+'s linear infinite;width:0;';c.appendChild(l);}
+}
+function initNetworkNodes(){
+  const c=document.getElementById('network-nodes-container');if(!c)return;
+  for(let i=0;i<20;i++){const n=document.createElement('div');n.style.cssText='position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:5px;height:5px;border-radius:50%;background:rgba(147,51,234,.5);box-shadow:0 0 8px rgba(147,51,234,.4);animation:nodeBreath '+(2+Math.random()*2)+'s '+(Math.random()*2)+'s ease-in-out infinite alternate;';c.appendChild(n);}
+}
+
+window.addEventListener('load',()=>{drawDNA();initDataStreams();initInkLines();initNetworkNodes();loadFromHash();});
+</script>
+</body>
+</html>
