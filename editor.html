@@ -137,7 +137,7 @@ function openItem(k,i){const l=L[k],a=arr(k),x=a[i],s=$('#sh');
 function show(t){tab=t;$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-t="${k}" aria-pressed="${k==t}">${l}</button>`).join('');
  $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.t));$('#tabs [aria-pressed=true]').scrollIntoView({inline:'center',block:'nearest'});
  const m=$('#mn');
- if(OB[t]){const o=OB[t][0]();m.innerHTML=OB[t][1].map(f=>fh(o,f)).join('')+(t=='meta'?'<div class="ar"><button id="dl">Download backup of index.html</button><button id="out" class="dg">Disconnect this phone</button></div>':'');bind(m,o);
+ if(OB[t]){const o=OB[t][0]();m.innerHTML=OB[t][1].map(f=>fh(o,f)).join('')+(t=='meta'?'<p class="em" style="margin:4px 0 16px">Publish also creates a separate web page for every article and report, plus sitemap.xml, so Google can find each one.</p><div class="ar"><button id="dl">Download backup of index.html</button><button id="out" class="dg">Disconnect this phone</button></div>':'');bind(m,o);
   if(t=='meta'){$('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([build()],{type:'text/html'}));a.download='index.html';a.click()};$('#out').onclick=()=>{if(confirm('Remove the saved token from this phone?')){try{localStorage.removeItem('ed-cfg');localStorage.removeItem('ed-draft')}catch(e){}location.reload()}}}}
  else if(t=='images'){m.innerHTML=SL.map(([k,l,h])=>`<div class="sl"><b>${l}</b><small>${h}</small><img class="pv" ${S.images[k]?'':'hidden'} src="${esc(pv(S.images[k]))}" alt=""><div class="row2"><label class="fb" style="margin:0">Choose from gallery<input type="file" accept="image/*" data-slot="${k}" hidden></label><button class="rm" data-rm="${k}">Remove</button></div></div>`).join('');
   m.querySelectorAll('[data-slot]').forEach(e=>e.onchange=async()=>{if(!e.files[0])return;const sp=SL.find(x=>x[0]==e.dataset.slot);try{S.images[sp[0]]=await pick(e.files[0],sp[0],sp[3]);chg();const im=e.closest('.sl').querySelector('img');im.src=P[S.images[sp[0]]].url;im.hidden=false;toast('Photo added. Publish to upload it.')}catch(x){toast(x.message)}});
@@ -148,15 +148,93 @@ function show(t){tab=t;$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-t="$
 function build(){const M=S.meta,ea=s=>esc(s),abs=p=>!p||/^https?:/.test(p)?p:(M.url||base()).replace(/\/?$/,'/')+p;
  let h=HTML.replace(RX,(m,a,j,z)=>a+JSON.stringify(S).replace(/</g,'\\u003c')+z).replace(/(<title id="t">)[\s\S]*?(<\/title>)/,(m,a,z)=>a+ea(M.title)+z);
  const set=(id,at,v)=>{h=h.replace(new RegExp('(<[a-z]+[^>]*\\sid="'+id+'"[^>]*\\s'+at+'=")[^"]*(")'),(m,a,z)=>a+ea(v)+z)};
- set('m-desc','content',M.desc);set('og-t','content',M.ogTitle||M.title);set('og-d','content',M.desc);set('og-u','content',M.url);set('og-i','content',abs(S.images.og));set('fav','href',S.images.fav);return h}
-async function publish(){const b=$('#pub');b.disabled=true;
- try{const js=JSON.stringify(S),use=Object.keys(P).filter(p=>js.includes(p));
-  for(let i=0;i<use.length;i++){$('#st').textContent=`Uploading photo ${i+1} of ${use.length}…`;const r=await api(use[i],{m:'PUT',b:{message:'Add '+use[i],content:P[use[i]].b64,branch:C.b}});if(!r.ok)throw await err(r)}
-  $('#st').textContent='Publishing…';const cr=await api('index.html',{q:'?ref='+encodeURIComponent(C.b)});if(!cr.ok)throw await err(cr);const cj=await cr.json();
+ set('m-desc','content',M.desc);set('og-t','content',M.ogTitle||M.title);set('og-d','content',M.desc);set('og-u','content',M.url);set('og-i','content',abs(S.images.og));set('fav','href',S.images.fav);set('cn','href',M.url);return h}
+const MO='january february march april may june july august september october november december'.split(' ');
+const ts=d=>{const m=String(d).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);return m?Date.UTC(+m[3],Math.max(0,MO.indexOf(m[2].toLowerCase())),+m[1]):0};
+const wl=()=>[...S.articles,...S.reports].sort((a,b)=>ts(b.date)-ts(a.date));
+const U=()=>(S.meta.url||base()).replace(/\/?$/,'/'),ab=p=>!p||/^https?:/.test(p)?p:U()+p.replace(/^\//,'');
+const iso=d=>{const t=ts(d);return t?new Date(t).toISOString().slice(0,10):''};
+const short=()=>{const n=S.home.name.split(' ').filter(w=>!/^md\.?$/i.test(w));return n.length>1?n[0]+' '+n[n.length-1]:S.home.name};
+const PCSS=`:root{color-scheme:light;--bg:#ECEEEB;--card:#F6F7F5;--ink:#171B19;--mute:#5C635E;--rule:#CBD0CB;--red:#B42318;--serif:'Newsreader','Noto Serif Bengali',Georgia,serif;--sans:'Schibsted Grotesk','Noto Sans Bengali',system-ui,sans-serif}
+[data-theme=dark]{color-scheme:dark;--bg:#121517;--card:#1A1E20;--ink:#E9EAE6;--mute:#9BA29C;--rule:#2B3134;--red:#F0705F}
+*{box-sizing:border-box;margin:0;padding:0}html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.7 var(--serif);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom)}
+a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.w{max-width:680px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+header{border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top)}.bar{height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font:italic 500 22px var(--serif);text-decoration:none}.bar nav a{font:500 15px var(--sans);min-height:44px;display:inline-flex;align-items:center;margin-left:14px;text-decoration:none}
+.pg{padding-top:28px}.back{display:inline-flex;align-items:center;min-height:44px;font:500 15px var(--sans);text-decoration:none}
+.m{display:flex;justify-content:space-between;gap:16px;font:500 14px var(--sans);color:var(--mute);border-top:2px solid var(--ink);padding-top:10px;margin-top:8px}.m b{color:var(--red);margin-left:10px}
+h1{font:600 clamp(28px,7.5vw,44px)/1.4 var(--serif);margin:18px 0 8px}.en{font:italic 400 19px/1.45 var(--serif);color:var(--mute)}
+.cl{margin-top:28px}.cl img{display:block;width:100%;height:auto;background:var(--card)}.cl figcaption{font:400 13px var(--sans);color:var(--mute);margin-top:8px}
+.body{margin-top:30px;font-size:19.5px;line-height:1.95}.body p+p{margin-top:1.1em}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin:36px 0}.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 20px;background:var(--ink);color:var(--bg);font:600 16px var(--sans);text-decoration:none}.btn.o{background:none;color:var(--ink);border:1px solid var(--ink)}
+.pn{border-top:2px solid var(--ink)}.pn a{display:block;padding:14px 0;border-bottom:1px solid var(--rule);text-decoration:none}.pn small{display:block;font:500 13px var(--sans);color:var(--mute)}.pn span{font:600 18px/1.5 var(--serif)}
+footer{margin-top:72px;border-top:2px solid var(--ink)}footer .w{display:flex;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:48px;font:400 14.5px var(--sans);color:var(--mute)}`;
+function page(x,i,W){const H=S.home,u=U()+'w/'+x.id+'.html',nw=W[i-1],od=W[i+1],d=iso(x.date),rp=x.id[0]=='r',
+ pa=String(x.content||'').split(/\n+/).map(s=>s.trim()).filter(Boolean),ds=((s=>s.length>155?s.slice(0,155).replace(/\s+\S*$/,'')+'…':s)(pa[0]||x.en||'')),im=ab(x.img||S.images.og),t=x.bn+' | '+short(),
+ rel=p=>/^https?:/.test(p)?p:'../'+p.replace(/^\//,''),
+ ld=JSON.stringify({'@context':'https://schema.org','@type':'Article',headline:x.bn,alternativeHeadline:x.en||undefined,inLanguage:'bn',datePublished:d||undefined,author:{'@type':'Person',name:H.name,url:U()},mainEntityOfPage:u,image:im||undefined,isPartOf:{'@type':'CreativeWork',name:x.paper}}).replace(/</g,'\\u003c'),
+ nv=(l,y)=>y?`<a href="${esc(y.id)}.html"><small>${l}</small><span lang="bn">${esc(y.bn)}</span></a>`:'';
+ return `<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ECEEEB" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121517" media="(prefers-color-scheme: dark)">
+<title>${esc(t)}</title>
+<meta name="description" content="${esc(ds)}">
+<link rel="canonical" href="${esc(u)}">
+<meta property="og:type" content="article"><meta property="og:title" content="${esc(x.bn)}"><meta property="og:description" content="${esc(ds)}"><meta property="og:url" content="${esc(u)}">${im?`<meta property="og:image" content="${esc(im)}">`:''}${d?`<meta property="article:published_time" content="${d}">`:''}
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="${esc(rel(S.images.fav||''))}">
+<script type="application/ld+json">${ld}<\/script>
+<script>(function(){var m='system',r=document.documentElement;try{m=localStorage.getItem('theme')||'system'}catch(e){}r.dataset.theme=(m=='dark'||(m=='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light'})()<\/script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap">
+<style>${PCSS}</style>
+</head>
+<body>
+<header><div class="w bar"><a class="logo" href="../">${esc(short())}</a><nav><a href="../#/writing">All writing</a><a href="../#/about">About</a></nav></div></header>
+<main><article class="w pg"><a class="back" href="../#/writing">&larr; Back to writing</a>
+<div class="m"><span>${esc(x.paper)}${rp?'<b>Report</b>':''}</span><time${d?` datetime="${d}"`:''}>${esc(x.date)}</time></div>
+<h1 lang="bn">${esc(x.bn)}</h1><p class="en">${esc(x.en)}</p>
+${x.img?`<figure class="cl"><img src="${esc(rel(x.img))}" alt="Newspaper clipping of this piece" loading="lazy"><figcaption>As printed in ${esc(x.paper)}</figcaption></figure>`:''}
+<div class="body" lang="bn">${pa.length?pa.map(s=>`<p>${esc(s)}</p>`).join(''):'<p>The full text will be added soon.</p>'}</div>
+<div class="acts">${/^https?:/.test(x.link||'')?`<a class="btn" href="${esc(x.link)}" target="_blank" rel="noopener">Read in ${esc(x.paper)}</a>`:''}<button class="btn o" id="sh">Share</button></div>
+<nav class="pn">${nv('Newer',nw)}${nv('Older',od)}</nav></article></main>
+<footer><div class="w"><span>&copy; ${new Date().getFullYear()} ${esc(H.name)}</span><a href="../">Home</a></div></footer>
+<script>document.getElementById('sh').onclick=async function(){var b=this;try{if(navigator.share)await navigator.share({title:document.title,url:location.href});else{await navigator.clipboard.writeText(location.href);b.textContent='Link copied'}}catch(e){}}<\/script>
+</body>
+</html>
+`}
+function sitemap(){const u=U(),e=(l,d)=>`<url><loc>${esc(l)}</loc>${d?`<lastmod>${d}</lastmod>`:''}</url>`;
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+[e(u,new Date().toISOString().slice(0,10)),...wl().map(x=>e(u+'w/'+x.id+'.html',iso(x.date)))].join('\n')+'\n</urlset>\n'}
+async function gj(p,o={}){const r=await fetch(`https://api.github.com/repos/${C.o}/${C.r}/git/${p}`,{method:o.m||'GET',headers:{Authorization:'Bearer '+C.t,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:o.b?JSON.stringify(o.b):undefined});if(!r.ok)throw await err(r);return r.json()}
+async function publish(){const b=$('#pub');b.disabled=true;const q='?ref='+encodeURIComponent(C.b);
+ try{$('#st').textContent='Checking…';
+  const cr=await api('index.html',{q});if(!cr.ok)throw await err(cr);const cj=await cr.json();
   if(cj.sha!==sha&&!confirm('index.html was changed somewhere else after you opened this editor. Publish anyway and replace it?'))throw Error('Cancelled. Nothing was overwritten.');
-  const h=build(),r=await api('index.html',{m:'PUT',b:{message:'Update site from phone editor',content:enc(h),sha:cj.sha,branch:C.b}});if(!r.ok)throw await err(r);
-  sha=(await r.json()).content.sha;HTML=h;P={};dirty=false;try{localStorage.removeItem('ed-draft')}catch(e){}st();toast('Published. The live site updates in 1 to 2 minutes.')}
+  const W=wl(),files={'index.html':build(),'sitemap.xml':sitemap(),'robots.txt':`User-agent: *\nAllow: /\n\nSitemap: ${U()}sitemap.xml\n`};
+  W.forEach((x,i)=>files['w/'+x.id+'.html']=page(x,i,W));
+  $('#st').textContent='Preparing…';
+  const ref=await gj('ref/heads/'+encodeURIComponent(C.b)),hc=await gj('commits/'+ref.object.sha),tr=await gj('trees/'+hc.tree.sha+'?recursive=1');
+  const en=Object.entries(files).map(([path,content])=>({path,mode:'100644',type:'blob',content}));
+  tr.tree.forEach(t=>{if(/^w\/[ar]\d+\.html$/.test(t.path)&&!files[t.path])en.push({path:t.path,mode:'100644',type:'blob',sha:null})});
+  const js=JSON.stringify(S),use=Object.keys(P).filter(p=>js.includes(p));
+  for(let i=0;i<use.length;i++){$('#st').textContent=`Uploading photo ${i+1} of ${use.length}…`;const bl=await gj('blobs',{m:'POST',b:{content:P[use[i]].b64,encoding:'base64'}});en.push({path:use[i],mode:'100644',type:'blob',sha:bl.sha})}
+  $('#st').textContent='Publishing…';
+  const nt=await gj('trees',{m:'POST',b:{base_tree:hc.tree.sha,tree:en}});
+  if(nt.sha==hc.tree.sha){st();toast('Nothing new to publish.');b.disabled=false;return}
+  const nc=await gj('commits',{m:'POST',b:{message:'Update site from phone editor',tree:nt.sha,parents:[ref.object.sha]}});
+  await gj('refs/heads/'+encodeURIComponent(C.b),{m:'PATCH',b:{sha:nc.sha}});
+  try{sha=(await (await api('index.html',{q})).json()).sha}catch(e){}
+  HTML=files['index.html'];P={};dirty=false;try{localStorage.removeItem('ed-draft')}catch(e){}st();toast('Published. Live in 1 to 2 minutes.')}
  catch(e){st();toast(e.message)}b.disabled=false}
+window.EDT={page,sitemap,wl};
 $('#pub').onclick=publish;
 $('#prev').onclick=()=>{const h=build().replace('<head>',`<head><base href="${base()}">`);const w=open(URL.createObjectURL(new Blob([h],{type:'text/html'})),'_blank');if(!w)toast('Allow pop-ups to see the preview.')};
 addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
