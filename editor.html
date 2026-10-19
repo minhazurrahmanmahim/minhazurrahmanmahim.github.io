@@ -7,6 +7,9 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>Site editor</title>
+<link rel="manifest" href="editor-manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#171B19">
 <style>
 :root{color-scheme:light dark;--bg:#ECEEEB;--card:#F7F8F6;--ink:#171B19;--mute:#5C635E;--rule:#CBD0CB;--red:#B42318;--ok:#17714A}
 @media(prefers-color-scheme:dark){:root{--bg:#121517;--card:#1B1F21;--ink:#E9EAE6;--mute:#9BA29C;--rule:#2D3336;--red:#F0705F;--ok:#5CCB9B}}
@@ -162,6 +165,7 @@ async function start(){$('#lg').hidden=true;$('#ap').hidden=false;$('#st').textC
 $('#cg').onclick=()=>{C={o:$('#co').value.trim(),r:$('#cr').value.trim(),b:$('#cb').value.trim()||'main',t:$('#ct').value.trim()};
  if(!C.o||!C.r||!C.t){$('#ce').textContent='Fill in the username, repository and token.';return}
  try{localStorage.setItem('ed-cfg',JSON.stringify(C))}catch(e){}start()};
+if('serviceWorker' in navigator)navigator.serviceWorker.register('editor-sw.js').catch(()=>{});
 if(C&&C.t)start();else $('#lg').hidden=false;
 })();
 </script>

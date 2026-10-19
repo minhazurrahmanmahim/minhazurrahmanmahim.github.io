@@ -1,0 +1,23 @@
+{
+ "name": "Site editor",
+ "short_name": "Editor",
+ "start_url": "editor.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#121517",
+ "theme_color": "#171B19",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
