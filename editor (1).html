@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex,nofollow">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Site editor</title>
+<style>
+:root{color-scheme:light dark;--bg:#ECEEEB;--card:#F7F8F6;--ink:#171B19;--mute:#5C635E;--rule:#CBD0CB;--red:#B42318;--ok:#17714A}
+@media(prefers-color-scheme:dark){:root{--bg:#121517;--card:#1B1F21;--ink:#E9EAE6;--mute:#9BA29C;--rule:#2D3336;--red:#F0705F;--ok:#5CCB9B}}
+*{box-sizing:border-box;margin:0;padding:0}[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,'Segoe UI','Noto Sans Bengali',sans-serif;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--rule)}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 6px}
+.hd b{font-size:18px}#st{font-size:13px;color:var(--ok)}#st.d{color:var(--red);font-weight:600}
+#tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 12px 10px;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:none;min-height:40px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;font-size:15px}
+#tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+main{padding:16px 16px calc(110px + env(safe-area-inset-bottom));max-width:720px;margin:0 auto}
+label{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-bottom:16px}
+input:not([type=file]),textarea,select{display:block;width:100%;margin-top:6px;padding:11px 12px;background:var(--card);border:1px solid var(--rule);border-radius:6px;font-size:16px;font-weight:400;color:var(--ink)}
+textarea{resize:vertical;line-height:1.6}
+.add,.fb,.go{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;background:var(--ink);color:var(--bg);font-weight:600;border-radius:6px;text-align:center;width:100%}
+.add{margin-bottom:12px}
+.ls{display:grid;gap:8px}
+.it{display:block;width:100%;text-align:left;padding:12px 14px;background:var(--card);border:1px solid var(--rule);border-radius:6px}
+.it b{display:block;font-weight:600;line-height:1.4}.it small{color:var(--mute);font-size:13px}
+.em{color:var(--mute);font-size:14px}
+.pb{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--rule)}
+.pb button{flex:1;min-height:50px;border-radius:6px;font-weight:600}
+#pub{background:var(--red);color:#fff}#prev{border:1px solid var(--ink)}#pub:disabled{opacity:.55}
+#sh{position:fixed;inset:0;z-index:10;background:var(--bg);overflow:auto;padding-top:env(safe-area-inset-top)}
+.sb{position:sticky;top:0;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 4px;border-bottom:1px solid var(--rule)}
+.sb button{min-height:44px;padding:0 14px;font-weight:600}.sc{padding:16px 16px calc(40px + env(safe-area-inset-bottom));max-width:720px;margin:0 auto}
+.ar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ar button{flex:1;min-height:46px;border:1px solid var(--ink);border-radius:6px;font-weight:600}.ar .dg{border-color:var(--red);color:var(--red)}
+.sl{padding:14px 0;border-bottom:1px solid var(--rule)}.sl small,.im small{display:block;color:var(--mute);font-size:13px;margin:2px 0 10px;font-weight:400}
+.pv{display:block;max-width:100%;max-height:220px;margin:0 0 10px;border:1px solid var(--rule);background:var(--card)}
+.row2{display:flex;gap:8px}.row2>*{flex:1}.rm{min-height:48px;border:1px solid var(--rule);border-radius:6px;padding:0 14px}
+#lg{padding:calc(28px + env(safe-area-inset-top)) 18px 40px;max-width:460px;margin:0 auto}
+#lg h1{font-size:28px;margin-bottom:6px}#lg p{color:var(--mute);margin-bottom:22px}
+.er{color:var(--red);min-height:24px;margin:10px 0;font-size:14px}
+details{margin-top:22px;font-size:15px}summary{font-weight:600;min-height:44px;display:flex;align-items:center}
+details ol{padding-left:22px;display:grid;gap:8px;margin-top:6px;color:var(--mute)}
+#ts{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:6px;z-index:20;max-width:92vw;font-size:15px;text-align:center}
+</style>
+</head>
+<body>
+<div id="lg" hidden>
+<h1>Site editor</h1><p>Connect once. After that, this phone opens straight into editing.</p>
+<label>GitHub username<input id="co" autocapitalize="none" autocorrect="off" value="minhazurrahmanmahim"></label>
+<label>Repository name<input id="cr" autocapitalize="none" autocorrect="off" value="minhazurrahmanmahim.github.io"></label>
+<label>Branch<input id="cb" autocapitalize="none" value="main"></label>
+<label>Access token<input id="ct" type="password" autocapitalize="none" autocorrect="off" placeholder="github_pat_..."></label>
+<button class="go" id="cg">Connect</button><div class="er" id="ce"></div>
+<details><summary>How do I get the token?</summary><ol>
+<li>GitHub-এ লগইন করে ছবিতে ট্যাপ করো → Settings → একদম নিচে Developer settings।</li>
+<li>Personal access tokens → Fine-grained tokens → Generate new token।</li>
+<li>Name: Site editor। Expiration: ১ বছর।</li>
+<li>Repository access: Only select repositories → তোমার সাইটের repo বেছে নাও।</li>
+<li>Permissions → Repository permissions → Contents → Read and write।</li>
+<li>Generate token চাপো, যে কোডটা আসবে সেটা কপি করে এখানে paste করো। পেজ ছেড়ে দিলে আর দেখা যাবে না।</li></ol></details>
+</div>
+<div id="ap" hidden>
+<div class="top"><div class="hd"><b>Site editor</b><span id="st"></span></div><div id="tabs"></div></div>
+<main id="mn"></main>
+<div class="pb"><button id="prev">Preview</button><button id="pub">Publish</button></div>
+</div>
+<div id="sh" hidden></div><div id="ts" hidden></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const RX=/(<script type="application\/json" id="site-data">)([\s\S]*?)(<\/script>)/;
+let C=null,S,HTML,sha,P={},dirty=false,tab='home',tm;
+try{C=JSON.parse(localStorage.getItem('ed-cfg')||'null')}catch(e){}
+const F={
+home:[['name','Full name'],['place','Place shown in the dateline'],['tagline','Tagline'],['caption','Caption under the profile photo'],['bio','Short bio','area'],['pills','Roles (one per line)','list'],['currently','Currently doing (one per line)','list']],
+about:[['bio','About text (blank line between paragraphs)','paras'],['skills','Interests (one per line)','list']],
+meta:[['title','Browser tab title'],['ogTitle','Title shown when the link is shared'],['desc','Description for Google and shares','area'],['url','Website address, e.g. https://name.github.io/','url']],
+art:[['bn','Bengali title'],['en','English title'],['paper','Newspaper'],['date','Date, e.g. 07 November 2024'],['link','Link to the newspaper page','url'],['img','Photo of the printed clipping (optional)','img'],['content','Full text. Leave a blank line between paragraphs.','area']],
+job:[['org','Organisation'],['role','Your role'],['periods','Dates (one per line)','list'],['status','Status','sel']],
+edu:[['degree','Degree'],['inst','Institution'],['note','Note (optional)'],['period','Period, e.g. 2022 — Present'],['badges','Highlights such as GPA (one per line)','list']],
+con:[['label','Label, e.g. Email'],['text','Text shown'],['href','Link: https://... or mailto:...','url']]};
+const nx=(a,p)=>p+String(Math.max(0,...a.map(x=>parseInt(String(x.id).slice(1))||0))+1).padStart(2,'0');
+const wr=(k,p,t)=>({t,f:F.art,ti:x=>x.bn||'Untitled',su:x=>[x.paper,x.date].filter(Boolean).join(', '),mk:()=>({id:nx(S[k],p),bn:'',en:'',paper:'',date:'',link:'',img:'',content:''})});
+const xj=t=>({t,f:F.job,ti:x=>x.org||'Untitled',su:x=>x.role,mv:1,mk:()=>({org:'',role:'',periods:[],status:'current'})});
+const L={articles:wr('articles','a','article'),reports:wr('reports','r','report'),jobs:xj('job'),clubs:xj('club or organisation'),
+edu:{t:'education entry',f:F.edu,ti:x=>x.degree||'Untitled',su:x=>x.inst,mv:1,mk:()=>({degree:'',inst:'',note:'',period:'',badges:[]})},
+contacts:{t:'contact',f:F.con,ti:x=>x.label||'Untitled',su:x=>x.text,mv:1,mk:()=>({label:'',text:'',href:''})}};
+const arr=k=>k=='contacts'?S.about.contacts:S[k];
+const OB={home:[()=>S.home,F.home],about:[()=>S.about,F.about],meta:[()=>S.meta,F.meta]};
+const TABS=[['home','Home'],['articles','Articles'],['reports','Reports'],['jobs','Jobs'],['clubs','Clubs'],['edu','Education'],['about','About'],['contacts','Contacts'],['images','Images'],['meta','Site info']];
+const SL=[['profile','Profile photo','Face and shoulders, portrait. Shown on the home page.',{max:1400}],['about','About page photo','A second, more relaxed photo.',{max:1400}],['og','Link preview image','Shown when the link is shared on Facebook or WhatsApp. Cropped to 1200×630.',{w:1200,h:630}],['fav','Browser icon','Small square logo or initials. Cropped to a square.',{w:256,h:256,type:'image/png'}]];
+const dec=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,'')),c=>c.charCodeAt(0)));
+const enc=s=>{const u=new TextEncoder().encode(s);let r='';for(let i=0;i<u.length;i+=32768)r+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(r)};
+const toast=m=>{const t=$('#ts');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,3500)};
+const base=()=>{const o=C.o.toLowerCase(),r=C.r.toLowerCase();return `https://${o}.github.io/`+(r==o+'.github.io'?'':C.r+'/')};
+const pv=p=>!p?'':P[p]?P[p].url:/^https?:/.test(p)?p:base()+p;
+const api=(p,o={})=>fetch(`https://api.github.com/repos/${C.o}/${C.r}/contents/${p}`+(o.q||''),{method:o.m||'GET',headers:{Authorization:'Bearer '+C.t,Accept:o.raw?'application/vnd.github.raw+json':'application/vnd.github+json','Content-Type':'application/json'},body:o.b?JSON.stringify(o.b):undefined});
+const err=async r=>{let m='';try{m=(await r.json()).message}catch(e){}return Error(r.status==401?'GitHub rejected the token. It is wrong or expired.':r.status==404?'Repository or file not found. Check the username, repository name, and that the token can access it.':r.status==403?'Permission denied. The token needs Contents: Read and write.':(m||'GitHub error '+r.status))};
+async function load(){const q='?ref='+encodeURIComponent(C.b),r=await api('index.html',{q});if(!r.ok)throw await err(r);const j=await r.json();sha=j.sha;
+ HTML=j.content?dec(j.content):await (await api('index.html',{q,raw:1})).text();const m=HTML.match(RX);
+ if(!m)throw Error('This index.html is not the new version. Upload the new index.html to GitHub first, then connect again.');S=JSON.parse(m[2]);P={};
+ try{const d=JSON.parse(localStorage.getItem('ed-draft')||'null');if(d&&d.sha==sha&&JSON.stringify(d.S)!=JSON.stringify(S)&&confirm('You have unpublished edits from last time. Restore them?')){S=d.S;for(const k in d.P)P[k]={b64:d.P[k],url:'data:image/'+(k.endsWith('png')?'png':'jpeg')+';base64,'+d.P[k]};dirty=true}}catch(e){}}
+function draft(){try{localStorage.setItem('ed-draft',JSON.stringify({sha,S,P:Object.fromEntries(Object.entries(P).map(([k,v])=>[k,v.b64]))}))}catch(e){}}
+function st(){const s=$('#st');s.textContent=dirty?'Unpublished changes':'Up to date';s.className=dirty?'d':''}
+function chg(){dirty=true;st();clearTimeout(tm);tm=setTimeout(draft,700)}
+const val=el=>{const t=el.dataset.t,v=el.value;return t=='list'?v.split('\n').map(s=>s.trim()).filter(Boolean):t=='paras'?v.split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean):v};
+function fh(o,[k,l,t]){t=t||'';const v=o[k],a=`data-k="${k}" data-t="${t}"`;
+ const tv=t=='list'?(v||[]).join('\n'):t=='paras'?(v||[]).join('\n\n'):(v||'');
+ if(t=='area'||t=='list'||t=='paras')return `<label>${l}<textarea ${a} rows="${k=='content'?14:t=='area'?5:4}">${esc(tv)}</textarea></label>`;
+ if(t=='sel')return `<label>${l}<select ${a}><option value="current"${v=='current'?' selected':''}>Current</option><option value="former"${v=='former'?' selected':''}>Former</option></select></label>`;
+ if(t=='img')return `<div class="im"><label style="margin:0">${l}</label><small>Tip: a screenshot of the printed page works well.</small><img class="pv" ${v?'':'hidden'} src="${esc(pv(v))}" alt=""><div class="row2"><label class="fb" style="margin:0">Choose photo<input type="file" accept="image/*" data-pick="${k}" hidden></label>${v?`<button class="rm" data-rmi="${k}">Remove</button>`:''}</div></div><div style="height:16px"></div>`;
+ return `<label>${l}<input ${a} value="${esc(tv)}"${t=='url'?' type="url" inputmode="url" autocapitalize="none"':''}></label>`}
+async function prep(file,w,h,max,type){const u=URL.createObjectURL(file);const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(Error('Could not read that image.'));i.src=u});
+ let sw=im.naturalWidth,sh=im.naturalHeight,sx=0,sy=0,cw,ch;
+ if(w&&h){const r=w/h;if(sw/sh>r){const n=sh*r;sx=(sw-n)/2;sw=n}else{const n=sw/r;sy=(sh-n)/2;sh=n}cw=w;ch=h}else{const k=Math.min(1,max/Math.max(sw,sh));cw=Math.round(sw*k);ch=Math.round(sh*k)}
+ const c=document.createElement('canvas');c.width=cw;c.height=ch;const g=c.getContext('2d');if(type!='image/png'){g.fillStyle='#fff';g.fillRect(0,0,cw,ch)}g.drawImage(im,sx,sy,sw,sh,0,0,cw,ch);
+ const bl=await new Promise(r=>c.toBlob(r,type,.86));URL.revokeObjectURL(u);
+ return{b64:await new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(bl)}),url:URL.createObjectURL(bl)}}
+async function pick(file,slot,s){const png=s.type=='image/png',p=`images/${slot}-${Date.now().toString(36)}.${png?'png':'jpg'}`;P[p]=await prep(file,s.w,s.h,s.max||1600,png?'image/png':'image/jpeg');return p}
+function bind(root,o){root.querySelectorAll('[data-k]').forEach(e=>e.addEventListener('input',()=>{o[e.dataset.k]=val(e);chg()}));
+ root.querySelectorAll('[data-pick]').forEach(e=>e.addEventListener('change',async()=>{if(!e.files[0])return;try{o[e.dataset.pick]=await pick(e.files[0],'clip',{max:1600});chg();const b=e.closest('.im');b.querySelector('img').src=P[o.img].url;b.querySelector('img').hidden=false;toast('Photo added. Publish to upload it.')}catch(x){toast(x.message)}}));
+ root.querySelectorAll('[data-rmi]').forEach(e=>e.onclick=()=>{o[e.dataset.rmi]='';chg();e.closest('.im').querySelector('img').hidden=true;e.remove()})}
+function openItem(k,i){const l=L[k],a=arr(k),x=a[i],s=$('#sh');
+ s.innerHTML=`<div class="sb"><button id="bk">&larr; Done</button><b>${esc(l.t)}</b><span style="width:70px"></span></div><div class="sc">${l.f.map(f=>fh(x,f)).join('')}<div class="ar">${l.mv?'<button id="up">Move up</button><button id="dn">Move down</button>':''}<button id="del" class="dg">Delete</button></div></div>`;
+ s.hidden=false;s.scrollTop=0;document.body.style.overflow='hidden';bind(s,x);
+ $('#bk').onclick=()=>{s.hidden=true;document.body.style.overflow='';show(tab)};
+ $('#del').onclick=()=>{if(confirm('Delete this '+l.t+'?')){a.splice(i,1);chg();$('#bk').click()}};
+ if(l.mv){const mv=d=>{const j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];chg();openItem(k,j)};$('#up').onclick=()=>mv(-1);$('#dn').onclick=()=>mv(1)}}
+function show(t){tab=t;$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-t="${k}" aria-pressed="${k==t}">${l}</button>`).join('');
+ $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.t));$('#tabs [aria-pressed=true]').scrollIntoView({inline:'center',block:'nearest'});
+ const m=$('#mn');
+ if(OB[t]){const o=OB[t][0]();m.innerHTML=OB[t][1].map(f=>fh(o,f)).join('')+(t=='meta'?'<div class="ar"><button id="dl">Download backup of index.html</button><button id="out" class="dg">Disconnect this phone</button></div>':'');bind(m,o);
+  if(t=='meta'){$('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([build()],{type:'text/html'}));a.download='index.html';a.click()};$('#out').onclick=()=>{if(confirm('Remove the saved token from this phone?')){try{localStorage.removeItem('ed-cfg');localStorage.removeItem('ed-draft')}catch(e){}location.reload()}}}}
+ else if(t=='images'){m.innerHTML=SL.map(([k,l,h])=>`<div class="sl"><b>${l}</b><small>${h}</small><img class="pv" ${S.images[k]?'':'hidden'} src="${esc(pv(S.images[k]))}" alt=""><div class="row2"><label class="fb" style="margin:0">Choose from gallery<input type="file" accept="image/*" data-slot="${k}" hidden></label><button class="rm" data-rm="${k}">Remove</button></div></div>`).join('');
+  m.querySelectorAll('[data-slot]').forEach(e=>e.onchange=async()=>{if(!e.files[0])return;const sp=SL.find(x=>x[0]==e.dataset.slot);try{S.images[sp[0]]=await pick(e.files[0],sp[0],sp[3]);chg();const im=e.closest('.sl').querySelector('img');im.src=P[S.images[sp[0]]].url;im.hidden=false;toast('Photo added. Publish to upload it.')}catch(x){toast(x.message)}});
+  m.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{S.images[b.dataset.rm]='';chg();show('images')})}
+ else{const l=L[t],a=arr(t);m.innerHTML=`<button class="add" id="ad">+ Add ${l.t}</button><div class="ls">${a.map((x,i)=>`<button class="it" data-i="${i}"><b>${esc(l.ti(x))}</b><small>${esc(l.su(x))}</small></button>`).join('')||'<p class="em">Nothing here yet.</p>'}</div>`;
+  $('#ad').onclick=()=>{a.unshift(l.mk());chg();openItem(t,0)};m.querySelectorAll('.it').forEach(b=>b.onclick=()=>openItem(t,+b.dataset.i))}
+ scrollTo(0,0)}
+function build(){const M=S.meta,ea=s=>esc(s),abs=p=>!p||/^https?:/.test(p)?p:(M.url||base()).replace(/\/?$/,'/')+p;
+ let h=HTML.replace(RX,(m,a,j,z)=>a+JSON.stringify(S).replace(/</g,'\\u003c')+z).replace(/(<title id="t">)[\s\S]*?(<\/title>)/,(m,a,z)=>a+ea(M.title)+z);
+ const set=(id,at,v)=>{h=h.replace(new RegExp('(<[a-z]+[^>]*\\sid="'+id+'"[^>]*\\s'+at+'=")[^"]*(")'),(m,a,z)=>a+ea(v)+z)};
+ set('m-desc','content',M.desc);set('og-t','content',M.ogTitle||M.title);set('og-d','content',M.desc);set('og-u','content',M.url);set('og-i','content',abs(S.images.og));set('fav','href',S.images.fav);return h}
+async function publish(){const b=$('#pub');b.disabled=true;
+ try{const js=JSON.stringify(S),use=Object.keys(P).filter(p=>js.includes(p));
+  for(let i=0;i<use.length;i++){$('#st').textContent=`Uploading photo ${i+1} of ${use.length}…`;const r=await api(use[i],{m:'PUT',b:{message:'Add '+use[i],content:P[use[i]].b64,branch:C.b}});if(!r.ok)throw await err(r)}
+  $('#st').textContent='Publishing…';const cr=await api('index.html',{q:'?ref='+encodeURIComponent(C.b)});if(!cr.ok)throw await err(cr);const cj=await cr.json();
+  if(cj.sha!==sha&&!confirm('index.html was changed somewhere else after you opened this editor. Publish anyway and replace it?'))throw Error('Cancelled. Nothing was overwritten.');
+  const h=build(),r=await api('index.html',{m:'PUT',b:{message:'Update site from phone editor',content:enc(h),sha:cj.sha,branch:C.b}});if(!r.ok)throw await err(r);
+  sha=(await r.json()).content.sha;HTML=h;P={};dirty=false;try{localStorage.removeItem('ed-draft')}catch(e){}st();toast('Published. The live site updates in 1 to 2 minutes.')}
+ catch(e){st();toast(e.message)}b.disabled=false}
+$('#pub').onclick=publish;
+$('#prev').onclick=()=>{const h=build().replace('<head>',`<head><base href="${base()}">`);const w=open(URL.createObjectURL(new Blob([h],{type:'text/html'})),'_blank');if(!w)toast('Allow pop-ups to see the preview.')};
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+async function start(){$('#lg').hidden=true;$('#ap').hidden=false;$('#st').textContent='Loading…';
+ try{await load();st();show('home')}catch(e){$('#ap').hidden=true;$('#lg').hidden=false;$('#ce').textContent=e.message}}
+$('#cg').onclick=()=>{C={o:$('#co').value.trim(),r:$('#cr').value.trim(),b:$('#cb').value.trim()||'main',t:$('#ct').value.trim()};
+ if(!C.o||!C.r||!C.t){$('#ce').textContent='Fill in the username, repository and token.';return}
+ try{localStorage.setItem('ed-cfg',JSON.stringify(C))}catch(e){}start()};
+if(C&&C.t)start();else $('#lg').hidden=false;
+})();
+</script>
+</body>
+</html>
