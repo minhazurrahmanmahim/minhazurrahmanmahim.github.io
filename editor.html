@@ -83,12 +83,12 @@ const F={
 home:[['name','Full name'],['place','Place shown in the dateline'],['tagline','Tagline'],['caption','Caption under the profile photo'],['bio','Short bio','area'],['pills','Roles (one per line)','list'],['currently','Currently doing (one per line)','list']],
 about:[['bio','About text (blank line between paragraphs)','paras'],['skills','Interests (one per line)','list']],
 meta:[['title','Browser tab title'],['ogTitle','Title shown when the link is shared'],['desc','Description for Google and shares','area'],['url','Website address, e.g. https://name.github.io/','url']],
-art:[['bn','Bengali title'],['en','English title'],['paper','Newspaper'],['date','Date, e.g. 07 November 2024'],['link','Link to the newspaper page','url'],['img','Photo of the printed clipping (optional)','img'],['content','Full text. Leave a blank line between paragraphs.','area']],
+art:[['bn','Bengali title'],['en','English title'],['paper','Newspaper'],['date','Date, e.g. 07 November 2024'],['link','Link to the newspaper page','url'],['img','Photo of the printed clipping (optional)','img'],['content','Full text. Leave a blank line between paragraphs.','area'],['enc','English translation of the full text (optional)','area']],
 job:[['org','Organisation'],['role','Your role'],['periods','Dates (one per line)','list'],['status','Status','sel']],
 edu:[['degree','Degree'],['inst','Institution'],['note','Note (optional)'],['period','Period, e.g. 2022 — Present'],['badges','Highlights such as GPA (one per line)','list']],
 con:[['label','Label, e.g. Email'],['text','Text shown'],['href','Link: https://... or mailto:...','url']]};
 const nx=(a,p)=>p+String(Math.max(0,...a.map(x=>parseInt(String(x.id).slice(1))||0))+1).padStart(2,'0');
-const wr=(k,p,t)=>({t,f:F.art,ti:x=>x.bn||'Untitled',su:x=>[x.paper,x.date].filter(Boolean).join(', '),mk:()=>({id:nx(S[k],p),bn:'',en:'',paper:'',date:'',link:'',img:'',content:''})});
+const wr=(k,p,t)=>({t,f:F.art,ti:x=>x.bn||'Untitled',su:x=>[x.paper,x.date].filter(Boolean).join(', '),mk:()=>({id:nx(S[k],p),bn:'',en:'',paper:'',date:'',link:'',img:'',content:'',enc:''})});
 const xj=t=>({t,f:F.job,ti:x=>x.org||'Untitled',su:x=>x.role,mv:1,mk:()=>({org:'',role:'',periods:[],status:'current'})});
 const L={articles:wr('articles','a','article'),reports:wr('reports','r','report'),jobs:xj('job'),clubs:xj('club or organisation'),
 edu:{t:'education entry',f:F.edu,ti:x=>x.degree||'Untitled',su:x=>x.inst,mv:1,mk:()=>({degree:'',inst:'',note:'',period:'',badges:[]})},
@@ -169,7 +169,15 @@ q('#mx').onclick=function(){cm();B.focus()};addEventListener('keydown',function(
 var s=q('#sh');if(s)s.onclick=async function(){var b=this;try{if(navigator.share)await navigator.share({title:document.title,url:location.href});else{await navigator.clipboard.writeText(location.href);b.textContent='Link copied'}}catch(e){}};
 var f='all',t='',L=document.querySelectorAll('.row[data-q]');function fl(){var n=0;L.forEach(function(x){var ok=(f=='all'||x.dataset.k==f)&&x.dataset.q.indexOf(t)>-1;x.hidden=!ok;if(ok)n++});var c=q('#wc');if(c)c.textContent=n+(n==1?' piece':' pieces');var m=q('#em');if(m)m.hidden=n>0}
 var qi=q('#q');if(qi)qi.oninput=function(){t=qi.value.trim().toLowerCase();fl()};
-document.querySelectorAll('.tb button').forEach(function(b){b.onclick=function(){f=b.dataset.f;document.querySelectorAll('.tb button').forEach(function(x){x.setAttribute('aria-pressed',x==b)});fl()}})})()`;
+document.querySelectorAll('.tb button').forEach(function(b){b.onclick=function(){f=b.dataset.f;document.querySelectorAll('.tb button').forEach(function(x){x.setAttribute('aria-pressed',x==b)});fl()}});
+var lb=document.querySelectorAll('.lb button[data-l]');lb.forEach(function(b){b.onclick=function(){var l=b.dataset.l;lb.forEach(function(x){x.setAttribute('aria-pressed',x==b)});document.querySelectorAll('[data-l]').forEach(function(n){if(n.tagName!='BUTTON')n.hidden=n.dataset.l!=l})}});
+var ml=q('#ml');if(ml)ml.onchange=function(){if(this.value)location.href=this.value};
+var lx;function ol(src,alt){lx=document.createElement('div');lx.id='lbx';lx.innerHTML='<button aria-label="Close">Close</button><img>';var i=lx.querySelector('img');i.src=src;i.alt=alt||'';document.body.appendChild(lx);document.body.style.overflow='hidden';history.pushState({lb:1},'');lx.onclick=function(e){if(e.target.tagName!='IMG')zc()};lx.querySelector('button').focus()}
+function zx(){if(lx){lx.remove();lx=null;document.body.style.overflow=''}}
+function zc(){if(!lx)return;zx();if(history.state&&history.state.lb)history.back()}
+addEventListener('popstate',zx);addEventListener('keydown',function(e){if(e.key=='Escape')zc()});
+document.querySelectorAll('img[data-zoom]').forEach(function(i){function go(){ol(i.currentSrc||i.src,i.alt)}i.onclick=go;i.onkeydown=function(e){if(e.key=='Enter'||e.key==' '){e.preventDefault();go()}}});
+})()`;
 function shell(o){const H=S.home,r=o.r||'',u=U()+o.p,im=ab(o.img||S.images.og),t=o.t+' | '+short(),rel=p=>!p||/^https?:/.test(p)?p:r+p.replace(/^\//,''),
  nav=[['writing','Writing'],['experience','Experience'],['education','Education'],['about','About']],lk=nav.map(([h,l])=>`<a href="${r}${h}.html"${h==o.cur?' aria-current="page"':''}>${l}</a>`).join(''),
  so=(S.about.contacts||[]).filter(c=>/^https?:/.test(c.href)).map(c=>`<a href="${esc(c.href)}" target="_blank" rel="noopener">${esc(c.label)}</a>`).join('');
@@ -190,6 +198,10 @@ ${o.ld?`<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g,'
 <script>(function(){var m='system',r=document.documentElement;try{m=localStorage.getItem('theme')||'system'}catch(e){}r.dataset.theme=(m=='dark'||(m=='system'&&matchMedia('(prefers-color-scheme:dark)').matches))?'dark':'light';r.dataset.mode=m})()<\/script>
 ${hd()}
 <style>${css()}</style>
+<style>.lb{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0 4px}.lb button,.lb a,.lb select{min-height:44px;padding:0 16px;border:1px solid var(--rule);border-radius:999px;font:500 15px var(--sans);background:var(--bg);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center}.lb button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}.ln{font:400 13px var(--sans);color:var(--mute);margin-top:6px}.body[lang=en]{line-height:1.75}
+.cl img{width:100%;height:auto;max-height:clamp(220px,50svh,440px);object-fit:cover;object-position:top center;cursor:zoom-in;border:1px solid var(--rule)}.ph img[data-zoom]{cursor:zoom-in}
+#lbx{position:fixed;inset:0;z-index:50;background:rgba(10,12,12,.95);overflow:auto;-webkit-overflow-scrolling:touch;padding:max(60px,calc(env(safe-area-inset-top) + 52px)) 12px 28px;display:flex;justify-content:center;align-items:flex-start}#lbx img{display:block;width:100%;max-width:1100px;height:auto;max-height:none;object-fit:contain;border:0;cursor:default}
+#lbx button{position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.55);color:#fff;font:500 15px var(--sans)}</style>
 </head>
 <body>
 <header><div class="w bar"><a class="logo" href="${r||'./'}">${esc(short())}</a><div class="tools"><nav class="hn">${lk}</nav><button id="tg" aria-label="Switch between light and dark"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg></button><button id="mb" aria-expanded="false" aria-controls="menu">Menu</button></div></div></header>
@@ -202,6 +214,7 @@ ${hd()}
 `}
 const rw=x=>`<a class="row" href="w/${esc(x.id)}.html" data-k="${x.id[0]}" data-q="${esc((x.bn+' '+x.en+' '+x.paper).toLowerCase())}"><div class="m"><span>${esc(x.paper)}${x.id[0]=='r'?'<b>Report</b>':''}</span><span>${esc(x.date)}</span></div><h3 lang="bn">${esc(x.bn)}</h3><div class="en">${esc(x.en)}</div></a>`;
 const xe=a=>a.map(x=>`<div class="xp"><div><h3>${esc(x.org)}</h3><div class="r">${esc(x.role)}</div></div><div class="per">${(x.periods||[]).map(p=>`<div>${esc(p)}</div>`).join('')}${x.status=='current'?'<div class="c">Current</div>':'<div>Former</div>'}</div></div>`).join('');
+const LGS=[['hi','हिन्दी'],['ur','اردو'],['ar','العربية'],['fr','Français'],['es','Español'],['de','Deutsch'],['zh-CN','中文'],['ja','日本語'],['ru','Русский'],['tr','Türkçe']];
 function pages(){const H=S.home,A=S.about,W=wl(),out={};
  out['writing.html']=shell({p:'writing.html',cur:'writing',t:'Writing',d:`${S.articles.length} articles and ${S.reports.length} special reports by ${H.name}, published in Bengali newspapers.`,
   b:`<div class="w pg"><h2>Writing</h2><div class="tb">${[['all','All',W.length],['a','Articles',S.articles.length],['r','Special reports',S.reports.length]].map(([k,l,n],i)=>`<button data-f="${k}" aria-pressed="${i==0}">${l} (${n})</button>`).join('')}</div><input type="search" id="q" placeholder="Search by title or newspaper" aria-label="Search writing" autocomplete="off"><div class="cnt" id="wc">${W.length} pieces</div><div>${W.map(rw).join('')}</div><p class="em" id="em" hidden>Nothing matches that search.</p></div>`});
@@ -210,16 +223,18 @@ function pages(){const H=S.home,A=S.about,W=wl(),out={};
  out['education.html']=shell({p:'education.html',cur:'education',t:'Education',d:`Education of ${H.name}${e0.degree?': '+e0.degree+(e0.inst?', '+e0.inst:''):''}.`,b:`<div class="w pg"><h2>Education</h2><div style="margin-top:22px">${S.edu.map(x=>`<div class="xp"><div><h3>${esc(x.degree)}</h3><div class="r">${esc(x.inst)}${x.note?'<br>'+esc(x.note):''}</div></div><div class="per"><div>${esc(x.period)}</div>${(x.badges||[]).map(b=>`<div>${esc(b)}</div>`).join('')}</div></div>`).join('')}</div></div>`});
  out['about.html']=shell({p:'about.html',cur:'about',t:'About',d:H.bio,img:S.images.profile,
   ld:{'@context':'https://schema.org','@type':'Person',name:H.name,url:U(),image:ab(S.images.profile)||undefined,description:H.bio,sameAs:(A.contacts||[]).filter(c=>/^https?:/.test(c.href)).map(c=>c.href)},
-  b:`<div class="w pg"><h2>About</h2><div class="hg" style="margin-top:10px"><figure class="ph"><img src="${esc(S.images.about)}" alt="${esc(H.name)}" onerror="this.closest('figure').remove()"></figure><div class="ht"><div class="pr" style="margin-top:20px">${(A.bio||[]).map(p=>`<p>${esc(p)}</p>`).join('')}</div><h2 style="margin-top:56px;font-size:28px">Contact</h2><dl class="ab">${(A.contacts||[]).map(c=>`<dt>${esc(c.label)}</dt><dd>${c.href?`<a href="${esc(c.href)}"${/^http/.test(c.href)?' target="_blank" rel="noopener"':''}>${esc(c.text)}</a>`:esc(c.text)}</dd>`).join('')}</dl><h2 style="margin-top:56px;font-size:28px">Interests</h2><p class="roles" style="margin-top:12px">${esc((A.skills||[]).join(', '))}</p></div></div></div>`});
+  b:`<div class="w pg"><h2>About</h2><div class="hg" style="margin-top:10px"><figure class="ph"><img data-zoom tabindex="0" role="button" aria-label="Open larger image" src="${esc(S.images.about)}" alt="${esc(H.name)}" onerror="this.closest('figure').remove()"></figure><div class="ht"><div class="pr" style="margin-top:20px">${(A.bio||[]).map(p=>`<p>${esc(p)}</p>`).join('')}</div><h2 style="margin-top:56px;font-size:28px">Contact</h2><dl class="ab">${(A.contacts||[]).map(c=>`<dt>${esc(c.label)}</dt><dd>${c.href?`<a href="${esc(c.href)}"${/^http/.test(c.href)?' target="_blank" rel="noopener"':''}>${esc(c.text)}</a>`:esc(c.text)}</dd>`).join('')}</dl><h2 style="margin-top:56px;font-size:28px">Interests</h2><p class="roles" style="margin-top:12px">${esc((A.skills||[]).join(', '))}</p></div></div></div>`});
  W.forEach((x,i)=>{const nw=W[i-1],od=W[i+1],d=iso(x.date),pa=String(x.content||'').split(/\n+/).map(s=>s.trim()).filter(Boolean),ds=((s=>s.length>155?s.slice(0,155).replace(/\s+\S*$/,'')+'…':s)(pa[0]||x.en||'')),
-  nv=(l,y)=>y?`<a href="${esc(y.id)}.html"><small>${l}</small><span lang="bn">${esc(y.bn)}</span></a>`:'',cl=p=>/^https?:/.test(p)?p:'../'+p.replace(/^\//,'');
+  nv=(l,y)=>y?`<a href="${esc(y.id)}.html"><small>${l}</small><span lang="bn">${esc(y.bn)}</span></a>`:'',cl=p=>/^https?:/.test(p)?p:'../'+p.replace(/^\//,''),he=!!String(x.enc||'').trim(),pe=String(x.enc||'').split(/\n+/).map(s=>s.trim()).filter(Boolean),tu=c=>`https://translate.google.com/translate?hl=en&sl=bn&tl=${c}&u=${encodeURIComponent(U()+'w/'+x.id+'.html')}`,
+  lb=`<div class="lb" role="group" aria-label="Language"><button data-l="bn" aria-pressed="true">বাংলা</button>${he?'<button data-l="en" aria-pressed="false">English</button>':`<a href="${esc(tu('en'))}">English</a>`}<select id="ml" aria-label="More languages"><option value="">More languages</option>${LGS.map(([c,n])=>`<option value="${esc(tu(c))}">${n}</option>`).join('')}</select></div><p class="ln">${he?'English is a human translation. ':''}Other languages are machine-translated by Google.</p>`;
   out['w/'+x.id+'.html']=shell({r:'../',p:'w/'+x.id+'.html',cur:'writing',t:x.bn,og:x.bn,d:ds,ty:'article',dt:d,img:x.img||S.images.og,
    ld:{'@context':'https://schema.org','@type':'Article',headline:x.bn,alternativeHeadline:x.en||undefined,inLanguage:'bn',datePublished:d||undefined,author:{'@type':'Person',name:H.name,url:U()},mainEntityOfPage:U()+'w/'+x.id+'.html',image:ab(x.img||S.images.og)||undefined,isPartOf:{'@type':'CreativeWork',name:x.paper}},
    b:`<article class="w read pg"><a class="back" href="../writing.html">&larr; Back to writing</a>
 <div class="m"><span>${esc(x.paper)}${x.id[0]=='r'?'<b>Report</b>':''}</span><time${d?` datetime="${d}"`:''}>${esc(x.date)}</time></div>
-<h1 lang="bn">${esc(x.bn)}</h1><p class="en">${esc(x.en)}</p>
-${x.img?`<figure class="cl"><img src="${esc(cl(x.img))}" alt="Newspaper clipping of this piece" loading="lazy"><figcaption>As printed in ${esc(x.paper)}</figcaption></figure>`:''}
-<div class="body" lang="bn">${pa.length?pa.map(s=>`<p>${esc(s)}</p>`).join(''):'<p class="em">The full text will be added soon.</p>'}</div>
+${lb}
+<h1 lang="bn" data-l="bn">${esc(x.bn)}</h1>${he&&x.en?`<h1 lang="en" data-l="en" hidden>${esc(x.en)}</h1>`:''}<p class="en" data-l="bn">${esc(x.en)}</p>
+${x.img?`<figure class="cl"><img data-zoom tabindex="0" role="button" aria-label="Open larger image" src="${esc(cl(x.img))}" alt="Newspaper clipping of this piece" loading="lazy"><figcaption>As printed in ${esc(x.paper)}. Tap the photo to enlarge.</figcaption></figure>`:''}
+<div class="body" lang="bn" data-l="bn">${pa.length?pa.map(s=>`<p>${esc(s)}</p>`).join(''):'<p class="em">The full text will be added soon.</p>'}</div>${he?`<div class="body" lang="en" data-l="en" hidden>${pe.map(s=>`<p>${esc(s)}</p>`).join('')}</div>`:''}
 <div class="acts">${/^https?:/.test(x.link||'')?`<a class="btn" href="${esc(x.link)}" target="_blank" rel="noopener">Read in ${esc(x.paper)}</a>`:''}<button class="btn o" id="sh">Share</button></div>
 <div class="pn">${nv('Newer',nw)}${nv('Older',od)}</div></article>`})});
  return out}
